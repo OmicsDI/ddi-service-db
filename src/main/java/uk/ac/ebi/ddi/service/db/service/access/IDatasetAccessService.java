@@ -1,5 +1,6 @@
 package uk.ac.ebi.ddi.service.db.service.access;
 
+import org.springframework.data.domain.Page;
 import uk.ac.ebi.ddi.service.db.model.DatasetAccess;
 
 import java.math.BigInteger;
@@ -30,7 +31,7 @@ public interface IDatasetAccessService {
      * Read all the datasetAccess from the database
      * @return A list of datasetAccess
      */
-    public List<DatasetAccess> readAll();
+    public Page<DatasetAccess> readAll(int pageStart, int size);
 
     /**
      * Update a datasetAccess entry in the database using the information of the new datasetAccess

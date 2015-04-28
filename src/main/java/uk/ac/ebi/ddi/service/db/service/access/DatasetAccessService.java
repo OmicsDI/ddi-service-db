@@ -1,6 +1,8 @@
 package uk.ac.ebi.ddi.service.db.service.access;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import uk.ac.ebi.ddi.service.db.model.DatasetAccess;
 import uk.ac.ebi.ddi.service.db.repo.IDatasetAccessRepo;
 
@@ -28,26 +30,30 @@ public class DatasetAccessService implements IDatasetAccessService {
     }
 
     @Override
-    public List<DatasetAccess> readAll() {
-        return datasetAccessRepo.findAll();
+    public Page<DatasetAccess> readAll(int pageStart, int size) {
+        return datasetAccessRepo.findAll(new PageRequest(pageStart, size));
     }
 
     @Override
     public DatasetAccess update(DatasetAccess datasetAccess) {
 
-        DatasetAccess existingEvent = datasetAccessRepo.findOne(datasetAccess.getId());
+        DatasetAccess existingDatasetAccess = datasetAccessRepo.findOne(datasetAccess.getId());
 
-        existingEvent.setAccessDate(datasetAccess.getAccessDate());
-        existingEvent.setAccession(datasetAccess.getAccession());
-        existingEvent.setDatabase(datasetAccess.getDatabase());
+        existingDatasetAccess.setAccessDate(datasetAccess.getAccessDate());
+        existingDatasetAccess.setAccession(datasetAccess.getAccession());
+        existingDatasetAccess.setDatabase(datasetAccess.getDatabase());
 
-        return datasetAccessRepo.save(existingEvent);
+        return datasetAccessRepo.save(existingDatasetAccess);
     }
 
     @Override
     public DatasetAccess delete(BigInteger id) {
         datasetAccessRepo.delete(id);
         return datasetAccessRepo.findOne(id);
+    }
+
+    public long countDatasetAccess(String acc, String database){
+        return 0;
     }
 
 

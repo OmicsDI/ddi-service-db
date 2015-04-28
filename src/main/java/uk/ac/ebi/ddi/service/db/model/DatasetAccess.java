@@ -19,7 +19,7 @@ import javax.annotation.Generated;
  * @author Yasset Perez-Riverol
  */
 
-@Document
+@Document(collection = "DatasetAccess")
 
 public class DatasetAccess extends AbstractDocument implements Serializable{
 
@@ -33,10 +33,9 @@ public class DatasetAccess extends AbstractDocument implements Serializable{
     private Date accessDate;
 
     /**
-     *
+     * Default constructor
      */
     public DatasetAccess(){
-
     }
 
     /**

@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -61,17 +62,17 @@ public class AccessDatasetServiceTest{
     @Test
     public void test_basicOperations() throws Exception {
         // check if collection is empty
-        List<DatasetAccess> datasetAccesses = datasetAccessService.readAll();
-        Assert.assertTrue(datasetAccesses.size() == 0);
+        Page<DatasetAccess> datasetAccesses = datasetAccessService.readAll(0,2);
+        Assert.assertTrue(datasetAccesses.getSize() == 0);
         // create new document
         DatasetAccess access = new DatasetAccess(3,"PXD0003", "pride", new Date());
 
         datasetAccessService.create(access);
 
-        datasetAccesses = datasetAccessService.readAll();
+        datasetAccesses = datasetAccessService.readAll(0,2);
 
         // check if document stored
-        Assert.assertEquals(2, datasetAccesses.size());
+        Assert.assertEquals(2, datasetAccesses.getSize());
         // check stored document
         Assert.assertEquals(access, datasetAccessService.read(BigInteger.valueOf(3)));
     }
