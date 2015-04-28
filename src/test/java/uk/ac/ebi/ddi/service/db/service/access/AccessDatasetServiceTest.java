@@ -35,7 +35,7 @@ public class AccessDatasetServiceTest{
     DB db = null;
 
     @Autowired
-    IDatasetAccessRepo repo;
+    DatasetAccessService datasetAccessService;
 
     @Before
     public void setUp(){
@@ -61,17 +61,19 @@ public class AccessDatasetServiceTest{
     @Test
     public void test_basicOperations() throws Exception {
         // check if collection is empty
-        Assert.assertTrue(repo.count() == 0);
+        List<DatasetAccess> datasetAccesses = datasetAccessService.readAll();
+        Assert.assertTrue(datasetAccesses.size() == 0);
         // create new document
         DatasetAccess access = new DatasetAccess(3,"PXD0003", "pride", new Date());
 
-        repo.save(access);
-        repo.save(access);
+        datasetAccessService.create(access);
+
+        datasetAccesses = datasetAccessService.readAll();
 
         // check if document stored
-        Assert.assertEquals(1, repo.count());
+        Assert.assertEquals(2, datasetAccesses.size());
         // check stored document
-        Assert.assertEquals(access, repo.findOne(BigInteger.valueOf(3)));
+        Assert.assertEquals(access, datasetAccessService.read(BigInteger.valueOf(3)));
     }
 
     @Test

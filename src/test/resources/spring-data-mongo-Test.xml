@@ -15,9 +15,9 @@
 
 	<!-- Offers convenience methods and automatic mapping between MongoDB JSON 
 		documents and your domain classes. -->
-	<bean id="mongoTemplateLocal" class="org.springframework.data.mongodb.core.MongoTemplate">
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg ref="mongo" />
-		<constructor-arg name="databaseName" value="mylocaldb" />
+		<constructor-arg name="databaseName" value="test" />
 	</bean>
 	
 <!-- alternate config with in memory java driver to mongo With this, you are not going through mongo local db, instead of that, you are using a inmemory mongo instance --> 
@@ -32,7 +32,10 @@
 	<!-- localhost settings for mongo -->
 	<!--<mongo:db-factory id="mongoDbFactory" /> -->
 <!--  -->
-	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
-		<constructor-arg ref="mongoDbFactory" />
-	</bean>
+	<!--<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">-->
+		<!--<constructor-arg ref="mongoDbFactory" />-->
+	<!--</bean>-->
+
+    <bean id="service" class="uk.ac.ebi.ddi.service.db.service.access.DatasetAccessService">
+    </bean>
 </beans>

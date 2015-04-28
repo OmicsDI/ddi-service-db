@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author Yasset Perez-Riverol
  */
-public class AccessDatasetService implements IDatasetAccessService {
+public class DatasetAccessService implements IDatasetAccessService {
 
     @Autowired
     private IDatasetAccessRepo datasetAccessRepo;
