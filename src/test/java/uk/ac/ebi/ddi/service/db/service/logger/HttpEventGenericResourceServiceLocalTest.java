@@ -27,7 +27,7 @@ import java.util.Date;
 public class HttpEventGenericResourceServiceLocalTest {
 
     @Autowired
-    private DatasetAccessService service;
+    private DatasetResourceService service;
 
     @Autowired
     HttpEventService eventService;
@@ -69,10 +69,10 @@ public class HttpEventGenericResourceServiceLocalTest {
 
         //Create an Event
         HttpEvent event = new HttpEvent();
-        event.setAbstractResource(dataset);
+        event.setResource(dataset);
         event.setAccessDate(new Date());
         event.setHost("localhost");
-        event.setLogName("/loganame");
+        event.setLogSource("/loganame");
         event.setRawMessage("simple message with the original log message");
 
         event = eventService.save(event);

@@ -7,7 +7,7 @@ import uk.ac.ebi.ddi.service.db.model.logger.DatasetResource;
 import java.math.BigInteger;
 
 /**
- * DatasetAccess MongoDB instance that extend the MongoDBRepository
+ * DatasetResource MongoDB instance that extend the MongoDBRepository
  *
  * @author ypriverol
  */

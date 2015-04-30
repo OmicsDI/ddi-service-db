@@ -1,7 +1,6 @@
 package uk.ac.ebi.ddi.service.db.model.logger;
 
 import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 
@@ -10,22 +9,23 @@ import java.io.Serializable;
  * @date 30/04/2015
  */
 
-public abstract class AbstractEvent extends AbstractDocument implements Serializable{
+public abstract class AbstractEvent extends AbstractDocument implements Serializable, IEvent{
 
     String rawMessage;
 
-    String logName;
+    String logSource;
 
     @DBRef
     AbstractResource abstractResource;
 
     public AbstractEvent(){}
 
-    public AbstractEvent(String rawMessage, String logName) {
+    public AbstractEvent(String rawMessage, String logSource) {
         this.rawMessage = rawMessage;
-        this.logName    = logName;
+        this.logSource = logSource;
     }
 
+    @Override
     public String getRawMessage() {
         return rawMessage;
     }
@@ -34,19 +34,21 @@ public abstract class AbstractEvent extends AbstractDocument implements Serializ
         this.rawMessage = rawMessage;
     }
 
-    public String getLogName() {
-        return logName;
+    @Override
+    public String getLogSource() {
+        return logSource;
     }
 
-    public void setLogName(String logName) {
-        this.logName = logName;
+    public void setLogSource(String logSource) {
+        this.logSource = logSource;
     }
 
-    public AbstractResource getAbstractResource() {
+    @Override
+    public IDocument getResource() {
         return abstractResource;
     }
 
-    public void setAbstractResource(AbstractResource abstractResource) {
+    public void setResource(AbstractResource abstractResource) {
         this.abstractResource = abstractResource;
     }
 
@@ -57,7 +59,7 @@ public abstract class AbstractEvent extends AbstractDocument implements Serializ
 
         AbstractEvent abstractEvent = (AbstractEvent) o;
 
-        if (logName != null ? !logName.equals(abstractEvent.logName) : abstractEvent.logName != null) return false;
+        if (logSource != null ? !logSource.equals(abstractEvent.logSource) : abstractEvent.logSource != null) return false;
         if (rawMessage != null ? !rawMessage.equals(abstractEvent.rawMessage) : abstractEvent.rawMessage != null) return false;
         if (abstractResource != null ? !abstractResource.equals(abstractEvent.abstractResource) : abstractEvent.abstractResource != null) return false;
 
@@ -67,7 +69,7 @@ public abstract class AbstractEvent extends AbstractDocument implements Serializ
     @Override
     public int hashCode() {
         int result = rawMessage != null ? rawMessage.hashCode() : 0;
-        result = 31 * result + (logName != null ? logName.hashCode() : 0);
+        result = 31 * result + (logSource != null ? logSource.hashCode() : 0);
         result = 31 * result + (abstractResource != null ? abstractResource.hashCode() : 0);
         return result;
     }
@@ -76,7 +78,7 @@ public abstract class AbstractEvent extends AbstractDocument implements Serializ
     public String toString() {
         return "Event{" +
                 "rawMessage='" + rawMessage + '\'' +
-                ", logName='" + logName + '\'' +
+                ", logSource='" + logSource + '\'' +
                 ", resource=" + abstractResource +
                 '}';
     }

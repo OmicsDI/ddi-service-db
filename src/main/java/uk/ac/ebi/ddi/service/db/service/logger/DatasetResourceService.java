@@ -15,7 +15,7 @@ import java.math.BigInteger;
  *
  * @author Yasset Perez-Riverol
  */
-public class DatasetAccessService implements IDatasetAccessService {
+public class DatasetResourceService implements IDatasetResourceService {
 
     @Autowired
     private IDatasetResourceRepo datasetAccessRepo;

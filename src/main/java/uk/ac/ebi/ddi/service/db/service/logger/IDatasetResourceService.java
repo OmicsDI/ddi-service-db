@@ -11,7 +11,7 @@ import java.math.BigInteger;
  * @author ypriverol
  *
  */
-public interface IDatasetAccessService {
+public interface IDatasetResourceService {
 
     /**
      * Create a new DatasetAccess in the MongoDB

@@ -31,7 +31,7 @@ public class HttpEventDatasetServiceTest {
     DB db = null;
 
     @Autowired
-    DatasetAccessService datasetAccessService;
+    DatasetResourceService datasetAccessService;
 
     @Before
     public void setUp(){
