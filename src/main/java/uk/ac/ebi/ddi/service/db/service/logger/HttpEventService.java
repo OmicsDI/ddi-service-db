@@ -3,6 +3,7 @@ package uk.ac.ebi.ddi.service.db.service.logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import uk.ac.ebi.ddi.service.db.exception.DBWriteException;
 import uk.ac.ebi.ddi.service.db.model.logger.HttpEvent;
 import uk.ac.ebi.ddi.service.db.repo.logger.IHttpEventRepo;
 
@@ -19,6 +20,9 @@ public class HttpEventService implements IHttpEventService {
 
     @Override
     public HttpEvent save(HttpEvent httpEvent) {
+        if((httpEvent.getAbstractResource() != null && httpEvent.getAbstractResource().getId() == null))
+            new DBWriteException(" The reference to the original resource should contain an Id");
+
         return accessRepo.save(httpEvent);
     }
 
@@ -46,8 +50,11 @@ public class HttpEventService implements IHttpEventService {
         existingHttpEvent.setStatus(httpEvent.getStatus());
         existingHttpEvent.setUser(httpEvent.getUser());
         existingHttpEvent.setUserAgent(httpEvent.getUserAgent());
+        existingHttpEvent.setLogName(httpEvent.getLogName());
+        existingHttpEvent.setRawMessage(httpEvent.getRawMessage());
+        existingHttpEvent.setAbstractResource(httpEvent.getAbstractResource());
 
-        return accessRepo.save(existingHttpEvent);
+        return save(existingHttpEvent);
     }
 
     @Override

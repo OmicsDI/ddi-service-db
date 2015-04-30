@@ -244,9 +244,9 @@
                         <configuration>
                             <outputDirectory>${project.build.outputDirectory}/META-INF</outputDirectory>
                             <resources>
-                                <resource>
+                                <resourceUUID>
                                     <directory>${project.basedir}/src/main/java/META-INF</directory>
-                                </resource>
+                                </resourceUUID>
                             </resources>
                         </configuration>
                     </execution>

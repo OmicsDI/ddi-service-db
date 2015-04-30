@@ -14,7 +14,7 @@ import java.util.Date;
  * @author Yasset Perez-Riverol
  */
 @Document(collection = "logger.HttpEvent")
-public class HttpEvent extends Event implements Serializable{
+public class HttpEvent extends AbstractEvent implements Serializable{
 
     private static final long serialVersionUID = 1326887243102331826L;
 

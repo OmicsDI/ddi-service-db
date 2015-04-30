@@ -4,12 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import uk.ac.ebi.ddi.service.db.model.logger.HttpEvent;
-import uk.ac.ebi.ddi.service.db.model.logger.DatasetAccess;
-import uk.ac.ebi.ddi.service.db.repo.logger.IDatasetAccessRepo;
+import uk.ac.ebi.ddi.service.db.model.logger.DatasetResource;
+import uk.ac.ebi.ddi.service.db.repo.logger.IDatasetResourceRepo;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -20,57 +18,51 @@ import java.util.List;
 public class DatasetAccessService implements IDatasetAccessService {
 
     @Autowired
-    private IDatasetAccessRepo datasetAccessRepo;
+    private IDatasetResourceRepo datasetAccessRepo;
 
     @Override
-    public DatasetAccess save(DatasetAccess datasetAccess) {
-        return datasetAccessRepo.save(datasetAccess);
+    public DatasetResource save(DatasetResource datasetResource) {
+        return datasetAccessRepo.save(datasetResource);
     }
 
     @Override
-    public DatasetAccess read(BigInteger id) {
+    public DatasetResource read(BigInteger id) {
         return datasetAccessRepo.findOne(id);
     }
 
     @Override
-    public Page<DatasetAccess> readAll(int pageStart, int size) {
+    public Page<DatasetResource> readAll(int pageStart, int size) {
         return datasetAccessRepo.findAll(new PageRequest(pageStart, size));
     }
 
     @Override
-    public DatasetAccess update(DatasetAccess datasetAccess) {
+    public DatasetResource update(DatasetResource datasetResource) {
 
-        DatasetAccess existingDatasetAccess = datasetAccessRepo.findOne(datasetAccess.getId());
+        DatasetResource existingDatasetResource = datasetAccessRepo.findOne(datasetResource.getId());
 
-        existingDatasetAccess.setAccession(datasetAccess.getAccession());
-        existingDatasetAccess.setDatabase(datasetAccess.getDatabase());
-        existingDatasetAccess.setHttpEventList(datasetAccess.getHttpEventList());
+        existingDatasetResource.setAccession(datasetResource.getAccession());
+        existingDatasetResource.setDatabase(datasetResource.getDatabase());
 
-        return datasetAccessRepo.save(existingDatasetAccess);
+        return datasetAccessRepo.save(existingDatasetResource);
     }
 
     @Override
-    public DatasetAccess delete(BigInteger id) {
+    public DatasetResource delete(BigInteger id) {
         datasetAccessRepo.delete(id);
         return datasetAccessRepo.findOne(id);
     }
 
     @Override
-    public DatasetAccess addAccess(String acc, String database, HttpEvent httpEvent) {
-        DatasetAccess datasetAccess = read(acc, database);
-        List<HttpEvent> httpEventList = datasetAccess.getHttpEventList();
-        if(httpEventList == null)
-            httpEventList = new ArrayList<HttpEvent>();
-        httpEventList.add(httpEvent);
-        datasetAccess.setHttpEventList(httpEventList);
-        update(datasetAccess);
-        return datasetAccess;
+    public DatasetResource addAccess(String acc, String database, HttpEvent httpEvent) {
+        DatasetResource datasetResource = read(acc, database);
+        update(datasetResource);
+        return datasetResource;
     }
 
     @Override
-    public DatasetAccess read(String acc, String database) {
-        DatasetAccess datasetAccess = datasetAccessRepo.findByAccessionDatabaseQuery(acc, database);
-        return datasetAccess;
+    public DatasetResource read(String acc, String database) {
+        DatasetResource datasetResource = datasetAccessRepo.findByAccessionDatabaseQuery(acc, database);
+        return datasetResource;
     }
 
 

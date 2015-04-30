@@ -2,13 +2,10 @@ package uk.ac.ebi.ddi.service.db.model.logger;
 
 
 import java.io.Serializable;
-import java.util.List;
 
 
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import uk.ac.ebi.ddi.service.db.utils.CascadeSave;
 
 /**
  * Information about the access of each dataset, Date of the access, the idea is to have a simple statistic about how many times
@@ -17,9 +14,9 @@ import uk.ac.ebi.ddi.service.db.utils.CascadeSave;
  * @author Yasset Perez-Riverol
  */
 
-@Document(collection = "logger.DatasetAccess")
+@Document(collection = "logger.DatasetResource")
 
-public class DatasetAccess extends Resource implements Serializable{
+public class DatasetResource extends AbstractResource implements Serializable{
 
     private static final long serialVersionUID = 1326887243102331826L;
 
@@ -32,7 +29,7 @@ public class DatasetAccess extends Resource implements Serializable{
     /**
      * Default constructor
      */
-    public DatasetAccess(){
+    public DatasetResource(){
     }
 
     /**
@@ -40,7 +37,13 @@ public class DatasetAccess extends Resource implements Serializable{
      * @param accession The access of the experiment in the repository
      * @param database  The id of the repository
      */
-    public DatasetAccess(String accession, String database) {
+    public DatasetResource(String accession, String database) {
+        this.accession = accession;
+        this.database = database;
+    }
+
+    public DatasetResource(String resourceUUID, String accession, String database) {
+        super(resourceUUID);
         this.accession = accession;
         this.database = database;
     }
@@ -61,4 +64,33 @@ public class DatasetAccess extends Resource implements Serializable{
         this.database = database;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DatasetResource)) return false;
+        if (!super.equals(o)) return false;
+
+        DatasetResource that = (DatasetResource) o;
+
+        if (!accession.equals(that.accession)) return false;
+        if (!database.equals(that.database)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + accession.hashCode();
+        result = 31 * result + database.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "DatasetAccess{" +
+                "accession='" + accession + '\'' +
+                ", database='" + database + '\'' +
+                '}';
+    }
 }

@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import uk.ac.ebi.ddi.service.db.model.logger.DatasetAccess;
+import uk.ac.ebi.ddi.service.db.model.logger.DatasetResource;
 import com.mongodb.DB;
 
 import java.math.BigInteger;
@@ -42,7 +42,7 @@ public class HttpEventDatasetServiceTest {
         DBCollection collection = db.getCollection("datasetaccess");
 
         collection.insert(new BasicDBObject("name", "jon"));
-        DatasetAccess myItem = new DatasetAccess("PXD00001", "PRIDE");
+        DatasetResource myItem = new DatasetResource("PXD00001", "PRIDE");
         collection.insert(new BasicDBObject("myItem", myItem));
 
     }
@@ -50,17 +50,17 @@ public class HttpEventDatasetServiceTest {
     @Test
     public void create(){
         DBCollection collection = db.getCollection("datasetaccess");
-        DatasetAccess myItem = new DatasetAccess("PXD00002", "PRIDE");
+        DatasetResource myItem = new DatasetResource("PXD00002", "PRIDE");
         collection.insert(new BasicDBObject("myItem", myItem));
     }
 
     @Test
     public void test_basicOperations() throws Exception {
         // check if collection is empty
-        Page<DatasetAccess> datasetAccesses = datasetAccessService.readAll(0,2);
+        Page<DatasetResource> datasetAccesses = datasetAccessService.readAll(0,2);
         Assert.assertTrue(datasetAccesses.getSize() == 1);
         // save new document
-        DatasetAccess access = new DatasetAccess("PXD0003", "PRIDE");
+        DatasetResource access = new DatasetResource("PXD0003", "PRIDE");
 
         datasetAccessService.save(access);
 

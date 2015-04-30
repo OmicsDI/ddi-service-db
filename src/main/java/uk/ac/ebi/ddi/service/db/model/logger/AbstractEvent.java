@@ -9,19 +9,19 @@ import java.io.Serializable;
  * @author Yasset Perez-Riverol (ypriverol@gmail.com)
  * @date 30/04/2015
  */
-@Document(collection = "logger.Event" )
-public class Event extends AbstractDocument implements Serializable{
+
+public abstract class AbstractEvent extends AbstractDocument implements Serializable{
 
     String rawMessage;
 
     String logName;
 
     @DBRef
-    Resource resource;
+    AbstractResource abstractResource;
 
-    public Event(){}
+    public AbstractEvent(){}
 
-    public Event(String rawMessage, String logName) {
+    public AbstractEvent(String rawMessage, String logName) {
         this.rawMessage = rawMessage;
         this.logName    = logName;
     }
@@ -42,15 +42,24 @@ public class Event extends AbstractDocument implements Serializable{
         this.logName = logName;
     }
 
+    public AbstractResource getAbstractResource() {
+        return abstractResource;
+    }
+
+    public void setAbstractResource(AbstractResource abstractResource) {
+        this.abstractResource = abstractResource;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Event event = (Event) o;
+        AbstractEvent abstractEvent = (AbstractEvent) o;
 
-        if (logName != null ? !logName.equals(event.logName) : event.logName != null) return false;
-        if (rawMessage != null ? !rawMessage.equals(event.rawMessage) : event.rawMessage != null) return false;
+        if (logName != null ? !logName.equals(abstractEvent.logName) : abstractEvent.logName != null) return false;
+        if (rawMessage != null ? !rawMessage.equals(abstractEvent.rawMessage) : abstractEvent.rawMessage != null) return false;
+        if (abstractResource != null ? !abstractResource.equals(abstractEvent.abstractResource) : abstractEvent.abstractResource != null) return false;
 
         return true;
     }
@@ -59,6 +68,7 @@ public class Event extends AbstractDocument implements Serializable{
     public int hashCode() {
         int result = rawMessage != null ? rawMessage.hashCode() : 0;
         result = 31 * result + (logName != null ? logName.hashCode() : 0);
+        result = 31 * result + (abstractResource != null ? abstractResource.hashCode() : 0);
         return result;
     }
 
@@ -67,6 +77,7 @@ public class Event extends AbstractDocument implements Serializable{
         return "Event{" +
                 "rawMessage='" + rawMessage + '\'' +
                 ", logName='" + logName + '\'' +
+                ", resource=" + abstractResource +
                 '}';
     }
 }
