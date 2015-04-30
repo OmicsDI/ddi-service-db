@@ -64,4 +64,8 @@ public class HttpEventService implements IHttpEventService {
         accessRepo.delete(id);
         return accessRepo.findOne(id);
     }
+
+    public long getLongEventService( String acccesion, String database){
+       return accessRepo.getNumberEventByHttpEventDataSetResource(acccesion, database);
+    }
 }

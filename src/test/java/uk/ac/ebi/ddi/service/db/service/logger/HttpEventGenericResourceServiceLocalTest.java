@@ -59,7 +59,6 @@ public class HttpEventGenericResourceServiceLocalTest {
     @Test
     public void testAddAndGetHttpEvent() throws Exception {
 
-
         //Create the resource for the Event
         DatasetResource dataset = new DatasetResource();
         dataset.setAccession("PXD0001");
@@ -118,6 +117,32 @@ public class HttpEventGenericResourceServiceLocalTest {
     }
 
     @Test
+    public void testGetNumberEventByDataset(){
+        for(int i = 0; i < 100; i++){
+            DatasetResource datasetResource = new DatasetResource();
+            datasetResource.setAccession("PXD0001" + i);
+            datasetResource.setDatabase("PRIDE");
+            service.save(datasetResource);
+        }
+        //Create the resource for the Event
+        DatasetResource dataset = service.read("PXD00011", "PRIDE");
+
+        for(int i = 0; i < 200; i++){
+            //Create an Event
+            HttpEvent event = new HttpEvent();
+            event.setResource(dataset);
+            event.setAccessDate(new Date());
+            event.setHost("localhost" + i);
+            event.setLogSource("/loganame");
+            event.setRawMessage("simple message with the original log message");
+            event = eventService.save(event);
+            System.out.println(event.toString());
+        }
+
+        System.out.println(eventService.getLongEventService(dataset.getAccession(), dataset.getDatabase()));
+    }
+
+    @Test
     public void testUpdateDatasetAccess() throws Exception {
         for(int i = 0; i < 100; i++){
             DatasetResource datasetResource = new DatasetResource();
@@ -143,9 +168,5 @@ public class HttpEventGenericResourceServiceLocalTest {
     public void close(){
         mongoTemplate.getDb().dropDatabase();
     }
-
-
-
-
 
 }

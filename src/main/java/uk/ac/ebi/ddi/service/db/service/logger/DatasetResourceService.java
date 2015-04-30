@@ -66,9 +66,6 @@ public class DatasetResourceService implements IDatasetResourceService {
     }
 
 
-    public long countDatasetAccess(String acc, String database){
-        return 0;
-    }
 
 
 

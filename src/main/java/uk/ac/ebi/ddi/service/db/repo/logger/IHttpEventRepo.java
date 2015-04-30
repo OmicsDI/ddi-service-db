@@ -1,6 +1,7 @@
 package uk.ac.ebi.ddi.service.db.repo.logger;
 
 
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import uk.ac.ebi.ddi.service.db.model.logger.HttpEvent;
 
@@ -13,5 +14,6 @@ import java.math.BigInteger;
  */
 public interface IHttpEventRepo extends MongoRepository<HttpEvent,BigInteger> {
 
-    long getNumberEventByResource()
+    @Query(value = "{'abstractResource.accession' : ?0, 'abstractResource.accession' : ?1,}", count = true)
+    long getNumberEventByHttpEventDataSetResource(String acc, String database);
 }
