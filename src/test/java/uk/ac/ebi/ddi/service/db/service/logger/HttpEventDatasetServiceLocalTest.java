@@ -1,4 +1,4 @@
-package uk.ac.ebi.ddi.service.db.service.access;
+package uk.ac.ebi.ddi.service.db.service.logger;
 
 
 import junit.framework.Assert;
@@ -12,9 +12,9 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import uk.ac.ebi.ddi.service.db.model.DatasetAccess;
+import uk.ac.ebi.ddi.service.db.model.logger.HttpEvent;
+import uk.ac.ebi.ddi.service.db.model.logger.DatasetAccess;
 
-import java.math.BigInteger;
 import java.util.Date;
 
 /**
@@ -25,10 +25,13 @@ import java.util.Date;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/applicationTestContext.xml"})
 
-public class AccessDatasetServiceLocalTest {
+public class HttpEventDatasetServiceLocalTest {
 
     @Autowired
     private DatasetAccessService service;
+
+    @Autowired
+    HttpEventService accessService;
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -45,9 +48,7 @@ public class AccessDatasetServiceLocalTest {
         DatasetAccess datasetAccess = new DatasetAccess();
         datasetAccess.setAccession("PXD0001");
         datasetAccess.setDatabase("PRIDE");
-        datasetAccess.setAccessDate(new Date());
-        datasetAccess.setId(BigInteger.valueOf(1));
-        service.create(datasetAccess);
+        service.save(datasetAccess);
         DatasetAccess datasetAccess1 = service.read(datasetAccess.getId());
         Assert.assertEquals(datasetAccess.getAccession(), datasetAccess1.getAccession());
 
@@ -55,8 +56,7 @@ public class AccessDatasetServiceLocalTest {
         datasetAccess = new DatasetAccess();
         datasetAccess.setAccession("PXD0001");
         datasetAccess.setDatabase("PRIDE");
-        datasetAccess.setAccessDate(new Date());
-        service.create(datasetAccess);
+        service.save(datasetAccess);
 
         Page<DatasetAccess> allEntries = service.readAll(0,20);
         System.out.println(allEntries.getSize());
@@ -69,19 +69,50 @@ public class AccessDatasetServiceLocalTest {
             DatasetAccess datasetAccess = new DatasetAccess();
             datasetAccess.setAccession("PXD0001" + i);
             datasetAccess.setDatabase("PRIDE");
-            datasetAccess.setAccessDate(new Date());
-            datasetAccess.setId(BigInteger.valueOf(i));
-            service.create(datasetAccess);
+            service.save(datasetAccess);
         }
         Page<DatasetAccess> datassetAccessList = service.readAll(0, 100);
         for(DatasetAccess dat: datassetAccessList){
-            System.out.println(dat.getAccessDate());
+            System.out.println(dat.toString());
         }
     }
 
     @Test
-    public void testUpdateDatasetAccess() throws Exception {
+    public void read(){
+        for(int i = 0; i < 100; i++){
+            DatasetAccess datasetAccess = new DatasetAccess();
+            datasetAccess.setAccession("PXD0001" + i);
+            datasetAccess.setDatabase("PRIDE");
+            service.save(datasetAccess);
+        }
+        DatasetAccess datasetAccess = service.read("PXD00013", "PRIDE");
+        System.out.println(datasetAccess.toString());
+    }
 
+    @Test
+    public void testAddAccess() throws Exception {
+        for(int i = 0; i < 100; i++){
+            DatasetAccess datasetAccess = new DatasetAccess();
+            datasetAccess.setAccession("PXD0001" + i);
+            datasetAccess.setDatabase("PRIDE");
+            service.save(datasetAccess);
+        }
+        HttpEvent httpEvent = new HttpEvent("172.0.0.0","logname", new Date(), "unknown", "/path", "request", "200", "340", "345", "Mozilla");
+        DatasetAccess datasetAccess = service.addAccess("PXD00011", "PRIDE", httpEvent);
+        System.out.println(datasetAccess.toString());
+    }
+
+    @Test
+    public void testUpdateDatasetAccess() throws Exception {
+        for(int i = 0; i < 100; i++){
+            DatasetAccess datasetAccess = new DatasetAccess();
+            datasetAccess.setAccession("PXD0001" + i);
+            datasetAccess.setDatabase("PRIDE");
+            service.save(datasetAccess);
+        }
+        DatasetAccess access = service.read("PXD00011", "PRIDE");
+        access.setDatabase("PRIDE-2");
+        service.update(access);
     }
 
     @Test

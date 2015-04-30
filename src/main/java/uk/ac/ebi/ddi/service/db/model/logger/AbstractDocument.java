@@ -1,13 +1,18 @@
-package uk.ac.ebi.ddi.service.db.model;
+package uk.ac.ebi.ddi.service.db.model.logger;
 
 import java.io.Serializable;
 import java.math.BigInteger;
 import org.springframework.data.annotation.Id;
 
 /**
- * @author Yasset Perez-Riverol
+ * This class allow to define a common identifier for all the objects in the
+ * database for Resource, Event, HttpEvent, etc
+ * The present class is not persistent in the database, it is only a business class.
+ * @author Yasset Perez-Riverol (ypriverol@gmail.com)
+ *
  */
-public class AbstractDocument implements Serializable{
+
+public abstract class AbstractDocument implements Serializable{
 
     private static final long serialVersionUID = 1326887243102331826L;
 
@@ -19,18 +24,6 @@ public class AbstractDocument implements Serializable{
      */
     public AbstractDocument(){
 
-    }
-
-    /**
-     * Default Constructor
-     * @param id
-     */
-    public AbstractDocument(BigInteger id) {
-        this.id = id;
-    }
-
-    public void setId(BigInteger id) {
-        this.id = id;
     }
 
     public BigInteger getId() {

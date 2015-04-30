@@ -36,6 +36,8 @@
 		<!--<constructor-arg ref="mongoDbFactory" />-->
 	<!--</bean>-->
 
-    <bean id="service" class="uk.ac.ebi.ddi.service.db.service.access.DatasetAccessService">
-    </bean>
+    <bean id="service" class="uk.ac.ebi.ddi.service.db.service.logger.DatasetAccessService"/>
+    <bean id="accessService" class="uk.ac.ebi.ddi.service.db.service.logger.HttpEventService"/>
+    <bean class="uk.ac.ebi.ddi.service.db.utils.CascadingMongoEventListener" />
+
 </beans>

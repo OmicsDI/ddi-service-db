@@ -27,7 +27,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.version>4.0.3.RELEASE</spring.version>
         <spring-test.version>4.0.3.RELEASE</spring-test.version>
-        <spring.data.mongo.version>1.2.0.RELEASE</spring.data.mongo.version>
+        <spring.data.mongo.version>1.7.0.RELEASE</spring.data.mongo.version>
         <spring.rmqp.version>1.0.0.RELEASE</spring.rmqp.version>
         <spring-orm.version>4.0.2.RELEASE</spring-orm.version>
         <slf4j-version>1.6.1</slf4j-version>
@@ -36,7 +36,7 @@
         <ehcache-core.version>2.5.1</ehcache-core.version>
         <validation-api.version>1.1.0.Final</validation-api.version>
         <!-- 2.7.2 latest but 2.11.3 neccesary for MongoClient dependendy -->
-        <mongo-java-driver.version>2.11.3</mongo-java-driver.version>
+        <mongo-java-driver.version>3.0.0</mongo-java-driver.version>
         <aspectjrt.version>1.6.10</aspectjrt.version>
         <standard.version>1.1.2</standard.version>
         <jackson-mapper-asl.version>1.8.0</jackson-mapper-asl.version>

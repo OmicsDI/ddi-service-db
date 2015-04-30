@@ -1,50 +1,46 @@
-package uk.ac.ebi.ddi.service.db.service.access;
+package uk.ac.ebi.ddi.service.db.service.logger;
 
 import org.springframework.data.domain.Page;
-import uk.ac.ebi.ddi.service.db.model.DatasetAccess;
+import uk.ac.ebi.ddi.service.db.model.logger.HttpEvent;
 
 import java.math.BigInteger;
-import java.util.List;
 
 /**
- * THis interface allows the creation of and handling of DatasetAccess in the database.
- * @author ypriverol
- *
+ * @quthor Yasset Perez-Riverol (ypriverol@gmail.com)
  */
-public interface IDatasetAccessService {
+public interface IHttpEventService {
 
     /**
      * Create a new DatasetAccess in the MongoDB
-     * @param datasetAccess The new datset access to be create in the database
+     * @param httpEvent The new datset access to be save in the database
      * @return the inserted datasetaccess
      */
-    public DatasetAccess create(DatasetAccess datasetAccess);
+    public HttpEvent save(HttpEvent httpEvent);
 
     /**
      * Read a datasetAccess entry from the database
      * @param id of the datasetaccess entry
      * @return A DatasetAccess
      */
-    public DatasetAccess read(BigInteger id);
+    public HttpEvent read(BigInteger id);
 
     /**
      * Read all the datasetAccess from the database
      * @return A list of datasetAccess
      */
-    public Page<DatasetAccess> readAll(int pageStart, int size);
+    public Page<HttpEvent> readAll(int pageStart, int size);
 
     /**
      * Update a datasetAccess entry in the database using the information of the new datasetAccess
-     * @param datasetAccess the new datasetAccess information
+     * @param httpEvent the new datasetAccess information
      * @return the updated datasetAccess.
      */
-    public DatasetAccess update(DatasetAccess datasetAccess);
+    public HttpEvent update(HttpEvent httpEvent);
 
     /**
      * Remove a DatasetAccess in the Database using the id.
      * @param id Identifier of the datasetAccess to be removed from the database
      * @return the removed datatsetAccess
      */
-    public DatasetAccess delete(BigInteger id);
-
+    public HttpEvent delete(BigInteger id);
 }

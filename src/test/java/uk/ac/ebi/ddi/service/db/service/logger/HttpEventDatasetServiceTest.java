@@ -1,11 +1,10 @@
-package uk.ac.ebi.ddi.service.db.service.access;
+package uk.ac.ebi.ddi.service.db.service.logger;
 
 
 import com.github.fakemongo.Fongo;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.Mongo;
-import com.sun.deploy.config.DefaultConfig;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,23 +12,19 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import uk.ac.ebi.ddi.service.db.model.DatasetAccess;
+import uk.ac.ebi.ddi.service.db.model.logger.DatasetAccess;
 import com.mongodb.DB;
-import uk.ac.ebi.ddi.service.db.repo.IDatasetAccessRepo;
 
-import javax.validation.constraints.AssertTrue;
 import java.math.BigInteger;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/applicationTestContext.xml"})
 
-public class AccessDatasetServiceTest{
+public class HttpEventDatasetServiceTest {
 
     Fongo fongo = null;
 
@@ -47,7 +42,7 @@ public class AccessDatasetServiceTest{
         DBCollection collection = db.getCollection("datasetaccess");
 
         collection.insert(new BasicDBObject("name", "jon"));
-        DatasetAccess myItem = new DatasetAccess(0, "PXD00001", "PRIDE", new Date(System.currentTimeMillis()));
+        DatasetAccess myItem = new DatasetAccess("PXD00001", "PRIDE");
         collection.insert(new BasicDBObject("myItem", myItem));
 
     }
@@ -55,7 +50,7 @@ public class AccessDatasetServiceTest{
     @Test
     public void create(){
         DBCollection collection = db.getCollection("datasetaccess");
-        DatasetAccess myItem = new DatasetAccess(1, "PXD00002", "PRIDE", new Date(System.currentTimeMillis()));
+        DatasetAccess myItem = new DatasetAccess("PXD00002", "PRIDE");
         collection.insert(new BasicDBObject("myItem", myItem));
     }
 
@@ -63,11 +58,11 @@ public class AccessDatasetServiceTest{
     public void test_basicOperations() throws Exception {
         // check if collection is empty
         Page<DatasetAccess> datasetAccesses = datasetAccessService.readAll(0,2);
-        Assert.assertTrue(datasetAccesses.getSize() == 0);
-        // create new document
-        DatasetAccess access = new DatasetAccess(3,"PXD0003", "pride", new Date());
+        Assert.assertTrue(datasetAccesses.getSize() == 1);
+        // save new document
+        DatasetAccess access = new DatasetAccess("PXD0003", "PRIDE");
 
-        datasetAccessService.create(access);
+        datasetAccessService.save(access);
 
         datasetAccesses = datasetAccessService.readAll(0,2);
 
