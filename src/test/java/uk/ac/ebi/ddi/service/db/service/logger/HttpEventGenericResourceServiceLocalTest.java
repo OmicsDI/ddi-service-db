@@ -122,6 +122,7 @@ public class HttpEventGenericResourceServiceLocalTest {
             DatasetResource datasetResource = new DatasetResource();
             datasetResource.setAccession("PXD0001" + i);
             datasetResource.setDatabase("PRIDE");
+            datasetResource.setResourceUUID("PXD0001" + i);
             service.save(datasetResource);
         }
         //Create the resource for the Event

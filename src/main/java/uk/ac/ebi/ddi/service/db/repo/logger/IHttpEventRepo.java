@@ -14,6 +14,6 @@ import java.math.BigInteger;
  */
 public interface IHttpEventRepo extends MongoRepository<HttpEvent,BigInteger> {
 
-    @Query(value = "{'abstractResource.accession' : ?0, 'abstractResource.accession' : ?1,}", count = true)
+    @Query(value = "{'abstractResource.accession' : ?0, 'abstractResource.database' : ?1}", count = true)
     long getNumberEventByHttpEventDataSetResource(String acc, String database);
 }
