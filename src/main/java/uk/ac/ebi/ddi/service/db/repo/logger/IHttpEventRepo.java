@@ -12,4 +12,6 @@ import java.math.BigInteger;
  * @author ypriverol
  */
 public interface IHttpEventRepo extends MongoRepository<HttpEvent,BigInteger> {
+
+    long getNumberEventByResource()
 }
