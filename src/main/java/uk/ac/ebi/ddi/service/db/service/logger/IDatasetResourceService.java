@@ -1,5 +1,6 @@
 package uk.ac.ebi.ddi.service.db.service.logger;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import uk.ac.ebi.ddi.service.db.model.logger.HttpEvent;
 import uk.ac.ebi.ddi.service.db.model.logger.DatasetResource;
@@ -25,7 +26,7 @@ public interface IDatasetResourceService {
      * @param id of the datasetaccess entry
      * @return A DatasetAccess
      */
-    public DatasetResource read(BigInteger id);
+    public DatasetResource read(ObjectId id);
 
     /**
      * Read all the datasetAccess from the database
@@ -45,7 +46,7 @@ public interface IDatasetResourceService {
      * @param id Identifier of the datasetAccess to be removed from the database
      * @return the removed datatsetAccess
      */
-    public DatasetResource delete(BigInteger id);
+    public DatasetResource delete(ObjectId id);
 
     /**
      * This function add a new Access to the DatasetAccess

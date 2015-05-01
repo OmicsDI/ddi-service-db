@@ -1,5 +1,6 @@
 package uk.ac.ebi.ddi.service.db.service.logger;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,7 +30,7 @@ public class HttpEventService implements IHttpEventService {
     }
 
     @Override
-    public HttpEvent read(BigInteger id) {
+    public HttpEvent read(ObjectId id) {
         return accessRepo.findOne(id);
     }
 
@@ -60,12 +61,16 @@ public class HttpEventService implements IHttpEventService {
     }
 
     @Override
-    public HttpEvent delete(BigInteger id) {
+    public HttpEvent delete(ObjectId id) {
         accessRepo.delete(id);
         return accessRepo.findOne(id);
     }
 
     public long getLongEventService( String acccesion, String database){
        return accessRepo.getNumberEventByHttpEventDataSetResource(acccesion, database);
+    }
+
+    public long getEventByResourceId(ObjectId _id){
+        return accessRepo.getNumberEventByDataResource(_id);
     }
 }

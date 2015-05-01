@@ -1,5 +1,6 @@
 package uk.ac.ebi.ddi.service.db.repo.logger;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import uk.ac.ebi.ddi.service.db.model.logger.DatasetResource;
@@ -11,7 +12,7 @@ import java.math.BigInteger;
  *
  * @author ypriverol
  */
-public interface IDatasetResourceRepo extends MongoRepository<DatasetResource,BigInteger>{
+public interface IDatasetResourceRepo extends MongoRepository<DatasetResource,ObjectId>{
 
     @Query("{accession : ?0}, {database : ?1}")
     public DatasetResource findByAccessionDatabaseQuery(String acc, String database);

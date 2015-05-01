@@ -1,5 +1,6 @@
 package uk.ac.ebi.ddi.service.db.service.logger;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,7 +27,7 @@ public class DatasetResourceService implements IDatasetResourceService {
     }
 
     @Override
-    public DatasetResource read(BigInteger id) {
+    public DatasetResource read(ObjectId id) {
         return datasetAccessRepo.findOne(id);
     }
 
@@ -47,7 +48,7 @@ public class DatasetResourceService implements IDatasetResourceService {
     }
 
     @Override
-    public DatasetResource delete(BigInteger id) {
+    public DatasetResource delete(ObjectId id) {
         datasetAccessRepo.delete(id);
         return datasetAccessRepo.findOne(id);
     }

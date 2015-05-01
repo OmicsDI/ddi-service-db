@@ -1,5 +1,6 @@
 package uk.ac.ebi.ddi.service.db.service.logger;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import uk.ac.ebi.ddi.service.db.model.logger.HttpEvent;
 
@@ -22,7 +23,7 @@ public interface IHttpEventService {
      * @param id of the datasetaccess entry
      * @return A DatasetAccess
      */
-    public HttpEvent read(BigInteger id);
+    public HttpEvent read(ObjectId id);
 
     /**
      * Read all the datasetAccess from the database
@@ -42,5 +43,5 @@ public interface IHttpEventService {
      * @param id Identifier of the datasetAccess to be removed from the database
      * @return the removed datatsetAccess
      */
-    public HttpEvent delete(BigInteger id);
+    public HttpEvent delete(ObjectId id);
 }

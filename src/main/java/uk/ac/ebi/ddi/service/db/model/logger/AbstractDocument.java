@@ -2,6 +2,8 @@ package uk.ac.ebi.ddi.service.db.model.logger;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 
 /**
@@ -19,7 +21,7 @@ public abstract class AbstractDocument implements Serializable, IDocument{
     private static final long serialVersionUID = 1326887243102331826L;
 
     @Id
-    protected BigInteger id;
+    protected ObjectId id;
 
     /**
      * Default Constructor
@@ -28,7 +30,7 @@ public abstract class AbstractDocument implements Serializable, IDocument{
 
     }
 
-    public BigInteger getId() {
+    public ObjectId getId() {
         return id;
     }
 

@@ -1,5 +1,7 @@
 package uk.ac.ebi.ddi.service.db.model.logger;
 
+import org.bson.types.ObjectId;
+
 import java.math.BigInteger;
 
 /**
@@ -12,7 +14,7 @@ public interface IDocument {
      * Every Document should contain an Id
      * @return
      */
-    public BigInteger getId();
+    public ObjectId getId();
 
     /**
      * All the documents should be able to export to String
