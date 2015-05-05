@@ -1,8 +1,10 @@
 package uk.ac.ebi.ddi.service.db.model.logger;
 
+import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author Yasset Perez-Riverol (ypriverol@gmail.com)
@@ -11,9 +13,17 @@ import java.io.Serializable;
 
 public abstract class AbstractEvent extends AbstractDocument implements Serializable, IEvent{
 
+    @TextIndexed
     String rawMessage;
 
-    String logSource;
+    @TextIndexed
+    private String logSource;
+
+    private String level;
+
+    private String loggerName;
+
+    private List<String> traceback;
 
     @DBRef
     AbstractResource abstractResource;

@@ -2,9 +2,10 @@ package uk.ac.ebi.ddi.service.db.model.logger;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.Date;
 
 import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.*;
 
 /**
  * This class allow to define a common identifier for all the objects in the
@@ -22,6 +23,18 @@ public abstract class AbstractDocument implements Serializable, IDocument{
 
     @Id
     protected ObjectId _id;
+
+    @CreatedDate
+    private Date cd;
+
+    @LastModifiedDate
+    private Date lmd;
+
+    @CreatedBy
+    private String cb;
+
+    @LastModifiedBy
+    private String lmb;
 
     String category;
 
@@ -42,6 +55,38 @@ public abstract class AbstractDocument implements Serializable, IDocument{
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public Date getCd() {
+        return cd;
+    }
+
+    public void setCd(Date cd) {
+        this.cd = cd;
+    }
+
+    public Date getLmd() {
+        return lmd;
+    }
+
+    public void setLmd(Date lmd) {
+        this.lmd = lmd;
+    }
+
+    public String getCb() {
+        return cb;
+    }
+
+    public void setCb(String cb) {
+        this.cb = cb;
+    }
+
+    public String getLmb() {
+        return lmb;
+    }
+
+    public void setLmb(String lmb) {
+        this.lmb = lmb;
     }
 
     @Override

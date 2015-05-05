@@ -3,6 +3,7 @@ package uk.ac.ebi.ddi.service.db.model.logger;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
+import uk.ac.ebi.ddi.service.db.utils.CategoryType;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -42,6 +43,7 @@ public class HttpEvent extends AbstractEvent implements Serializable{
      * Default Constructor
      */
     public HttpEvent() {
+        this.category = CategoryType.HTTP_EVENT.getCategory();
     }
 
     /**
@@ -66,6 +68,7 @@ public class HttpEvent extends AbstractEvent implements Serializable{
         this.response_size = response_size;
         this.referrer = referrer;
         this.userAgent = userAgent;
+        this.category = CategoryType.HTTP_EVENT.getCategory();
     }
 
     public static long getSerialVersionUID() {

@@ -1,6 +1,7 @@
 package uk.ac.ebi.ddi.service.db.model.logger;
 
 import org.springframework.data.mongodb.core.mapping.Document;
+import uk.ac.ebi.ddi.service.db.utils.CategoryType;
 
 /**
  * @author Yasset Perez-Riverol (ypriverol@gmail.com)
@@ -9,5 +10,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "logger.Resource")
 
 public class GenericResource extends AbstractResource {
+
+    public GenericResource(){
+        this.category = CategoryType.GENERIC_RESOURCE.getCategory();
+    }
 
 }

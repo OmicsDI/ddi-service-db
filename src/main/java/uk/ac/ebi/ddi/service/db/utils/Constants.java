@@ -6,5 +6,4 @@ package uk.ac.ebi.ddi.service.db.utils;
  */
 public class Constants {
 
-
 }

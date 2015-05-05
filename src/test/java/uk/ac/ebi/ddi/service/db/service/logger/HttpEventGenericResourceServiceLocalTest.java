@@ -13,8 +13,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import uk.ac.ebi.ddi.service.db.model.logger.HttpEvent;
 import uk.ac.ebi.ddi.service.db.model.logger.DatasetResource;
+import uk.ac.ebi.ddi.service.db.model.logger.ResourceStatVisit;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * This class allow to do the testing locally using a mongoDB instance.
@@ -34,6 +36,7 @@ public class HttpEventGenericResourceServiceLocalTest {
 
     @Autowired
     private MongoTemplate mongoTemplate;
+
 
     @Test
     public void testAddAndGetDatasetAcces() throws Exception {
@@ -182,10 +185,17 @@ public class HttpEventGenericResourceServiceLocalTest {
         //Create the resource for the Event
         DatasetResource dataset = service.read("PXD00011", "PRIDE");
 
+        DatasetResource dataset1 = service.read("PXD00012", "PRIDE");
+
+
         for(int i = 0; i < 200; i++){
             //Create an Event
             HttpEvent event = new HttpEvent();
-            event.setResource(dataset);
+            if(i%2 ==0)
+                event.setResource(dataset);
+            else
+                event.setResource(dataset1);
+
             event.setAccessDate(new Date());
             event.setHost("localhost" + i);
             event.setLogSource("/loganame");
@@ -194,7 +204,10 @@ public class HttpEventGenericResourceServiceLocalTest {
             System.out.println(event.toString());
         }
 
-        System.out.println(eventService.getLongEventServiceByResourceAccession(dataset.getAccession()));
+        System.out.println(eventService.getHttpEventbyResource(dataset).size());
+        List<ResourceStatVisit> eventList = eventService.moreAccessedResource();
+        System.out.println(eventList.size());
+
     }
 
     @Test

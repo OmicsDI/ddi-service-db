@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import uk.ac.ebi.ddi.service.db.utils.CategoryType;
 
 /**
  * Information about the access of each dataset, Date of the access, the idea is to have a simple statistic about how many times
@@ -30,6 +31,7 @@ public class DatasetResource extends AbstractResource implements Serializable{
      * Default constructor
      */
     public DatasetResource(){
+        this.category = CategoryType.DATASET_RESOURCE.getCategory();
     }
 
     /**

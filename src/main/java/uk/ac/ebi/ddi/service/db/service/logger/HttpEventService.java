@@ -9,10 +9,11 @@ import org.springframework.data.domain.PageRequest;
 import uk.ac.ebi.ddi.service.db.exception.DBWriteException;
 import uk.ac.ebi.ddi.service.db.model.logger.AbstractResource;
 import uk.ac.ebi.ddi.service.db.model.logger.HttpEvent;
+import uk.ac.ebi.ddi.service.db.model.logger.ResourceStatVisit;
 import uk.ac.ebi.ddi.service.db.repo.logger.IHttpEventRepo;
 
-import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -73,11 +74,15 @@ public class HttpEventService implements IHttpEventService {
        return accessRepo.getNumberEventByHttpEventDataSetResource(acccesion, database);
     }
 
-    public long getLongEventServiceByResourceAccession(String acc){
-        return accessRepo.getNumberEventByDataResourceAccession(acc);
+    public List<HttpEvent> getHttpEventbyResource(AbstractResource resource){
+        return  accessRepo.findByAbstractResource(resource);
     }
 
     public long getEventByResourceId(ObjectId _id){
         return accessRepo.getNumberEventByDataResource(_id);
+    }
+
+    public List<ResourceStatVisit> moreAccessedResource(){
+        return accessRepo.getHttpEventByResource();
     }
 }
