@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author Yasset Perez-Riverol (ypriverol@gmail.com)
  * @date 30/04/2015
  */
-@Document(collection = "logger.GenericResource")
+@Document(collection = "logger.Resource")
 
 public class GenericResource extends AbstractResource {
 

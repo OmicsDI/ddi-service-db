@@ -1,8 +1,8 @@
 package uk.ac.ebi.ddi.service.db.repo.logger;
 
+
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import uk.ac.ebi.ddi.service.db.model.logger.AbstractEvent;
 import uk.ac.ebi.ddi.service.db.model.logger.GenericEvent;
 
 import java.math.BigInteger;

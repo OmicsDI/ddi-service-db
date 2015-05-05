@@ -13,7 +13,7 @@ import java.util.Date;
  * The current file control the IP, region, request size, user and date.
  * @author Yasset Perez-Riverol
  */
-@Document(collection = "logger.HttpEvent")
+@Document(collection = "logger.Event")
 public class HttpEvent extends AbstractEvent implements Serializable{
 
     private static final long serialVersionUID = 1326887243102331826L;

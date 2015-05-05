@@ -1,16 +1,19 @@
 package uk.ac.ebi.ddi.service.db.service.logger;
 
+
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+
 import uk.ac.ebi.ddi.service.db.exception.DBWriteException;
-import uk.ac.ebi.ddi.service.db.model.logger.AbstractDocument;
 import uk.ac.ebi.ddi.service.db.model.logger.AbstractResource;
 import uk.ac.ebi.ddi.service.db.model.logger.HttpEvent;
 import uk.ac.ebi.ddi.service.db.repo.logger.IHttpEventRepo;
 
 import java.math.BigInteger;
+import java.util.List;
+
 
 /**
  * @author Yasset Perez-Riverol (ypriverol@gmail.com)
@@ -68,6 +71,10 @@ public class HttpEventService implements IHttpEventService {
 
     public long getLongEventService( String acccesion, String database){
        return accessRepo.getNumberEventByHttpEventDataSetResource(acccesion, database);
+    }
+
+    public long getLongEventServiceByResourceAccession(String acc){
+        return accessRepo.getNumberEventByDataResourceAccession(acc);
     }
 
     public long getEventByResourceId(ObjectId _id){

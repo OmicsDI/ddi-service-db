@@ -18,7 +18,6 @@ public abstract class AbstractResource extends AbstractDocument{
     @Indexed(unique = true)
     String resourceUUID;
 
-
     /**
      * Default constructor for the resourceUUID.
      */
@@ -59,4 +58,6 @@ public abstract class AbstractResource extends AbstractDocument{
                 "resourceUUID='" + resourceUUID + '\'' +
                 '}';
     }
+
+
 }

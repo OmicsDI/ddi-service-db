@@ -21,23 +21,33 @@ public abstract class AbstractDocument implements Serializable, IDocument{
     private static final long serialVersionUID = 1326887243102331826L;
 
     @Id
-    protected ObjectId id;
+    protected ObjectId _id;
+
+    String category;
 
     /**
      * Default Constructor
      */
     public AbstractDocument(){
-
     }
 
     public ObjectId getId() {
-        return id;
+        return _id;
+    }
+
+    @Override
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     @Override
     public String toString() {
         return "AbstractDocument{" +
-                "id=" + id +
+                "id=" + _id +
                 '}';
     }
 }

@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author Yasset Perez-Riverol
  */
 
-@Document(collection = "logger.DatasetResource")
+@Document(collection = "logger.Resource")
 
 public class DatasetResource extends AbstractResource implements Serializable{
 

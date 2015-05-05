@@ -1,5 +1,6 @@
 package uk.ac.ebi.ddi.service.db.service.logger;
 
+
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import uk.ac.ebi.ddi.service.db.model.logger.HttpEvent;
