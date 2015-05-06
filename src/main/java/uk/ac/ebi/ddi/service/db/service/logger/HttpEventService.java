@@ -9,10 +9,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import uk.ac.ebi.ddi.service.db.exception.DBWriteException;
 import uk.ac.ebi.ddi.service.db.model.logger.AbstractResource;
+import uk.ac.ebi.ddi.service.db.model.logger.DatasetResource;
 import uk.ac.ebi.ddi.service.db.model.logger.HttpEvent;
 import uk.ac.ebi.ddi.service.db.model.logger.ResourceStatVisit;
+import uk.ac.ebi.ddi.service.db.repo.logger.IDatasetResourceRepo;
 import uk.ac.ebi.ddi.service.db.repo.logger.IHttpEventRepo;
+import uk.ac.ebi.ddi.service.db.utils.Tuple;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +31,9 @@ public class HttpEventService implements IHttpEventService {
 
     @Autowired
     private IHttpEventRepo accessRepo;
+
+    @Autowired
+    private IDatasetResourceRepo datasetRepo;
 
     @Override
     public HttpEvent save(HttpEvent httpEvent) {
@@ -85,7 +92,17 @@ public class HttpEventService implements IHttpEventService {
         return accessRepo.getNumberEventByDataResource(_id);
     }
 
-    public List<ResourceStatVisit> moreAccessedResource(){
-        return accessRepo.getHttpEventByResource();
+    public Map<Tuple<String, String>, Integer> moreAccessedResource(int size){
+        Map<Tuple<String, String>, Integer> datasets = new HashMap<>();
+        List<ResourceStatVisit> currentMostAccessed = accessRepo.getHttpEventByResource(size);
+        //Todo: It would be interesting to to this in batch
+        for(ResourceStatVisit visit: currentMostAccessed){
+            if(visit.getAbstractResource() != null){
+                DatasetResource resource = datasetRepo.findByIdDatabaseQuery(visit.getAbstractResource().getId());
+                Tuple<String, String> resourceMap = new Tuple<>(resource.getAccession(), resource.getDatabase());
+                datasets.put(resourceMap,visit.getTotal());
+            }
+        }
+        return datasets;
     }
 }

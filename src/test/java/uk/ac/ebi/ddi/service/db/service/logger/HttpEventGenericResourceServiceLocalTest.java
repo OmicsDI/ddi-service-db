@@ -14,9 +14,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.ddi.service.db.model.logger.HttpEvent;
 import uk.ac.ebi.ddi.service.db.model.logger.DatasetResource;
 import uk.ac.ebi.ddi.service.db.model.logger.ResourceStatVisit;
+import uk.ac.ebi.ddi.service.db.utils.Tuple;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This class allow to do the testing locally using a mongoDB instance.
@@ -205,7 +207,7 @@ public class HttpEventGenericResourceServiceLocalTest {
         }
 
         System.out.println(eventService.getHttpEventbyResource(dataset).size());
-        List<ResourceStatVisit> eventList = eventService.moreAccessedResource();
+        Map<Tuple<String, String>, Integer> eventList = eventService.moreAccessedResource(5);
         System.out.println(eventList.size());
 
     }

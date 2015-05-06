@@ -1,6 +1,7 @@
 package uk.ac.ebi.ddi.service.db.repo.logger;
 
 import org.bson.types.ObjectId;
+import org.springframework.data.domain.Page;
 import uk.ac.ebi.ddi.service.db.model.logger.HttpEvent;
 import uk.ac.ebi.ddi.service.db.model.logger.ResourceStatVisit;
 
@@ -13,6 +14,6 @@ import java.util.Map;
  */
 public interface IHttpEventCustom {
 
-    public List<ResourceStatVisit> getHttpEventByResource();
+    public List<ResourceStatVisit> getHttpEventByResource(int size);
 
 }
