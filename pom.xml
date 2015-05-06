@@ -4,9 +4,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+
+    <parent>
+        <groupId>uk.ac.ebi.ddi.maven</groupId>
+        <artifactId>ddi-base-master</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
     <groupId>uk.ac.ebi.ddi</groupId>
     <artifactId>ddi-service-db</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
 
     <licenses>
         <license>
@@ -24,26 +33,10 @@
 
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.version>4.0.3.RELEASE</spring.version>
-        <spring-test.version>4.0.3.RELEASE</spring-test.version>
-        <spring.data.mongo.version>1.7.0.RELEASE</spring.data.mongo.version>
-        <spring.rmqp.version>1.0.0.RELEASE</spring.rmqp.version>
-        <spring-orm.version>4.0.2.RELEASE</spring-orm.version>
-        <slf4j-version>1.6.1</slf4j-version>
-        <log4j.version>1.2.14</log4j.version>
         <org.cloudfoundry-version>0.8.0</org.cloudfoundry-version>
         <ehcache-core.version>2.5.1</ehcache-core.version>
-        <validation-api.version>1.1.0.Final</validation-api.version>
-        <!-- 2.7.2 latest but 2.11.3 neccesary for MongoClient dependendy -->
-        <mongo-java-driver.version>3.0.0</mongo-java-driver.version>
         <aspectjrt.version>1.6.10</aspectjrt.version>
         <standard.version>1.1.2</standard.version>
-        <jackson-mapper-asl.version>1.8.0</jackson-mapper-asl.version>
-        <jackson-core-asl.version>1.8.0</jackson-core-asl.version>
-        <maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
-        <maven-resources-plugin.version>2.5</maven-resources-plugin.version>
-        <junit.version>4.8.2</junit.version>
     </properties>
 
     <dependencies>
@@ -56,7 +49,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>${spring-test.version}</version>
+            <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
         <!-- Spring Core -->
@@ -92,16 +85,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
-            <version>${spring-orm.version}</version>
-        </dependency>
-
-        <!-- Logger -->
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>${log4j.version}</version>
-            <type>jar</type>
-            <scope>compile</scope>
+            <version>${spring.orm.version}</version>
         </dependency>
 
         <!-- The Simple Logging Facade for Java or (SLF4J) serves as a simple facade
@@ -111,25 +95,10 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>${slf4j-version}</version>
+            <version>${slf4j.version}</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>${slf4j-version}</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jcl-over-slf4j</artifactId>
-            <version>${slf4j-version}</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-
         <dependency>
             <groupId>taglibs</groupId>
             <artifactId>standard</artifactId>
@@ -141,7 +110,7 @@
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
-            <version>${jackson-mapper-asl.version}</version>
+            <version>${jackson.version}</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
@@ -150,7 +119,7 @@
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-core-asl</artifactId>
-            <version>${jackson-core-asl.version}</version>
+            <version>${jackson.version}</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
@@ -159,28 +128,22 @@
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
-            <version>${validation-api.version}</version>
+            <version>${java.validation.api.version}</version>
         </dependency>
 
         <!-- MongoDB Java Driver -->
         <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>mongo-java-driver</artifactId>
-            <version>${mongo-java-driver.version}</version>
+            <version>${mongo.java.driver.version}</version>
             <type>jar</type>
-
         </dependency>
+
         <!-- MongoDB test java driver -->
         <dependency>
             <groupId>com.github.fakemongo</groupId>
             <artifactId>fongo</artifactId>
             <version>1.4.0</version>
-
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.1.1</version>
 
         </dependency>
 
@@ -212,69 +175,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
+                <version>${maven.compiler.plugin}</version>
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>tomcat-maven-plugin</artifactId>
-            </plugin>
-
-            <plugin>
-                <groupId>org.mortbay.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-            </plugin>
-
-            <!-- The Resources Plugin handles the copying of project resources to
-                the output directory. @see http://maven.apache.org/plugins/maven-resources-plugin/index.html -->
-            <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>${maven-resources-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>copy-meta-inf</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.outputDirectory}/META-INF</outputDirectory>
-                            <resources>
-                                <resourceUUID>
-                                    <directory>${project.basedir}/src/main/java/META-INF</directory>
-                                </resourceUUID>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-shade-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <keepDependenciesWithProvidedScope>true</keepDependenciesWithProvidedScope>
-                    <artifactSet>
-                        <includes>
-                            <include>org.objenesis:objenesis</include>
-                        </includes>
-                    </artifactSet>
-                    <relocations>
-                        <relocation>
-                            <pattern>org.objenesis</pattern>
-                            <shadedPattern>org.easymock.classextension.internal.objenesis</shadedPattern>
-                        </relocation>
-                    </relocations>
                 </configuration>
             </plugin>
         </plugins>

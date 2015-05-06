@@ -4,6 +4,8 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import uk.ac.ebi.ddi.service.db.model.logger.HttpEvent;
 import uk.ac.ebi.ddi.service.db.model.logger.DatasetResource;
 import uk.ac.ebi.ddi.service.db.repo.logger.IDatasetResourceRepo;
@@ -16,6 +18,7 @@ import java.math.BigInteger;
  *
  * @author Yasset Perez-Riverol
  */
+@Component
 public class DatasetResourceService implements IDatasetResourceService {
 
     @Autowired

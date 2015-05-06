@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import org.springframework.stereotype.Component;
 import uk.ac.ebi.ddi.service.db.exception.DBWriteException;
 import uk.ac.ebi.ddi.service.db.model.logger.AbstractResource;
 import uk.ac.ebi.ddi.service.db.model.logger.HttpEvent;
@@ -20,6 +21,8 @@ import java.util.Map;
  * @author Yasset Perez-Riverol (ypriverol@gmail.com)
  * @date 29/04/2015
  */
+
+@Component
 public class HttpEventService implements IHttpEventService {
 
     @Autowired
