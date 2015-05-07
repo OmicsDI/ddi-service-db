@@ -36,12 +36,20 @@ public class HttpEventService implements IHttpEventService {
     private IDatasetResourceRepo datasetRepo;
 
     @Override
-    public HttpEvent save(HttpEvent httpEvent) {
+    public HttpEvent insert(HttpEvent httpEvent) {
         if((httpEvent.getResource() != null && httpEvent.getResource().getId() == null))
             new DBWriteException(" The reference to the original resource should contain an Id");
 
+        return accessRepo.insert(httpEvent);
+    }
+
+
+    public HttpEvent save(HttpEvent httpEvent) {
+        if((httpEvent.getResource() != null && httpEvent.getResource().getId() == null))
+            new DBWriteException(" The reference to the original resource should contain an Id");
         return accessRepo.save(httpEvent);
     }
+
 
     @Override
     public HttpEvent read(ObjectId id) {
@@ -92,9 +100,9 @@ public class HttpEventService implements IHttpEventService {
         return accessRepo.getNumberEventByDataResource(_id);
     }
 
-    public Map<Tuple<String, String>, Integer> moreAccessedResource(int size){
+    public Map<Tuple<String, String>, Integer> moreAccessedDatasetResource(int size){
         Map<Tuple<String, String>, Integer> datasets = new HashMap<>();
-        List<ResourceStatVisit> currentMostAccessed = accessRepo.getHttpEventByResource(size);
+        List<ResourceStatVisit> currentMostAccessed = accessRepo.getHttpEventByDatasetResource(size);
         //Todo: It would be interesting to to this in batch
         for(ResourceStatVisit visit: currentMostAccessed){
             if(visit.getAbstractResource() != null){

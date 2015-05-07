@@ -16,7 +16,7 @@ public interface IHttpEventService {
      * @param httpEvent The new datset access to be save in the database
      * @return the inserted datasetaccess
      */
-    public HttpEvent save(HttpEvent httpEvent);
+    public HttpEvent insert(HttpEvent httpEvent);
 
     /**
      * Read a datasetAccess entry from the database

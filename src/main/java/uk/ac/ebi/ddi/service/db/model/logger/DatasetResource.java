@@ -40,6 +40,7 @@ public class DatasetResource extends AbstractResource implements Serializable{
      * @param database  The id of the repository
      */
     public DatasetResource(String accession, String database) {
+        this.category = CategoryType.DATASET_RESOURCE.getCategory();
         this.accession = accession;
         this.database = database;
     }
@@ -47,7 +48,8 @@ public class DatasetResource extends AbstractResource implements Serializable{
     public DatasetResource(String resourceUUID, String accession, String database) {
         super(resourceUUID);
         this.accession = accession;
-        this.database = database;
+        this.database  = database;
+        this.category  = CategoryType.DATASET_RESOURCE.getCategory();
     }
 
     public String getAccession() {

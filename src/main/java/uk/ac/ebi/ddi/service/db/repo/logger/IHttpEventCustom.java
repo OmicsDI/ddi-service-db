@@ -14,6 +14,6 @@ import java.util.Map;
  */
 public interface IHttpEventCustom {
 
-    public List<ResourceStatVisit> getHttpEventByResource(int size);
+    public List<ResourceStatVisit> getHttpEventByDatasetResource(int size);
 
 }

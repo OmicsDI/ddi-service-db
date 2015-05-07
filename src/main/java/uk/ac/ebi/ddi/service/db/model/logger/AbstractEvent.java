@@ -25,7 +25,6 @@ public abstract class AbstractEvent extends AbstractDocument implements Serializ
 
     private List<String> traceback;
 
-    @DBRef
     AbstractResource abstractResource;
 
     public AbstractEvent(){}
