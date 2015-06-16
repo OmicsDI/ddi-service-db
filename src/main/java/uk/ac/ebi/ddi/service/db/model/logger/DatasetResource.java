@@ -15,16 +15,16 @@ import uk.ac.ebi.ddi.service.db.utils.CategoryType;
  * @author Yasset Perez-Riverol
  */
 
-@Document(collection = "logger.Resource")
+@Document(collection = "logger.resource")
 
 public class DatasetResource extends AbstractResource implements Serializable{
 
     private static final long serialVersionUID = 1326887243102331826L;
 
-    @Indexed
+//    @Indexed(background = true)
     private String accession;
 
-    @Indexed
+//    @Indexed(background = true)
     private String database;
 
     /**

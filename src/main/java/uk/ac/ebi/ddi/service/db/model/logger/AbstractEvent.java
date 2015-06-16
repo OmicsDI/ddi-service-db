@@ -1,5 +1,6 @@
 package uk.ac.ebi.ddi.service.db.model.logger;
 
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
@@ -13,10 +14,10 @@ import java.util.List;
 
 public abstract class AbstractEvent extends AbstractDocument implements Serializable, IEvent{
 
-    @TextIndexed
+//    @Indexed(background = true)
     String rawMessage;
 
-    @TextIndexed
+ //   @Indexed(background = true)
     private String logSource;
 
     private String level;

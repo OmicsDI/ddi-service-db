@@ -14,14 +14,14 @@ import java.util.Date;
  * The current file control the IP, region, request size, user and date.
  * @author Yasset Perez-Riverol
  */
-@Document(collection = "logger.Event")
+@Document(collection = "logger.event")
 public class HttpEvent extends AbstractEvent implements Serializable{
 
     private static final long serialVersionUID = 1326887243102331826L;
 
     String host;
 
-    @Indexed
+ //   @Indexed(background = true)
     @DateTimeFormat(iso= DateTimeFormat.ISO.DATE_TIME)
     private Date accessDate;
 

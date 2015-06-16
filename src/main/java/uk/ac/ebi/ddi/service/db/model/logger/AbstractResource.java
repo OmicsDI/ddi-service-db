@@ -15,7 +15,7 @@ import java.util.Enumeration;
 
 public abstract class AbstractResource extends AbstractDocument{
 
-    @Indexed
+ //   @Indexed(background = true)
     String resourceUUID;
 
     /**

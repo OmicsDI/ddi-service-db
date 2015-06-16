@@ -1,21 +1,21 @@
 package uk.ac.ebi.ddi.service.db.service.logger;
 
 
-import com.github.fakemongo.Fongo;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBCollection;
-import com.mongodb.Mongo;
+//import com.github.fakemongo.Fongo;
+//import com.mongodb.BasicDBObject;
+//import com.mongodb.DBCollection;
+//import com.mongodb.Mongo;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+//import org.springframework.data.domain.Page;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.ddi.service.db.model.logger.DatasetResource;
-import com.mongodb.DB;
+//import com.mongodb.DB;
 
 import java.math.BigInteger;
 import java.util.Collection;
@@ -26,9 +26,9 @@ import java.util.List;
 
 public class HttpEventDatasetServiceTest {
 
-    Fongo fongo = null;
-
-    DB db = null;
+//    Fongo fongo = null;
+//
+//    DB db = null;
 
     @Autowired
     DatasetResourceService datasetAccessService;

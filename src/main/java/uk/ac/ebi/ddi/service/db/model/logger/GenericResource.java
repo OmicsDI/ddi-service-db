@@ -7,7 +7,7 @@ import uk.ac.ebi.ddi.service.db.utils.CategoryType;
  * @author Yasset Perez-Riverol (ypriverol@gmail.com)
  * @date 30/04/2015
  */
-@Document(collection = "logger.Resource")
+@Document(collection = "logger.resource")
 
 public class GenericResource extends AbstractResource {
 
