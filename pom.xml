@@ -139,12 +139,11 @@
         <!--</dependency>-->
 
         <!-- MongoDB test java driver -->
-        <!--<dependency>-->
-            <!--<groupId>com.github.fakemongo</groupId>-->
-            <!--<artifactId>fongo</artifactId>-->
-            <!--<version>1.4.0</version>-->
-
-        <!--</dependency>-->
+        <dependency>
+            <groupId>com.github.fakemongo</groupId>
+            <artifactId>fongo</artifactId>
+            <version>1.4.0</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.data</groupId>
