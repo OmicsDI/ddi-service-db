@@ -89,8 +89,10 @@ public class SynonymsServiceTest {
     public void readAll() {
         for (int i = 0; i < 100; i++) {
             Synonym word = new Synonym("testWord" + i);
-            wordService.insert(word);
+            System.out.println(word.getId());
+//            wordService.insert(word);
         }
+        System.exit(1);
         Page<Synonym> synonymss = wordService.readAll(0, 100000000);
         for (Synonym wordtemp : synonymss) {
             System.out.println(wordtemp.toString());
@@ -113,8 +115,6 @@ public class SynonymsServiceTest {
         for (int i = 0; i < 10; i++) {
             Synonym wordSyno = new Synonym("testWordSyno" + i);
             wordService.insertAsSynonym(word, wordSyno);
-//            System.out.println("main word id:" + word.getId() + "\t its nextid: " + word.getNextSynonym());
-//            System.out.println("\n");
         }
 
         ArrayList<String> synonyms = wordService.getAllSynonyms("testWord");

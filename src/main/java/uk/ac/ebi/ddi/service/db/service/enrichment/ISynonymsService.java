@@ -57,6 +57,9 @@ public interface ISynonymsService {
      */
     Synonym delete(ObjectId id);
 
+    Synonym readByLabel(String label);
+
     ArrayList<String> getAllSynonyms(String word);
 
+    boolean isWordExist(String wordLabel);
 }
