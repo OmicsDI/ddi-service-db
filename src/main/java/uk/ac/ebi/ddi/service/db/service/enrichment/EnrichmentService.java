@@ -25,7 +25,7 @@ public class EnrichmentService implements IEnrichmentService {
     @Override
     public EnrichedDataset insert(EnrichedDataset enrichedDataset) {
 
-        if (accessRepo.findByRepoIdQuery(enrichedDataset.getDatasetRepoId()) != null) {
+        if (accessRepo.findByAccessionQuery(enrichedDataset.getAccession()) != null) {
             return enrichedDataset;
         }
 
@@ -58,18 +58,18 @@ public class EnrichmentService implements IEnrichmentService {
     }
 
     @Override
-    public EnrichedDataset readByRepoId(String datasetRepoId) {
-        if ((datasetRepoId == null))
-            throw new DBWriteException(" The reference to the original resource should contain a string");
+    public EnrichedDataset readByaccession(String accession) {
+        if ((accession == null))
+            throw new DBWriteException(" The accession to the original resource should contain a string");
 
-        EnrichedDataset enrichedDataset = accessRepo.findByRepoIdQuery(datasetRepoId);
+        EnrichedDataset enrichedDataset = accessRepo.findByAccessionQuery(accession);
             return enrichedDataset;
 
     }
 
     @Override
-    public boolean isDatasetExist(String datasetRepoId) {
-        EnrichedDataset dataset = accessRepo.findByRepoIdQuery(datasetRepoId);
+    public boolean isDatasetExist(String accession) {
+        EnrichedDataset dataset = accessRepo.findByAccessionQuery(accession);
         if ((dataset != null)) return true;
         else return false;
     }

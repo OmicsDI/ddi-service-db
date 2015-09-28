@@ -17,14 +17,14 @@ public interface ISynonymsService {
      * @param synonym the word to be inserted in the database
      * @return the inserted word
      */
-    Synonym insert(Synonym synonym);
+    Synonym insert(String synonym);
 
     /**
      * @param mainWord of all synonyms (basically, every word in synonyms cycle could be the mainWord now)
-     * @param synonym  the new synonym which need to be inserted in the synonyms cycle
+     * @param synonymLabel  the new synonym which need to be inserted in the synonyms cycle
      * @return
      */
-    Synonym insertAsSynonym(Synonym mainWord, Synonym synonym);
+    Synonym insertAsSynonym(Synonym mainWord, String synonymLabel);
 
     /**
      * read a word from database
@@ -57,9 +57,25 @@ public interface ISynonymsService {
      */
     Synonym delete(ObjectId id);
 
+    /**
+     * read one synonym word in DB by label
+     * @param label
+     * @return
+     */
     Synonym readByLabel(String label);
+
+    /**
+     * read all synonyms' labels of one word
+     * @param word
+     * @return
+     */
 
     ArrayList<String> getAllSynonyms(String word);
 
+    /**
+     * check if one word exist or not
+     * @param wordLabel
+     * @return
+     */
     boolean isWordExist(String wordLabel);
 }

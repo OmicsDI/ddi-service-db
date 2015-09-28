@@ -50,7 +50,7 @@ public interface IEnrichmentService {
      */
     EnrichedDataset delete(ObjectId id);
 
-    EnrichedDataset readByRepoId(String label);
+    EnrichedDataset readByaccession(String accession);
 
     boolean isDatasetExist(String wordLabel);
 

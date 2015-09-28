@@ -36,17 +36,15 @@ public class SynonymsServiceTest {
     @Test
     public void testAddAndGetWord() throws Exception {
 
-        Synonym word = new Synonym("testWord1");
-        wordService.insert(word);
-        Synonym word1 = wordService.read(word.getId());
-        Assert.assertEquals(word.getId(), word1.getId());
-        Assert.assertEquals(word.getlabel(), word1.getlabel());
+        Synonym word1 = wordService.insert("testWord1");
+        Synonym word11 = wordService.read(word1.getId());
+        Assert.assertEquals(word1.getId(), word11.getId());
+        Assert.assertEquals(word1.getlabel(), word11.getlabel());
 
-        System.out.println(word.getId());
+        System.out.println(word1.getId());
 
         //Add a term without id
-        Synonym word2 = new Synonym("testWord2");
-        wordService.insert(word2);
+        Synonym word2 = wordService.insert("testWord2");
 
         Page<Synonym> allEntries = wordService.readAll(0, 1000000000);
         System.out.println(allEntries.getSize());
@@ -92,7 +90,7 @@ public class SynonymsServiceTest {
             System.out.println(word.getId());
 //            wordService.insert(word);
         }
-        System.exit(1);
+//        System.exit(1);
         Page<Synonym> synonymss = wordService.readAll(0, 100000000);
         for (Synonym wordtemp : synonymss) {
             System.out.println(wordtemp.toString());
@@ -108,13 +106,11 @@ public class SynonymsServiceTest {
             wordService.delete(wordtemp.getId());
         }
 
-        Synonym word = new Synonym("testWord");
-        wordService.insert(word);
+        Synonym word = wordService.insert("testWord");
         System.out.println("main word id:" + word.getId());
         System.out.println("main word label:" + word.getlabel());
         for (int i = 0; i < 10; i++) {
-            Synonym wordSyno = new Synonym("testWordSyno" + i);
-            wordService.insertAsSynonym(word, wordSyno);
+            wordService.insertAsSynonym(word, "testWordSyno" + i);
         }
 
         ArrayList<String> synonyms = wordService.getAllSynonyms("testWord");
