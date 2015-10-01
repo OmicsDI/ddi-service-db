@@ -62,29 +62,6 @@ public class SynonymsServiceTest {
 
     }
 
-    //    @Test
-//    public void testAddAndGetHttpEvent() throws Exception {
-//
-//        //Create the resource for the Event
-//        DatasetResource dataset = new DatasetResource();
-//        dataset.setAccession("PXD0001");
-//        dataset.setDatabase("PRIDE");
-//        dataset.setResourceUUID("http://www.ebi.ac.uk/pride/archive/PXD00001");
-//        dataset = service.save(dataset);
-//
-//        //Create an Event
-//        HttpEvent event = new HttpEvent();
-//        event.setResource(dataset);
-//        event.setAccessDate(new Date());
-//        event.setHost("localhost");
-//        event.setLogSource("/loganame");
-//        event.setRawMessage("simple message with the original log message");
-//
-//        event = eventService.save(event);
-//
-//        System.out.println(event.toString());
-//    }
-//
     @Test
     public void readAll() {
         for (int i = 0; i < 100; i++) {

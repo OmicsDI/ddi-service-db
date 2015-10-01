@@ -16,6 +16,7 @@ import java.util.Date;
  * @author Yasset Perez-Riverol
  */
 @Document(collection = "enrichment.enrichedDataset")
+
 public class EnrichedDataset extends AbstractDocument implements Serializable{
 
     private static final long serialVersionUID = 1326887243102331825L;
