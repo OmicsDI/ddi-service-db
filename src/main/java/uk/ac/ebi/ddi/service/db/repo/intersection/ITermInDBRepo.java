@@ -1,23 +1,19 @@
-package uk.ac.ebi.ddi.service.db.repo.enrichment;
+package uk.ac.ebi.ddi.service.db.repo.intersection;
 
 
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import uk.ac.ebi.ddi.service.db.model.enrichment.EnrichedDataset;
-import uk.ac.ebi.ddi.service.db.model.logger.AbstractResource;
-import uk.ac.ebi.ddi.service.db.model.logger.HttpEvent;
-import uk.ac.ebi.ddi.service.db.repo.logger.IHttpEventCustom;
-
-import java.util.List;
+import uk.ac.ebi.ddi.service.db.model.intersection.TermInDB;
 
 /**
  * The Access Repository it give information about the access to any resource in the database and the system.
  *
- * @author ypriverol
+ * @author mingze
  */
 
-public interface IEnrichmentRepo extends MongoRepository<EnrichedDataset,ObjectId>{
+public interface ITermInDBRepo extends MongoRepository<TermInDB,ObjectId>{
 
 //    @Query(value = "{'abstractResource.$accession' : ?0, 'abstractResource.$database' : ?1}", count = true)
 //    long getNumberEventByHttpEventDataSetResource(String acc, String database);
@@ -27,7 +23,9 @@ public interface IEnrichmentRepo extends MongoRepository<EnrichedDataset,ObjectI
 //
 //    List<HttpEvent> findByAbstractResource(AbstractResource abstractResource);
 
-    @Query("{accession: ?0}")
-    public EnrichedDataset findByAccessionQuery(String accession);
+    @Query("{termName: ?0}")
+    public TermInDB findByNameQuery(String termName);
 
+    @Query("{index: ?0}")
+    public TermInDB findByIndexQuery(String index);
 }

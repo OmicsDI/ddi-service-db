@@ -21,7 +21,8 @@ public class EnrichedDataset extends AbstractDocument implements Serializable{
 
     private static final long serialVersionUID = 1326887243102331825L;
 
-    private String datasetRepoId;
+    private String accession;
+    private String database;
     private Date enrichingTime;
     private String status;
 
@@ -36,13 +37,11 @@ public class EnrichedDataset extends AbstractDocument implements Serializable{
     private String dataProtocol;
     private String enrichedDataProtocol;
 
-    public EnrichedDataset(String datasetRepoId) {
-        this.datasetRepoId = datasetRepoId;
+    public EnrichedDataset(String accession, String database) {
+        this.accession= accession;
+        this.database= database;
     }
 
-    public void setDatasetRepoId(String datasetRepoId) {
-        this.datasetRepoId = datasetRepoId;
-    }
 
     public void setTitle(String title) {
         this.title = title;
@@ -87,8 +86,8 @@ public class EnrichedDataset extends AbstractDocument implements Serializable{
         return serialVersionUID;
     }
 
-    public String getDatasetRepoId() {
-        return datasetRepoId;
+    public String getAccession() {
+        return accession;
     }
 
     public Date getEnrichingTime() {
@@ -127,10 +126,23 @@ public class EnrichedDataset extends AbstractDocument implements Serializable{
         return dataProtocol;
     }
 
+    public void setAccession(String accession) {
+        this.accession = accession;
+    }
+
+    public String getDatabase() {
+        return database;
+    }
+
+    public void setDatabase(String database) {
+        this.database = database;
+    }
+
     @Override
     public String toString() {
         return "EnrichedDataset{" +
-                "datasetRepoId='" + datasetRepoId + '\'' +
+                "accession='" + accession + '\'' +
+                "database='" + database + '\'' +
                 ", enrichingTime=" + enrichingTime +
                 ", status='" + status + '\'' +
                 ", title='" + title + '\'' +
