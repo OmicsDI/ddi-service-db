@@ -1,23 +1,18 @@
-package uk.ac.ebi.ddi.service.db.repo.enrichment;
+package uk.ac.ebi.ddi.service.db.repo.similarity;
 
 
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
-import uk.ac.ebi.ddi.service.db.model.enrichment.EnrichedDataset;
-import uk.ac.ebi.ddi.service.db.model.logger.AbstractResource;
-import uk.ac.ebi.ddi.service.db.model.logger.HttpEvent;
-import uk.ac.ebi.ddi.service.db.repo.logger.IHttpEventCustom;
-
-import java.util.List;
+import uk.ac.ebi.ddi.service.db.model.similarity.ExpOutputDataset;
 
 /**
  * The Access Repository it give information about the access to any resource in the database and the system.
  *
- * @author ypriverol
+ * @author Mingze
  */
 
-public interface IEnrichmentRepo extends MongoRepository<EnrichedDataset,ObjectId>{
+public interface IExpOutputDatasetRepo extends MongoRepository<ExpOutputDataset,ObjectId>{
 
 //    @Query(value = "{'abstractResource.$accession' : ?0, 'abstractResource.$database' : ?1}", count = true)
 //    long getNumberEventByHttpEventDataSetResource(String acc, String database);
@@ -28,6 +23,8 @@ public interface IEnrichmentRepo extends MongoRepository<EnrichedDataset,ObjectI
 //    List<HttpEvent> findByAbstractResource(AbstractResource abstractResource);
 
     @Query("{accession: ?0}")
-    public EnrichedDataset findByAccessionQuery(String accession);
+    public ExpOutputDataset findByAccessionQuery(String accession);
 
+    @Query("{dataType: ?0}")
+    public ExpOutputDataset readAllInOneType(String dataType);
 }

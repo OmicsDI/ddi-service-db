@@ -1,25 +1,14 @@
-package uk.ac.ebi.ddi.service.db.repo.enrichment;
+package uk.ac.ebi.ddi.service.db.repo.similarity;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.aggregation.Aggregation;
-import org.springframework.data.mongodb.core.aggregation.AggregationResults;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Component;
-import uk.ac.ebi.ddi.service.db.model.logger.HttpEvent;
-import uk.ac.ebi.ddi.service.db.model.logger.ResourceStatVisit;
-import uk.ac.ebi.ddi.service.db.utils.CategoryType;
-
-import java.util.List;
 
 /**
- * @author Yasset Perez-Riverol (ypriverol@gmail.com)
- * @date 05/05/2015
+ * @author Mingze
+ * @date 05/09/2015
  */
 
 @Component
-public class IEnrichmentRepoImpl  {
+public class IExpOutputDatasetRepoimpl{
 
 //   @Autowired
 //    MongoTemplate mongoTemplate;

@@ -1,4 +1,4 @@
-package uk.ac.ebi.ddi.service.db.service.intersection;
+package uk.ac.ebi.ddi.service.db.service.similarity;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import uk.ac.ebi.ddi.service.db.model.intersection.ExpOutputDataset;
+import uk.ac.ebi.ddi.service.db.model.similarity.ExpOutputDataset;
 
 import java.util.List;
 

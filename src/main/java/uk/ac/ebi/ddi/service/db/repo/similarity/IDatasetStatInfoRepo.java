@@ -1,10 +1,10 @@
-package uk.ac.ebi.ddi.service.db.repo.intersection;
+package uk.ac.ebi.ddi.service.db.repo.similarity;
 
 
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
-import uk.ac.ebi.ddi.service.db.model.intersection.ExpOutputDataset;
+import uk.ac.ebi.ddi.service.db.model.similarity.DatasetStatInfo;
 
 /**
  * The Access Repository it give information about the access to any resource in the database and the system.
@@ -12,7 +12,7 @@ import uk.ac.ebi.ddi.service.db.model.intersection.ExpOutputDataset;
  * @author Mingze
  */
 
-public interface IExpOutputDatasetRepo extends MongoRepository<ExpOutputDataset,ObjectId>{
+public interface IDatasetStatInfoRepo extends MongoRepository<DatasetStatInfo,ObjectId>{
 
 //    @Query(value = "{'abstractResource.$accession' : ?0, 'abstractResource.$database' : ?1}", count = true)
 //    long getNumberEventByHttpEventDataSetResource(String acc, String database);
@@ -23,8 +23,6 @@ public interface IExpOutputDatasetRepo extends MongoRepository<ExpOutputDataset,
 //    List<HttpEvent> findByAbstractResource(AbstractResource abstractResource);
 
     @Query("{accession: ?0}")
-    public ExpOutputDataset findByAccessionQuery(String accession);
+    public DatasetStatInfo findByAccessionQuery(String accession);
 
-    @Query("{dataType: ?0}")
-    public ExpOutputDataset readAllInOneType(String dataType);
 }

@@ -1,4 +1,4 @@
-package uk.ac.ebi.ddi.service.db.service.intersection;
+package uk.ac.ebi.ddi.service.db.service.similarity;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,8 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import uk.ac.ebi.ddi.service.db.model.intersection.TermInDB;
-import uk.ac.ebi.ddi.service.db.service.intersection.ITermInDBService;
+import uk.ac.ebi.ddi.service.db.model.similarity.TermInDB;
+import uk.ac.ebi.ddi.service.db.service.similarity.ITermInDBService;
 
 /**
  * This class allow to do the testing locally using a mongoDB instance.

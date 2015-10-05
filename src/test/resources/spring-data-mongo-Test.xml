@@ -39,11 +39,11 @@
     <bean id="service" class="uk.ac.ebi.ddi.service.db.service.logger.DatasetResourceService"/>
     <bean id="accessService" class="uk.ac.ebi.ddi.service.db.service.logger.HttpEventService"/>
 	<bean id="wordService" class="uk.ac.ebi.ddi.service.db.service.enrichment.SynonymsService"/>
-	<bean id="termService" class="uk.ac.ebi.ddi.service.db.service.intersection.TermInDBService"/>
-	<bean id="enrichmentService" class="uk.ac.ebi.ddi.service.db.service.enrichment.EnrichmentService"/>
-	<bean id="termInDBService" class="uk.ac.ebi.ddi.service.db.service.intersection.TermInDBService"/>
-	<bean id="expOutputDatasetService" class="uk.ac.ebi.ddi.service.db.service.intersection.ExpOutputDatasetService"/>
-	<bean id="InDBServiceRepo" class="uk.ac.ebi.ddi.service.db.repo.intersection.ITermInDBRepoImpl"/>
+	<bean id="termService" class="uk.ac.ebi.ddi.service.db.service.similarity.TermInDBService"/>
+	<bean id="enrichmentService" class="uk.ac.ebi.ddi.service.db.service.enrichment.EnrichmentInfoService"/>
+	<bean id="termInDBService" class="uk.ac.ebi.ddi.service.db.service.similarity.TermInDBService"/>
+	<bean id="expOutputDatasetService" class="uk.ac.ebi.ddi.service.db.service.similarity.ExpOutputDatasetService"/>
+	<bean id="InDBServiceRepo" class="uk.ac.ebi.ddi.service.db.repo.similarity.ITermInDBRepoImpl"/>
     <bean class="uk.ac.ebi.ddi.service.db.utils.CascadingMongoEventListener" />
 
 </beans>

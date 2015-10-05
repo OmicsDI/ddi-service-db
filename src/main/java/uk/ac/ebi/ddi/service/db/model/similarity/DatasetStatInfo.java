@@ -1,4 +1,4 @@
-package uk.ac.ebi.ddi.service.db.model.intersection;
+package uk.ac.ebi.ddi.service.db.model.similarity;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 import uk.ac.ebi.ddi.service.db.model.logger.AbstractDocument;

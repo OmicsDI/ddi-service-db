@@ -1,4 +1,4 @@
-package uk.ac.ebi.ddi.service.db.model.intersection;
+package uk.ac.ebi.ddi.service.db.model.similarity;
 
 import org.bson.types.ObjectId;
 

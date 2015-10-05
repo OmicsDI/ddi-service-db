@@ -2,22 +2,20 @@ package uk.ac.ebi.ddi.service.db.service.enrichment;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
-import uk.ac.ebi.ddi.service.db.model.enrichment.EnrichedDataset;
-
-import java.util.ArrayList;
+import uk.ac.ebi.ddi.service.db.model.enrichment.DatasetEnrichmentInfo;
 
 /**
  * Created by mingze on 30/07/15.
  */
-public interface IEnrichmentService {
+public interface IEnrichmentInfoService {
 
     /**
-     * Create a new EnrichedDataset in the MongoDB
+     * Create a new DatasetEnrichmentInfo in the MongoDB
      *
-     * @param enrichedDataset the Enrichied Dataset to be inserted in the database
+     * @param datasetEnrichmentInfo the Enrichied Dataset to be inserted in the database
      * @return the inserted dataset
      */
-    EnrichedDataset insert(EnrichedDataset enrichedDataset);
+    DatasetEnrichmentInfo insert(DatasetEnrichmentInfo datasetEnrichmentInfo);
 
     /**
      * read a dataset from database by id
@@ -25,22 +23,22 @@ public interface IEnrichmentService {
      * @param id of the dataset entry in database
      * @return a dataset
      */
-    EnrichedDataset read(ObjectId id);
+    DatasetEnrichmentInfo read(ObjectId id);
 
     /**
      * Read all the enriched datasets from the database
      *
      * @return A list of datasets
      */
-    Page<EnrichedDataset> readAll(int pageStart, int size);
+    Page<DatasetEnrichmentInfo> readAll(int pageStart, int size);
 
     /**
      * Update a dataset entry in the database using the new information
      *
-     * @param enrichedDataset the new datasetAccess information
+     * @param datasetEnrichmentInfo the new datasetAccess information
      * @return the updated datasetAccess.
      */
-    EnrichedDataset update(EnrichedDataset enrichedDataset);
+    DatasetEnrichmentInfo update(DatasetEnrichmentInfo datasetEnrichmentInfo);
 
     /**
      * Remove a DatasetAccess in the Database using the id.
@@ -48,9 +46,9 @@ public interface IEnrichmentService {
      * @param id Identifier of the dataset to be removed from the database
      * @return the removed dataset
      */
-    EnrichedDataset delete(ObjectId id);
+    DatasetEnrichmentInfo delete(ObjectId id);
 
-    EnrichedDataset readByaccession(String accession);
+    DatasetEnrichmentInfo readByaccession(String accession);
 
     boolean isDatasetExist(String wordLabel);
 

@@ -1,14 +1,14 @@
-package uk.ac.ebi.ddi.service.db.repo.intersection;
+package uk.ac.ebi.ddi.service.db.repo.similarity;
 
 import org.springframework.stereotype.Component;
 
 /**
- * @author mingze
+ * @author Mingze
  * @date 05/09/2015
  */
 
 @Component
-public class ITermInDBRepoImpl {
+public class IDatasetStatInfoRepoimpl{
 
 //   @Autowired
 //    MongoTemplate mongoTemplate;
