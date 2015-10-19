@@ -23,10 +23,12 @@ public class EnrichmentInfoService implements IEnrichmentInfoService {
     @Override
     public DatasetEnrichmentInfo insert(DatasetEnrichmentInfo datasetEnrichmentInfo) {
 
-        if (accessRepo.findByAccessionQuery(datasetEnrichmentInfo.getAccession()) != null) {
-            return accessRepo.save(datasetEnrichmentInfo);
+        DatasetEnrichmentInfo oldDatasetEnrichmentInfo = accessRepo.findByAccessionQuery(datasetEnrichmentInfo.getAccession(),"new");
+        if (oldDatasetEnrichmentInfo!=null){
+            oldDatasetEnrichmentInfo.setStatus("old");
+            accessRepo.save(oldDatasetEnrichmentInfo);
         }
-
+        datasetEnrichmentInfo.setStatus("new");
         DatasetEnrichmentInfo insertedDataset = accessRepo.insert(datasetEnrichmentInfo);
         if ((insertedDataset.getId() == null))
             throw new DBWriteException("Inserting fail, no _id assigned");
@@ -60,14 +62,14 @@ public class EnrichmentInfoService implements IEnrichmentInfoService {
         if ((accession == null))
             throw new DBWriteException(" The accession to the original resource should contain a string");
 
-        DatasetEnrichmentInfo datasetEnrichmentInfo = accessRepo.findByAccessionQuery(accession);
+        DatasetEnrichmentInfo datasetEnrichmentInfo = accessRepo.findByAccessionQuery(accession,"new");
             return datasetEnrichmentInfo;
 
     }
 
     @Override
     public boolean isDatasetExist(String accession) {
-        DatasetEnrichmentInfo dataset = accessRepo.findByAccessionQuery(accession);
+        DatasetEnrichmentInfo dataset = accessRepo.findByAccessionQuery(accession,"new");
         if ((dataset != null)) return true;
         else return false;
     }

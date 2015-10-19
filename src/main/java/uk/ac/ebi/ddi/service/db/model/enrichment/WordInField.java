@@ -4,7 +4,7 @@ package uk.ac.ebi.ddi.service.db.model.enrichment;
  * Created by mingze on 22/07/15.
  * word has been found by recommender in each field.
  */
-public class WordInField {
+public class WordInField implements Comparable<WordInField>{
 
     private String text;
     private int from;
@@ -14,6 +14,10 @@ public class WordInField {
         this.text = text;
         this.from = from;
         this.to = to;
+    }
+
+    public int compareTo(WordInField anotherInstance) {
+        return this.from - anotherInstance.from;
     }
 
     public int getFrom() {
