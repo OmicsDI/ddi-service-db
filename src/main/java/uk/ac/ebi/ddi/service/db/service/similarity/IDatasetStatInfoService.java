@@ -50,9 +50,9 @@ public interface IDatasetStatInfoService {
      */
     DatasetStatInfo delete(ObjectId id);
 
-    DatasetStatInfo readByaccession(String accession);
+    DatasetStatInfo readByAccession(String accession, String database);
 
-    boolean isDatasetExist(String wordLabel);
+    boolean isDatasetExist(String accession, String database);
 
     long getNumberOfDatasets();
 

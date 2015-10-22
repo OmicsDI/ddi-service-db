@@ -31,7 +31,7 @@ public class ExpOutputDatasetService implements IExpOutputDatasetService {
     @Override
     public ExpOutputDataset insert(ExpOutputDataset expOutputDataset) {
 
-        if (accessRepo.findByAccessionQuery(expOutputDataset.getAccession()) != null) {
+        if (accessRepo.findByAccessionQuery(expOutputDataset.getAccession(), expOutputDataset.getDatabase()) != null) {
             return expOutputDataset;
         }
 
@@ -75,18 +75,18 @@ public class ExpOutputDatasetService implements IExpOutputDatasetService {
     }
 
     @Override
-    public ExpOutputDataset readByaccession(String accession) {
-        if ((accession == null))
-            throw new DBWriteException(" The accession to the original resource should contain a string");
+    public ExpOutputDataset readByAccession(String accession, String database) {
+        if ((accession == null || database == null))
+            throw new DBWriteException(" The accession/database to the original resource should contain a string");
 
-        ExpOutputDataset expOutputDataset = accessRepo.findByAccessionQuery(accession);
+        ExpOutputDataset expOutputDataset = accessRepo.findByAccessionQuery(accession,database);
             return expOutputDataset;
 
     }
 
     @Override
-    public boolean isDatasetExist(String accession) {
-        ExpOutputDataset dataset = accessRepo.findByAccessionQuery(accession);
+    public boolean isDatasetExist(String accession, String database) {
+        ExpOutputDataset dataset = accessRepo.findByAccessionQuery(accession, database);
         if ((dataset != null)) return true;
         else return false;
     }

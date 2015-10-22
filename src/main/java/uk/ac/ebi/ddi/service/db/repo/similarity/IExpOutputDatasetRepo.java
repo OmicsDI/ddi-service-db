@@ -22,8 +22,8 @@ public interface IExpOutputDatasetRepo extends MongoRepository<ExpOutputDataset,
 //
 //    List<HttpEvent> findByAbstractResource(AbstractResource abstractResource);
 
-    @Query("{accession: ?0}")
-    public ExpOutputDataset findByAccessionQuery(String accession);
+    @Query("{$and: [{accession: ?0},{database: ?1}]}")
+    public ExpOutputDataset findByAccessionQuery(String accession, String database);
 
     @Query("{dataType: ?0}")
     public ExpOutputDataset readAllInOneType(String dataType);

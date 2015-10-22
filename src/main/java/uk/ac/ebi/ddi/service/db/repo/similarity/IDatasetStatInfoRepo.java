@@ -22,7 +22,7 @@ public interface IDatasetStatInfoRepo extends MongoRepository<DatasetStatInfo,Ob
 //
 //    List<HttpEvent> findByAbstractResource(AbstractResource abstractResource);
 
-    @Query("{accession: ?0}")
-    public DatasetStatInfo findByAccessionQuery(String accession);
+    @Query("{$and: [{accession: ?0},{database: ?1}]}")
+    public DatasetStatInfo findByAccessionQuery(String accession, String database);
 
 }

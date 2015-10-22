@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by mingze on 11/09/15.
  */
-public class TermInList {
+public class TermInList implements Comparable<TermInList>{
     private ObjectId idInDB;
     private String termName;
 
@@ -29,5 +29,9 @@ public class TermInList {
 
     public void setIdInDB(ObjectId indexInDB) {
         this.idInDB = indexInDB;
+    }
+
+    public int compareTo(TermInList anotherTerm) {
+        return this.termName.compareTo(anotherTerm.getTermName());
     }
 }

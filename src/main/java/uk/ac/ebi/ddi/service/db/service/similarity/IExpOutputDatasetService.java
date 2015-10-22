@@ -50,9 +50,9 @@ public interface IExpOutputDatasetService {
      */
     ExpOutputDataset delete(ObjectId id);
 
-    ExpOutputDataset readByaccession(String accession);
+    ExpOutputDataset readByAccession(String accession, String database);
 
-    boolean isDatasetExist(String wordLabel);
+    boolean isDatasetExist(String accession, String database);
 
     long getNumberOfDatasets();
 

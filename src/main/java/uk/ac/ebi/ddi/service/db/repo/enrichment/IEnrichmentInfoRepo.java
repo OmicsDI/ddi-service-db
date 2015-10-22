@@ -22,7 +22,7 @@ public interface IEnrichmentInfoRepo extends MongoRepository<DatasetEnrichmentIn
 //
 //    List<HttpEvent> findByAbstractResource(AbstractResource abstractResource);
 
-    @Query("{$and: [{accession: ?0},{status: ?1}]}")
-    public DatasetEnrichmentInfo findByAccessionQuery(String accession, String status);
+    @Query("{$and: [{accession: ?0},{database: ?1},{status: ?2}]}")
+    public DatasetEnrichmentInfo findByAccessionQuery(String accession, String database, String status);
 
 }
