@@ -31,7 +31,7 @@ public class DatasetStatInfoService implements IDatasetStatInfoService {
     @Override
     public DatasetStatInfo insert(DatasetStatInfo datasetStatInfo) {
 
-        if (accessRepo.findByAccessionQuery(datasetStatInfo.getAccession()) != null) {
+        if (accessRepo.findByAccessionQuery(datasetStatInfo.getAccession(), datasetStatInfo.getDatabase()) != null) {
             return datasetStatInfo;
         }
 
@@ -74,18 +74,21 @@ public class DatasetStatInfoService implements IDatasetStatInfoService {
     }
 
     @Override
-    public DatasetStatInfo readByaccession(String accession) {
-        if ((accession == null))
-            throw new DBWriteException(" The accession to the original resource should contain a string");
+    public DatasetStatInfo readByAccession(String accession, String database) {
+        if ((accession == null||database == null))
+            throw new DBWriteException(" The accession/database to the original resource should contain a string");
 
-        return accessRepo.findByAccessionQuery(accession);
-
+        DatasetStatInfo datasetStatInfo = accessRepo.findByAccessionQuery(accession, database);
+        return datasetStatInfo;
     }
 
     @Override
-    public boolean isDatasetExist(String accession) {
-        DatasetStatInfo dataset = accessRepo.findByAccessionQuery(accession);
-        return (dataset != null);
+    public boolean isDatasetExist(String accession, String database) {
+        DatasetStatInfo dataset = accessRepo.findByAccessionQuery(accession, database);
+        if ((dataset != null)) return true;
+        else {
+            return false;
+        }
     }
 
     @Override

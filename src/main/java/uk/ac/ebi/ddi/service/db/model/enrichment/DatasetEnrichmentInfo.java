@@ -23,18 +23,19 @@ public class DatasetEnrichmentInfo extends AbstractDocument implements Serializa
     private Date enrichTime;
     private String status;
 
-
-
     private List<WordInField> title;
+    private String titleString;
     private List<WordInField> abstractDescription;
+    private String abstractString;
     private List<WordInField> sampleProtocol;
+    private String sampleProtocolString;
     private List<WordInField> dataProtocol;
+    private String dataProtocolString;
 
     public DatasetEnrichmentInfo(String accession, String database) {
         this.accession= accession;
         this.database= database;
     }
-
 
     public void setTitle(List<WordInField> title) {
         this.title = title;
@@ -104,6 +105,38 @@ public class DatasetEnrichmentInfo extends AbstractDocument implements Serializa
 
     public void setDatabase(String database) {
         this.database = database;
+    }
+
+    public String getTitleString() {
+        return titleString;
+    }
+
+    public void setTitleString(String titleString) {
+        this.titleString = titleString;
+    }
+
+    public String getAbstractString() {
+        return abstractString;
+    }
+
+    public void setAbstractString(String abstractString) {
+        this.abstractString = abstractString;
+    }
+
+    public String getSampleProtocolString() {
+        return sampleProtocolString;
+    }
+
+    public void setSampleProtocolString(String sampleProtocolString) {
+        this.sampleProtocolString = sampleProtocolString;
+    }
+
+    public String getDataProtocolString() {
+        return dataProtocolString;
+    }
+
+    public void setDataProtocolString(String dataProtocolString) {
+        this.dataProtocolString = dataProtocolString;
     }
 
     @Override

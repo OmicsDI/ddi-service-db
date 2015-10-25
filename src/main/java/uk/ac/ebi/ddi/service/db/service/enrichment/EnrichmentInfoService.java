@@ -23,7 +23,8 @@ public class EnrichmentInfoService implements IEnrichmentInfoService {
     @Override
     public DatasetEnrichmentInfo insert(DatasetEnrichmentInfo datasetEnrichmentInfo) {
 
-        DatasetEnrichmentInfo oldDatasetEnrichmentInfo = accessRepo.findByAccessionQuery(datasetEnrichmentInfo.getAccession(),"new");
+        DatasetEnrichmentInfo oldDatasetEnrichmentInfo = accessRepo.findByAccessionQuery(datasetEnrichmentInfo.getAccession(),
+                datasetEnrichmentInfo.getDatabase(), "new");
         if (oldDatasetEnrichmentInfo!=null){
             oldDatasetEnrichmentInfo.setStatus("old");
             accessRepo.save(oldDatasetEnrichmentInfo);
@@ -58,18 +59,26 @@ public class EnrichmentInfoService implements IEnrichmentInfoService {
     }
 
     @Override
-    public DatasetEnrichmentInfo readByaccession(String accession) {
-        if ((accession == null))
-            throw new DBWriteException(" The accession to the original resource should contain a string");
+    public DatasetEnrichmentInfo readByAccession(String accession, String database) {
+        if ((accession == null || database== null))
+            throw new DBWriteException(" The accession/databaseName to the original resource should contain a string");
 
-        return accessRepo.findByAccessionQuery(accession,"new");
+        DatasetEnrichmentInfo datasetEnrichmentInfo = accessRepo.findByAccessionQuery(accession,database,"new");
+
+        return datasetEnrichmentInfo;
 
     }
 
     @Override
-    public boolean isDatasetExist(String accession) {
-        DatasetEnrichmentInfo dataset = accessRepo.findByAccessionQuery(accession,"new");
-        return (dataset != null);
+    public boolean isDatasetExist(String accession, String database) {
+        DatasetEnrichmentInfo dataset = accessRepo.findByAccessionQuery(accession, database, "new");
+        if ((dataset != null)) return true;
+        else return false;
+    }
+
+    @Override
+    public void deleteAll() {
+        accessRepo.deleteAll();
     }
 
 }

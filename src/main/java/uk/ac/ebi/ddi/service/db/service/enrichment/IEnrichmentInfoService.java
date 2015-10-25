@@ -48,8 +48,9 @@ public interface IEnrichmentInfoService {
      */
     DatasetEnrichmentInfo delete(ObjectId id);
 
-    DatasetEnrichmentInfo readByaccession(String accession);
+    DatasetEnrichmentInfo readByAccession(String accession, String database);
 
-    boolean isDatasetExist(String wordLabel);
+    boolean isDatasetExist(String accession, String database);
 
+    void deleteAll();
 }
