@@ -59,8 +59,7 @@ public class DatasetStatInfoService implements IDatasetStatInfoService {
     public List<DatasetStatInfo> readAllInOneType(String dataType) {
         Query query = new Query();
         query.addCriteria(Criteria.where("expDataType").is(dataType));
-        List<DatasetStatInfo> allDatasetInOneType = mongoOperation.find(query, DatasetStatInfo.class);
-        return allDatasetInOneType;
+        return mongoOperation.find(query, DatasetStatInfo.class);
     }
 
     @Override
@@ -79,16 +78,14 @@ public class DatasetStatInfoService implements IDatasetStatInfoService {
         if ((accession == null))
             throw new DBWriteException(" The accession to the original resource should contain a string");
 
-        DatasetStatInfo datasetStatInfo = accessRepo.findByAccessionQuery(accession);
-            return datasetStatInfo;
+        return accessRepo.findByAccessionQuery(accession);
 
     }
 
     @Override
     public boolean isDatasetExist(String accession) {
         DatasetStatInfo dataset = accessRepo.findByAccessionQuery(accession);
-        if ((dataset != null)) return true;
-        else return false;
+        return (dataset != null);
     }
 
     @Override

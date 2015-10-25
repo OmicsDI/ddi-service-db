@@ -71,9 +71,8 @@ public abstract class AbstractEvent extends AbstractDocument implements Serializ
 
         if (logSource != null ? !logSource.equals(abstractEvent.logSource) : abstractEvent.logSource != null) return false;
         if (rawMessage != null ? !rawMessage.equals(abstractEvent.rawMessage) : abstractEvent.rawMessage != null) return false;
-        if (abstractResource != null ? !abstractResource.equals(abstractEvent.abstractResource) : abstractEvent.abstractResource != null) return false;
+        return !(abstractResource != null ? !abstractResource.equals(abstractEvent.abstractResource) : abstractEvent.abstractResource != null);
 
-        return true;
     }
 
     @Override

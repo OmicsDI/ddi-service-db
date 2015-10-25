@@ -137,8 +137,7 @@ public class SynonymsService implements ISynonymsService {
         if ((label == null))
             throw new DBWriteException(" The reference to the original resource should contain a string");
 
-        Synonym synonym = accessRepo.findByLabelQuery(label);
-        return synonym;
+        return accessRepo.findByLabelQuery(label);
 
     }
 

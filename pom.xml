@@ -98,37 +98,6 @@
             <version>${slf4j.version}</version>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>taglibs</groupId>-->
-            <!--<artifactId>standard</artifactId>-->
-            <!--<version>${standard.version}</version>-->
-        <!--</dependency>-->
-
-        <!-- Data Mapper package is a high-performance data binding package built
-            on Jackson JSON processor -->
-        <!--<dependency>-->
-            <!--<groupId>org.codehaus.jackson</groupId>-->
-            <!--<artifactId>jackson-mapper-asl</artifactId>-->
-            <!--<version>${jackson.version}</version>-->
-            <!--<type>jar</type>-->
-            <!--<scope>compile</scope>-->
-        <!--</dependency>-->
-
-        <!--&lt;!&ndash; Jackson is a high-performance JSON processor (parser, generator) &ndash;&gt;-->
-        <!--<dependency>-->
-            <!--<groupId>org.codehaus.jackson</groupId>-->
-            <!--<artifactId>jackson-core-asl</artifactId>-->
-            <!--<version>${jackson.version}</version>-->
-            <!--<type>jar</type>-->
-            <!--<scope>compile</scope>-->
-        <!--</dependency>-->
-
-
-        <!--<dependency>-->
-            <!--<groupId>javax.validation</groupId>-->
-            <!--<artifactId>validation-api</artifactId>-->
-            <!--<version>${java.validation.api.version}</version>-->
-        <!--</dependency>-->
 
         <!--&lt;!&ndash; MongoDB Java Driver &ndash;&gt;-->
         <dependency>
@@ -169,15 +138,7 @@
     <build>
         <finalName>dd-service-db</finalName>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.plugin}</version>
-                <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                </configuration>
-            </plugin>
+             
         </plugins>
     </build>
 

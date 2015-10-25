@@ -164,9 +164,8 @@ public class HttpEvent extends AbstractEvent implements Serializable{
             return false;
         if (status != null ? !status.equals(httpEvent.status) : httpEvent.status != null) return false;
         if (user != null ? !user.equals(httpEvent.user) : httpEvent.user != null) return false;
-        if (userAgent != null ? !userAgent.equals(httpEvent.userAgent) : httpEvent.userAgent != null) return false;
+        return !(userAgent != null ? !userAgent.equals(httpEvent.userAgent) : httpEvent.userAgent != null);
 
-        return true;
     }
 
     @Override

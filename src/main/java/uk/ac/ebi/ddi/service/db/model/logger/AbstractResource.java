@@ -13,6 +13,7 @@ import java.util.Enumeration;
  * @author Yasset Perez-Riverol (ypriverol@gmail.com)
  */
 
+@SuppressWarnings("RedundantIfStatement")
 public abstract class AbstractResource extends AbstractDocument{
 
  //   @Indexed(background = true)

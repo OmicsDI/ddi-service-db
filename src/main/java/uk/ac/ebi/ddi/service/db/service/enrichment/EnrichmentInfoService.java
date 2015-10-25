@@ -62,16 +62,14 @@ public class EnrichmentInfoService implements IEnrichmentInfoService {
         if ((accession == null))
             throw new DBWriteException(" The accession to the original resource should contain a string");
 
-        DatasetEnrichmentInfo datasetEnrichmentInfo = accessRepo.findByAccessionQuery(accession,"new");
-            return datasetEnrichmentInfo;
+        return accessRepo.findByAccessionQuery(accession,"new");
 
     }
 
     @Override
     public boolean isDatasetExist(String accession) {
         DatasetEnrichmentInfo dataset = accessRepo.findByAccessionQuery(accession,"new");
-        if ((dataset != null)) return true;
-        else return false;
+        return (dataset != null);
     }
 
 }

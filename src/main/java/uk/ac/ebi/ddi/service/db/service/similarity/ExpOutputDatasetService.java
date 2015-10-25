@@ -59,8 +59,7 @@ public class ExpOutputDatasetService implements IExpOutputDatasetService {
     public List<ExpOutputDataset> readAllInOneType(String dataType) {
         Query query = new Query();
         query.addCriteria(Criteria.where("expDataType").is(dataType));
-        List<ExpOutputDataset> allDatasetInOneType = mongoOperation.find(query, ExpOutputDataset.class);
-        return allDatasetInOneType;
+        return mongoOperation.find(query, ExpOutputDataset.class);
     }
 
     @Override
@@ -79,16 +78,14 @@ public class ExpOutputDatasetService implements IExpOutputDatasetService {
         if ((accession == null))
             throw new DBWriteException(" The accession to the original resource should contain a string");
 
-        ExpOutputDataset expOutputDataset = accessRepo.findByAccessionQuery(accession);
-            return expOutputDataset;
+        return accessRepo.findByAccessionQuery(accession);
 
     }
 
     @Override
     public boolean isDatasetExist(String accession) {
         ExpOutputDataset dataset = accessRepo.findByAccessionQuery(accession);
-        if ((dataset != null)) return true;
-        else return false;
+        return (dataset != null);
     }
 
     @Override

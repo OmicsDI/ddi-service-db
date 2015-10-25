@@ -74,8 +74,7 @@ public class TermInDBService implements ITermInDBService {
         if ((termName == null))
             throw new DBWriteException(" The reference to the original resource should contain a string");
 
-        TermInDB termInDB = accessRepo.findByNameQuery(termName);
-        return termInDB;
+        return accessRepo.findByNameQuery(termName);
 
     }
 
@@ -100,7 +99,6 @@ public class TermInDBService implements ITermInDBService {
     public List<TermInDB> readAllInOneType(String dataType){
         Query query = new Query();
         query.addCriteria(Criteria.where("dataType").is(dataType));
-        List<TermInDB> allDatasetInOneType = mongoOperation.find(query, TermInDB.class);
-        return allDatasetInOneType;
+        return mongoOperation.find(query, TermInDB.class);
     }
 }

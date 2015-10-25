@@ -77,9 +77,8 @@ public class DatasetResource extends AbstractResource implements Serializable{
         DatasetResource that = (DatasetResource) o;
 
         if (!accession.equals(that.accession)) return false;
-        if (!database.equals(that.database)) return false;
+        return database.equals(that.database);
 
-        return true;
     }
 
     @Override

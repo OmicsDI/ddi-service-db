@@ -66,8 +66,7 @@ public class DatasetResourceService implements IDatasetResourceService {
 
     @Override
     public DatasetResource read(String acc, String database) {
-        DatasetResource datasetResource = datasetAccessRepo.findByAccessionDatabaseQuery(acc, database);
-        return datasetResource;
+        return datasetAccessRepo.findByAccessionDatabaseQuery(acc, database);
     }
 
 
