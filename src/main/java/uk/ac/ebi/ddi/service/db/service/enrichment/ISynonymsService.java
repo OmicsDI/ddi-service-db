@@ -4,7 +4,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import uk.ac.ebi.ddi.service.db.model.enrichment.Synonym;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by mingze on 30/07/15.
@@ -14,17 +14,17 @@ public interface ISynonymsService {
     /**
      * Create a new word in the MongoDB
      *
-     * @param synonym the word to be inserted in the database
+     * @param word the word to be inserted in the database
      * @return the inserted word
      */
-    Synonym insert(String synonym);
+    Synonym insert(String word, List<String> synonyms);
 
     /**
      * @param mainWord of all synonyms (basically, every word in synonyms cycle could be the mainWord now)
      * @param synonymLabel  the new synonym which need to be inserted in the synonyms cycle
      * @return
      */
-    Synonym insertAsSynonym(Synonym mainWord, String synonymLabel);
+//    Synonym insertAsSynonym(Synonym mainWord, String synonymLabel);
 
     /**
      * read a word from database
@@ -66,11 +66,11 @@ public interface ISynonymsService {
 
     /**
      * read all synonyms' labels of one word
-     * @param word
+     * @param wordLabel
      * @return
      */
 
-    ArrayList<String> getAllSynonyms(String word);
+    List<String> getAllSynonyms(String wordLabel);
 
     /**
      * check if one word exist or not

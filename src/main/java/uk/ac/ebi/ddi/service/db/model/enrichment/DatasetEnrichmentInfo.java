@@ -1,5 +1,6 @@
 package uk.ac.ebi.ddi.service.db.model.enrichment;
 
+import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 import uk.ac.ebi.ddi.service.db.model.logger.AbstractDocument;
 
@@ -32,6 +33,7 @@ public class DatasetEnrichmentInfo extends AbstractDocument implements Serializa
     private List<WordInField> dataProtocol;
     private String dataProtocolString;
 
+    @PersistenceConstructor
     public DatasetEnrichmentInfo(String accession, String database) {
         this.accession= accession;
         this.database= database;
@@ -152,4 +154,6 @@ public class DatasetEnrichmentInfo extends AbstractDocument implements Serializa
                 ", dataProtocol='" + dataProtocol + '\'' +
                 '}';
     }
+
+
 }

@@ -63,5 +63,7 @@ public class ExpOutputDataset extends AbstractDocument implements Serializable{
         this.accession = accession;
     }
 
-
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
 }

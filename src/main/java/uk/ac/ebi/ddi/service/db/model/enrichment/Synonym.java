@@ -1,10 +1,13 @@
 package uk.ac.ebi.ddi.service.db.model.enrichment;
 
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 import uk.ac.ebi.ddi.service.db.model.logger.AbstractDocument;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by mingze on 23/07/15.
@@ -17,21 +20,37 @@ public class Synonym extends AbstractDocument implements Serializable {
 
     private static final long serialVersionUID = 1326887243102331825L;
 
+    @Field
     private String label;
-    private ObjectId nextSynonym;
 
+    @Field
+    private List<String> synonyms;
 
-    public Synonym(String label) {
+    @PersistenceConstructor
+    public Synonym(String label, List<String> synonyms ) {
         this.label = label;
-        this.nextSynonym = null;
+        this.synonyms = synonyms;
+
     }
 
-    public void setNextSynonym(ObjectId id) {
-        this.nextSynonym = id;
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
-    public ObjectId getNextSynonym() {
-        return nextSynonym;
+    public String getLabel() {
+        return label;
+    }
+
+    public List<String> getSynonyms() {
+        return synonyms;
+    }
+
+    public void setSynonyms(List<String> synonyms) {
+        this.synonyms = synonyms;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public String getlabel() {
@@ -43,7 +62,7 @@ public class Synonym extends AbstractDocument implements Serializable {
         return "Synonyms{" +
                 "id='" + _id + '\'' +
                 "label='" + label + '\'' +
-                ", nextSynonym=" + nextSynonym +
+                ", nextSynonym=" + synonyms +
                 '}';
     }
 }

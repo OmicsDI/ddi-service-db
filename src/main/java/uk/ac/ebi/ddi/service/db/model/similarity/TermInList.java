@@ -34,4 +34,6 @@ public class TermInList implements Comparable<TermInList>{
     public int compareTo(TermInList anotherTerm) {
         return this.termName.compareTo(anotherTerm.getTermName());
     }
+
+
 }

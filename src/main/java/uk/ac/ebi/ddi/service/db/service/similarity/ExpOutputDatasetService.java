@@ -77,8 +77,7 @@ public class ExpOutputDatasetService implements IExpOutputDatasetService {
     public ExpOutputDataset readByAccession(String accession, String database) {
         if ((accession == null || database == null))
             throw new DBWriteException(" The accession/database to the original resource should contain a string");
-        ExpOutputDataset expOutputDataset = accessRepo.findByAccessionQuery(accession,database);
-            return expOutputDataset;
+        return accessRepo.findByAccessionQuery(accession,database);
     }
 
     @Override

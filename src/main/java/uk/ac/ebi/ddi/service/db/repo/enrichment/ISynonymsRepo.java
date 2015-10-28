@@ -19,15 +19,10 @@ import java.util.List;
 
 public interface ISynonymsRepo extends MongoRepository<Synonym,ObjectId>{
 
-//    @Query(value = "{'abstractResource.$accession' : ?0, 'abstractResource.$database' : ?1}", count = true)
-//    long getNumberEventByHttpEventDataSetResource(String acc, String database);
-//
-//    @Query(value = "{'abstractResource.$id' : ?0}", count = true)
-//    long getNumberEventByDataResource(ObjectId _id);
-//
-//    List<HttpEvent> findByAbstractResource(AbstractResource abstractResource);
 
     @Query("{label : ?0}")
-    public Synonym findByLabelQuery(String wordLabel);
+    public Synonym findByLabelQuery(String label);
+
+
 
 }

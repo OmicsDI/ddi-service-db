@@ -52,4 +52,6 @@ public class WordInField implements Comparable<WordInField>{
                 ", \"to\" : \"" + to + '\"' +
                 '}';
     }
+
+
 }

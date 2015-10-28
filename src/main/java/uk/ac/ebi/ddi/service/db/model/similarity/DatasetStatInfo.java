@@ -55,4 +55,6 @@ public class DatasetStatInfo extends AbstractDocument implements Serializable {
     public void setIntersectionInfos(List<IntersectionInfo> intersectionInfos) {
         this.intersectionInfos = intersectionInfos;
     }
+
+
 }

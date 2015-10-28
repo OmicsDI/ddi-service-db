@@ -5,6 +5,7 @@ package uk.ac.ebi.ddi.service.db.model.similarity;
  * Intersection information between two datasets by each term
  */
 public class IntersectionInfo {
+
     private String relatedDatasetAcc;
     private double cosineScore;
     private int sharedTermsNo;
@@ -36,4 +37,7 @@ public class IntersectionInfo {
     public void increaseOneSharedTermsNo() {
         this.sharedTermsNo++;
     }
+
+
+
 }

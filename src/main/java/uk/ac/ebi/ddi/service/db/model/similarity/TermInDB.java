@@ -60,4 +60,6 @@ public class TermInDB extends AbstractDocument {
     public void setDataType(String dataType) {
         this.dataType = dataType;
     }
+
+
 }

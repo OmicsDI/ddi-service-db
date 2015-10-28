@@ -10,6 +10,7 @@ import uk.ac.ebi.ddi.service.db.model.enrichment.Synonym;
 import uk.ac.ebi.ddi.service.db.repo.enrichment.ISynonymsRepo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by mingze on 30/07/15.
@@ -25,57 +26,50 @@ public class SynonymsService implements ISynonymsService {
     /**
      * intert  a single word in database
      *
-     * @param synonymLabel the word to be inserted in the database
+     * @param word the word to be inserted in the database
      * @return
      */
     @Override
-    public Synonym insert(String synonymLabel) {
-        Synonym synonym = accessRepo.findByLabelQuery(synonymLabel);
-        if (synonym != null) {
-            return synonym;
-        } else {
-            synonym = new Synonym(synonymLabel);
-            Synonym insertedWord = accessRepo.insert(synonym);
-            if ((insertedWord.getId() == null))
-                throw new DBWriteException("Insert failed, no _id assigned to this synonym");
-            insertedWord.setNextSynonym(insertedWord.getId());
-            return insertedWord;
-        }
+    public Synonym insert(String word, List<String> synonyms) {
+        Synonym synonym = new Synonym(word, synonyms);
+        return accessRepo.insert(synonym);
     }
 
-    /**
-     * insert one word as a synonym of the main word
-     *
-     * @param mainWord     of all synonyms (basically, every word in synonyms cycle could be the mainWord now)
-     * @param synonymLabel the new synonym which need to be inserted in the synonyms cycle
-     * @return
-     */
-    @Override
-    public Synonym insertAsSynonym(Synonym mainWord, String synonymLabel) {
-
-        if ((mainWord.getId() == null))
-            throw new DBWriteException(" The reference to the original resource should contain an Id");
-
-        if (accessRepo.findByLabelQuery(mainWord.getlabel()) == null) {
-            throw new DBWriteException("Can not find mainWord(" + mainWord + ") in this DB");
-        }
-
-        Synonym synonym = accessRepo.findByLabelQuery(synonymLabel);
-        if (synonym != null) {
-            return synonym;
-        }
-
-        synonym = new Synonym(synonymLabel);
-        Synonym insertedWord = accessRepo.insert(synonym);
-        if ((synonym.getId() == null))
-            throw new DBWriteException("Insert failed, no _id assigned to this synonym");
-        insertedWord.setNextSynonym(mainWord.getNextSynonym());
-        mainWord.setNextSynonym(insertedWord.getId());
-        update(mainWord);
-        update(insertedWord);
-
-        return insertedWord;
-    }
+//    /**
+//     * insert one word as a synonym of the main word
+//     *
+//     * @param mainWord     of all synonyms (basically, every word in synonyms cycle could be the mainWord now)
+//     * @param synonymLabel the new synonym which need to be inserted in the synonyms cycle
+//     * @return
+//     */
+//    @Override
+//    public Synonym insertAsSynonym(Synonym mainWord, String synonymLabel) {
+//
+//        if ((mainWord.getId() == null))
+//            throw new DBWriteException(" The reference to the original resource should contain an Id");
+//
+//        System.out.println("mainword: " + mainWord.getlabel() + " Sysnonym: " + synonymLabel);
+//
+////        if (accessRepo.findOne(mainWord.getId()) == null) {
+////            throw new DBWriteException("Can not find mainWord(" + mainWord + ") in this DB");
+////        }
+//
+//        Synonym synonym = accessRepo.findByLabelQuery(synonymLabel);
+//        if (synonym != null) {
+//            return synonym;
+//        }
+//
+//        synonym = new Synonym(synonymLabel);
+//        Synonym insertedWord = accessRepo.insert(synonym);
+//        if ((synonym.getId() == null))
+//            throw new DBWriteException("Insert failed, no _id assigned to this synonym");
+//        insertedWord.setNextSynonym(mainWord.getNextSynonym());
+//        mainWord.setNextSynonym(insertedWord.getId());
+//        update(mainWord);
+//        update(insertedWord);
+//
+//        return insertedWord;
+//    }
 
     /**
      * read on word by id
@@ -108,9 +102,6 @@ public class SynonymsService implements ISynonymsService {
      */
     @Override
     public Synonym update(Synonym synonym) {
-//        Synonym existingSynonym = accessRepo.findOne(synonym.getId());
-//        existingSynonyms.setNextSynonym(synonym.getNextSynonym());
-
         return accessRepo.save(synonym);
     }
 
@@ -148,22 +139,11 @@ public class SynonymsService implements ISynonymsService {
      * @return
      */
     @Override
-    public ArrayList<String> getAllSynonyms(String wordLabel) {
-        ArrayList<String> wordList = new ArrayList<String>();
-        Synonym mainWord = accessRepo.findByLabelQuery(wordLabel);
-        ObjectId mainId = mainWord.getId();
-        ObjectId nextId = mainWord.getNextSynonym();
-
-        while (nextId != null && !nextId.equals(mainId)) {
-            Synonym synonym = accessRepo.findOne(nextId);
-            wordList.add(synonym.getlabel());
-            nextId = synonym.getNextSynonym();
-        }
-        wordList.add(wordLabel);
-
-        wordList = mergeLowerAndUpperCase(wordList);
-
-        return wordList;
+    public List<String> getAllSynonyms(String wordLabel) {
+        Synonym synonym = accessRepo.findByLabelQuery(wordLabel);
+        if(synonym != null)
+            return synonym.getSynonyms();
+        return null;
     }
 
     private ArrayList<String> mergeLowerAndUpperCase(ArrayList<String> wordList) {

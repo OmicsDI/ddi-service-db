@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.ddi.service.db.model.enrichment.Synonym;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class allow to do the testing locally using a mongoDB instance.
@@ -36,7 +37,7 @@ public class SynonymsServiceTest {
     @Test
     public void testAddAndGetWord() throws Exception {
 
-        Synonym word1 = wordService.insert("testWord1");
+        Synonym word1 = wordService.insert("testWord1", null);
         Synonym word11 = wordService.read(word1.getId());
         Assert.assertEquals(word1.getId(), word11.getId());
         Assert.assertEquals(word1.getlabel(), word11.getlabel());
@@ -44,7 +45,7 @@ public class SynonymsServiceTest {
         System.out.println(word1.getId());
 
         //Add a term without id
-        Synonym word2 = wordService.insert("testWord2");
+        Synonym word2 = wordService.insert("testWord2", null);
 
         Page<Synonym> allEntries = wordService.readAll(0, 1000000000);
         System.out.println(allEntries.getSize());
@@ -63,7 +64,7 @@ public class SynonymsServiceTest {
     @Test
     public void readAll() {
         for (int i = 0; i < 100; i++) {
-            Synonym word = new Synonym("testWord" + i);
+            Synonym word = new Synonym("testWord" + i, null);
             System.out.println(word.getId());
 //            wordService.insert(word);
         }
@@ -83,14 +84,14 @@ public class SynonymsServiceTest {
             wordService.delete(wordtemp.getId());
         }
 
-        Synonym word = wordService.insert("testWord");
+        Synonym word = wordService.insert("testWord", null);
         System.out.println("main word id:" + word.getId());
         System.out.println("main word label:" + word.getlabel());
-        for (int i = 0; i < 10; i++) {
-            wordService.insertAsSynonym(word, "testWordSyno" + i);
-        }
+//        for (int i = 0; i < 10; i++) {
+//            wordService.insertAsSynonym(word, "testWordSyno" + i);
+//        }
 
-        ArrayList<String> synonyms = wordService.getAllSynonyms("testWord");
+        List<String> synonyms = wordService.getAllSynonyms("testWord");
         System.out.println("the synonyms of testWord are: " + synonyms);
 
         Page<Synonym> synonymss = wordService.readAll(0, 1000);
