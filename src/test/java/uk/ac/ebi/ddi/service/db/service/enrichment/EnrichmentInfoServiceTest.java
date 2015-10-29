@@ -154,7 +154,11 @@ public class EnrichmentInfoServiceTest {
 
     }
 
+    @Test
     public void testRead() throws Exception {
+
+        DatasetEnrichmentInfo enrichmentInfo = enrichmentService.readByAccession("PXD002287", "PRIDE");
+        System.out.println(enrichmentInfo.getTitle());
 
     }
 

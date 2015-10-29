@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.ddi.service.db.exception.DBWriteException;
 import uk.ac.ebi.ddi.service.db.model.enrichment.DatasetEnrichmentInfo;
 import uk.ac.ebi.ddi.service.db.repo.enrichment.IEnrichmentInfoRepo;
@@ -13,7 +15,8 @@ import uk.ac.ebi.ddi.service.db.repo.enrichment.IEnrichmentInfoRepo;
  * Created by mingze on 30/07/15.
  */
 
-@Component
+//@Component
+@Service
 public class EnrichmentInfoService implements IEnrichmentInfoService {
 
     @Autowired
@@ -58,6 +61,7 @@ public class EnrichmentInfoService implements IEnrichmentInfoService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public DatasetEnrichmentInfo readByAccession(String accession, String database) {
         if ((accession == null || database== null))
             throw new DBWriteException(" The accession/databaseName to the original resource should contain a string");
