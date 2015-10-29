@@ -16,14 +16,13 @@ import uk.ac.ebi.ddi.service.db.repo.enrichment.IEnrichmentInfoRepo;
 @Component
 public class EnrichmentInfoService implements IEnrichmentInfoService {
 
-
     @Autowired
     private IEnrichmentInfoRepo accessRepo;
 
     @Override
     public DatasetEnrichmentInfo insert(DatasetEnrichmentInfo datasetEnrichmentInfo) {
 
-        DatasetEnrichmentInfo oldDatasetEnrichmentInfo = accessRepo.findByAccessionQuery(datasetEnrichmentInfo.getAccession(),
+        DatasetEnrichmentInfo oldDatasetEnrichmentInfo = accessRepo.findByAccessionDatabaseStatusQuery(datasetEnrichmentInfo.getAccession(),
                 datasetEnrichmentInfo.getDatabase(), "new");
         if (oldDatasetEnrichmentInfo!=null){
             oldDatasetEnrichmentInfo.setStatus("old");
@@ -63,7 +62,7 @@ public class EnrichmentInfoService implements IEnrichmentInfoService {
         if ((accession == null || database== null))
             throw new DBWriteException(" The accession/databaseName to the original resource should contain a string");
 
-        DatasetEnrichmentInfo datasetEnrichmentInfo = accessRepo.findByAccessionQuery(accession,database,"new");
+        DatasetEnrichmentInfo datasetEnrichmentInfo = accessRepo.findByAccessionDatabaseStatusQuery(accession,database,"new");
 
         return datasetEnrichmentInfo;
 
@@ -71,7 +70,7 @@ public class EnrichmentInfoService implements IEnrichmentInfoService {
 
     @Override
     public boolean isDatasetExist(String accession, String database) {
-        DatasetEnrichmentInfo dataset = accessRepo.findByAccessionQuery(accession, database, "new");
+        DatasetEnrichmentInfo dataset = accessRepo.findByAccessionDatabaseStatusQuery(accession, database, "new");
         if ((dataset != null)) return true;
         else return false;
     }

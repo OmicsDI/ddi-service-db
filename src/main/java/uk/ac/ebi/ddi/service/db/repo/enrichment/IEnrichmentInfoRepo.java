@@ -14,15 +14,7 @@ import uk.ac.ebi.ddi.service.db.model.enrichment.DatasetEnrichmentInfo;
 
 public interface IEnrichmentInfoRepo extends MongoRepository<DatasetEnrichmentInfo,ObjectId>{
 
-//    @Query(value = "{'abstractResource.$accession' : ?0, 'abstractResource.$database' : ?1}", count = true)
-//    long getNumberEventByHttpEventDataSetResource(String acc, String database);
-//
-//    @Query(value = "{'abstractResource.$id' : ?0}", count = true)
-//    long getNumberEventByDataResource(ObjectId _id);
-//
-//    List<HttpEvent> findByAbstractResource(AbstractResource abstractResource);
-
-    @Query("{$and: [{accession: ?0},{database: ?1},{status: ?2}]}")
-    public DatasetEnrichmentInfo findByAccessionQuery(String accession, String database, String status);
+    @Query("{accession: ?0},{database: ?1}, {status: ?2}")
+    public DatasetEnrichmentInfo findByAccessionDatabaseStatusQuery(String accession, String database, String status);
 
 }
