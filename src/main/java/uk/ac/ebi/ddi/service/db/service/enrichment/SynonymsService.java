@@ -148,18 +148,18 @@ public class SynonymsService implements ISynonymsService {
         return null;
     }
 
-    private ArrayList<String> mergeLowerAndUpperCase(ArrayList<String> wordList) {
-        ArrayList<String> cloneList = new ArrayList<>();
-        ArrayList<String> cloneListInLower = new ArrayList<>();
-        for (String word : wordList) {
-            if(!cloneListInLower.contains(word.toLowerCase())) {
-                cloneListInLower.add(word.toLowerCase());
-                cloneList.add(word);
-            }
-        }
-
-        return cloneList;
-    }
+//    private ArrayList<String> mergeLowerAndUpperCase(ArrayList<String> wordList) {
+//        ArrayList<String> cloneList = new ArrayList<>();
+//        ArrayList<String> cloneListInLower = new ArrayList<>();
+//        for (String word : wordList) {
+//            if(!cloneListInLower.contains(word.toLowerCase())) {
+//                cloneListInLower.add(word.toLowerCase());
+//                cloneList.add(word);
+//            }
+//        }
+//
+//        return cloneList;
+//    }
 
     /**
      * check if a word(label) is exist

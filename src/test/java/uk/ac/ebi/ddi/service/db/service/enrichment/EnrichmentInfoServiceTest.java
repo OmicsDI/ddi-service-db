@@ -32,9 +32,10 @@ public class EnrichmentInfoServiceTest {
 
         Page<DatasetEnrichmentInfo> allEntries = enrichmentService.readAll(0, 1000000000);
         System.out.println(allEntries.getSize());
-        for (DatasetEnrichmentInfo datasettemp : allEntries) {
-            enrichmentService.delete(datasettemp.getId());
-        }
+//        for (DatasetEnrichmentInfo datasettemp : allEntries) {
+//           if(datasettemp.getId().toString().startsWith("pxd"))
+//               enrichmentService.delete(datasettemp.getId());
+//        }
 
         DatasetEnrichmentInfo dataset = new DatasetEnrichmentInfo("pxd000001", "PRIDE");
         dataset.setStatus("status1");
@@ -158,7 +159,7 @@ public class EnrichmentInfoServiceTest {
     public void testRead() throws Exception {
 
         DatasetEnrichmentInfo enrichmentInfo = enrichmentService.readByAccession("PXD002287", "PRIDE");
-        System.out.println(enrichmentInfo.getTitle());
+//        System.out.println(enrichmentInfo.getTitle());
 
     }
 
