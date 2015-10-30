@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import uk.ac.ebi.ddi.service.db.exception.DBWriteException;
 import uk.ac.ebi.ddi.service.db.model.enrichment.Synonym;
 import uk.ac.ebi.ddi.service.db.repo.enrichment.ISynonymsRepo;
@@ -16,7 +17,8 @@ import java.util.List;
  * Created by mingze on 30/07/15.
  */
 
-@Component
+//@Component
+@Service
 public class SynonymsService implements ISynonymsService {
 
 
@@ -146,18 +148,18 @@ public class SynonymsService implements ISynonymsService {
         return null;
     }
 
-    private ArrayList<String> mergeLowerAndUpperCase(ArrayList<String> wordList) {
-        ArrayList<String> cloneList = new ArrayList<>();
-        ArrayList<String> cloneListInLower = new ArrayList<>();
-        for (String word : wordList) {
-            if(!cloneListInLower.contains(word.toLowerCase())) {
-                cloneListInLower.add(word.toLowerCase());
-                cloneList.add(word);
-            }
-        }
-
-        return cloneList;
-    }
+//    private ArrayList<String> mergeLowerAndUpperCase(ArrayList<String> wordList) {
+//        ArrayList<String> cloneList = new ArrayList<>();
+//        ArrayList<String> cloneListInLower = new ArrayList<>();
+//        for (String word : wordList) {
+//            if(!cloneListInLower.contains(word.toLowerCase())) {
+//                cloneListInLower.add(word.toLowerCase());
+//                cloneList.add(word);
+//            }
+//        }
+//
+//        return cloneList;
+//    }
 
     /**
      * check if a word(label) is exist
