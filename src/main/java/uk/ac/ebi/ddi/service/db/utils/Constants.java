@@ -6,4 +6,6 @@ package uk.ac.ebi.ddi.service.db.utils;
  */
 public class Constants {
 
+    public static String UNKNOWN_DATABASE = "unkownDatabase";
+
 }
