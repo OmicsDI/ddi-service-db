@@ -14,7 +14,7 @@ import java.math.BigInteger;
  */
 public interface IDatasetResourceRepo extends MongoRepository<DatasetResource,ObjectId>{
 
-    @Query("{accession : ?0}, {database : ?1}")
+    @Query("{'$and':[{accession : ?0}, {database : ?1}]}")
     public DatasetResource findByAccessionDatabaseQuery(String acc, String database);
 
     @Query("{_id: ?0}")

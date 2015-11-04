@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * The Access Repository it give information about the access to any resource in the database and the system.
  *
- * @author ypriverol
+ * @author Mingze
  */
 
 public interface ISynonymsRepo extends MongoRepository<Synonym,ObjectId>{

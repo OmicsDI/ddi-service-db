@@ -9,12 +9,12 @@ import uk.ac.ebi.ddi.service.db.model.enrichment.DatasetEnrichmentInfo;
 /**
  * The Access Repository it give information about the access to any resource in the database and the system.
  *
- * @author ypriverol
+ * @author Mingze
  */
 
 public interface IEnrichmentInfoRepo extends MongoRepository<DatasetEnrichmentInfo,ObjectId>{
 
-    @Query("{accession: ?0},{database: ?1}, {status: ?2}")
+    @Query("{'$and':[{'accession': ?0},{'database': ?1}, {'status': ?2}]}")
     public DatasetEnrichmentInfo findByAccessionDatabaseStatusQuery(String accession, String database, String status);
 
 }
