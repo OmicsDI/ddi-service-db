@@ -8,12 +8,12 @@
     <parent>
         <groupId>uk.ac.ebi.ddi.maven</groupId>
         <artifactId>ddi-base-master</artifactId>
-        <version>1.0.0</version>
+        <version>1.0</version>
     </parent>
 
     <groupId>uk.ac.ebi.ddi</groupId>
     <artifactId>ddi-service-db</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
 
@@ -33,47 +33,36 @@
 
 
     <properties>
-        <org.cloudfoundry-version>0.8.0</org.cloudfoundry-version>
-        <ehcache-core.version>2.5.1</ehcache-core.version>
-        <aspectjrt.version>1.6.10</aspectjrt.version>
-        <standard.version>1.1.2</standard.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <!-- Spring test -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
         <!-- Spring Core -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>${spring.version}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
-            <version>${spring.version}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>${spring.version}</version>
             <type>jar</type>
         </dependency>
-
-
 
         <!-- web components to create some of the structures -->
 
@@ -84,30 +73,12 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
         </dependency>
-
-
 
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-mongodb</artifactId>
-            <version>${spring.data.mongo.version}</version>
         </dependency>
-
-        <!--&lt;!&ndash; Spring RabbitMQ &ndash;&gt;-->
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.amqp</groupId>-->
-            <!--<artifactId>spring-rabbit</artifactId>-->
-            <!--<version>${spring.rmqp.version}</version>-->
-        <!--</dependency>-->
-
-        <!-- Ehcache -->
-        <!--<dependency>-->
-            <!--<groupId>net.sf.ehcache</groupId>-->
-            <!--<artifactId>ehcache-core</artifactId>-->
-            <!--<version>${ehcache-core.version}</version>-->
-        <!--</dependency>-->
 
     </dependencies>
     <build>
