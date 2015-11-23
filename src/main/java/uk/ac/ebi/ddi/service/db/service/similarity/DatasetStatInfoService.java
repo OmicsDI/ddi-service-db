@@ -31,8 +31,9 @@ public class DatasetStatInfoService implements IDatasetStatInfoService {
     @Override
     public DatasetStatInfo insert(DatasetStatInfo datasetStatInfo) {
 
-        if (accessRepo.findByAccessionQuery(datasetStatInfo.getAccession(), datasetStatInfo.getDatabase()) != null) {
-            return datasetStatInfo;
+        DatasetStatInfo oldDatasetStatInfo = accessRepo.findByAccessionQuery(datasetStatInfo.getAccession(), datasetStatInfo.getDatabase());
+        if ( oldDatasetStatInfo != null) {
+            accessRepo.delete(oldDatasetStatInfo);
         }
 
         DatasetStatInfo insertedDataset = accessRepo.insert(datasetStatInfo);
