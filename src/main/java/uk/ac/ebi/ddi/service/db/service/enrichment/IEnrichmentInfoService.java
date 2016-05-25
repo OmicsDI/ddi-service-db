@@ -12,7 +12,7 @@ public interface IEnrichmentInfoService {
     /**
      * Create a new DatasetEnrichmentInfo in the MongoDB
      *
-     * @param datasetEnrichmentInfo the Enrichied Dataset to be inserted in the database
+     * @param datasetEnrichmentInfo the Enrichied INSERTED to be inserted in the database
      * @return the inserted dataset
      */
     DatasetEnrichmentInfo insert(DatasetEnrichmentInfo datasetEnrichmentInfo);

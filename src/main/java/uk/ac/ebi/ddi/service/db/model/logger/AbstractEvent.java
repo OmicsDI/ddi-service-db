@@ -14,10 +14,8 @@ import java.util.List;
 
 public abstract class AbstractEvent extends AbstractDocument implements Serializable, IEvent{
 
-//    @Indexed(background = true)
     String rawMessage;
 
- //   @Indexed(background = true)
     private String logSource;
 
     private String level;

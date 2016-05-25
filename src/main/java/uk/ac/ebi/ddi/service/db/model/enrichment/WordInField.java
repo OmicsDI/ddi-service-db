@@ -2,7 +2,7 @@ package uk.ac.ebi.ddi.service.db.model.enrichment;
 
 /**
  * Created by mingze on 22/07/15.
- * word has been found by recommender in each field.
+ * word has been found by recomender in each field.
  */
 public class WordInField implements Comparable<WordInField>{
 
