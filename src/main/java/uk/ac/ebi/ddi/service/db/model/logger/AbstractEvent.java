@@ -1,9 +1,5 @@
 package uk.ac.ebi.ddi.service.db.model.logger;
 
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.index.TextIndexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -67,9 +63,7 @@ public abstract class AbstractEvent extends AbstractDocument implements Serializ
 
         AbstractEvent abstractEvent = (AbstractEvent) o;
 
-        if (logSource != null ? !logSource.equals(abstractEvent.logSource) : abstractEvent.logSource != null) return false;
-        if (rawMessage != null ? !rawMessage.equals(abstractEvent.rawMessage) : abstractEvent.rawMessage != null) return false;
-        return !(abstractResource != null ? !abstractResource.equals(abstractEvent.abstractResource) : abstractEvent.abstractResource != null);
+        return logSource != null ? logSource.equals(abstractEvent.logSource) : abstractEvent.logSource == null && (rawMessage != null ? rawMessage.equals(abstractEvent.rawMessage) : abstractEvent.rawMessage == null && !(abstractResource != null ? !abstractResource.equals(abstractEvent.abstractResource) : abstractEvent.abstractResource != null));
 
     }
 

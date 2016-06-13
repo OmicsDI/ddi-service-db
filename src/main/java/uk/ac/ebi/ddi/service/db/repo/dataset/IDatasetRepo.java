@@ -27,4 +27,7 @@ public interface IDatasetRepo extends MongoRepository<Dataset,ObjectId>{
     @Query("{_id: ?0}")
     public Dataset findByIdDatabaseQuery(ObjectId _id);
 
+    @Query("{accession: ?0}")
+    public List<Dataset> findByAccession(String accession);
+
 }

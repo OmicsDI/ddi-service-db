@@ -43,18 +43,25 @@ public class DatasetService implements IDatasetService {
         Dataset existingDataset = datasetAccessRepo.findOne(id);
 
         if(existingDataset != null){
-            dataset.setId(id);
-            return datasetAccessRepo.save(dataset);
+            existingDataset.setCrossReferences(dataset.getCrossReferences());
+            existingDataset.setDescription(dataset.getDescription());
+            existingDataset.setCurrentStatus(dataset.getCurrentStatus());
+            existingDataset.setAdditional(dataset.getAdditional());
+            existingDataset.setAccession(dataset.getAccession());
+            existingDataset.setDatabase(dataset.getDatabase());
+            existingDataset.setDates(dataset.getDates());
+            existingDataset.setName(dataset.getName());
+            existingDataset.setFilePath(dataset.getFilePath());
+            existingDataset.setInitHashCode(dataset.getInitHashCode());
+            return datasetAccessRepo.save(existingDataset);
         }
-        return null;
+        return existingDataset;
     }
 
     @Override
-    public Dataset delete(ObjectId id) {
+    public void delete(ObjectId id) {
         datasetAccessRepo.delete(id);
-        return datasetAccessRepo.findOne(id);
     }
-
 
     @Override
     public Dataset read(String acc, String database) {
@@ -72,5 +79,10 @@ public class DatasetService implements IDatasetService {
         Dataset existingDataset = datasetAccessRepo.findOne(dataset.getId());
         existingDataset.setAccession(dataset.getCurrentStatus());
         return datasetAccessRepo.save(existingDataset);
+    }
+
+    @Override
+    public List<Dataset> findByAccession(String accession) {
+        return datasetAccessRepo.findByAccession(accession);
     }
 }

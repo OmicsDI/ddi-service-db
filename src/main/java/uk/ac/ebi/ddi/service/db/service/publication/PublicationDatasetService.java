@@ -5,9 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
-import uk.ac.ebi.ddi.service.db.model.dataset.Dataset;
 import uk.ac.ebi.ddi.service.db.model.publication.PublicationDataset;
-import uk.ac.ebi.ddi.service.db.repo.dataset.IDatasetRepo;
 import uk.ac.ebi.ddi.service.db.repo.publication.IPublicationDatasetRepo;
 
 import java.util.List;
@@ -65,5 +63,10 @@ public class PublicationDatasetService implements IPublicationDatasetService {
     @Override
     public List<PublicationDataset> findByPubmedId(String pubmedID) {
         return datasetAccessRepo.findByPubmedId(pubmedID);
+    }
+
+    @Override
+    public List<PublicationDataset> readAll() {
+        return datasetAccessRepo.findAll();
     }
 }

@@ -6,8 +6,6 @@ import org.springframework.data.domain.Page;
 import uk.ac.ebi.ddi.service.db.model.logger.HttpEvent;
 import uk.ac.ebi.ddi.service.db.model.logger.DatasetResource;
 
-import java.math.BigInteger;
-
 /**
  * THis interface allows the creation of and handling of DatasetAccess in the database.
  * @author ypriverol

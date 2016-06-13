@@ -2,8 +2,6 @@ package uk.ac.ebi.ddi.service.db.model.similarity;
 
 import org.bson.types.ObjectId;
 
-import java.util.List;
-
 /**
  * Created by mingze on 11/09/15.
  */

@@ -5,8 +5,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import uk.ac.ebi.ddi.service.db.model.logger.DatasetResource;
 
-import java.math.BigInteger;
-
 /**
  * DatasetResource MongoDB instance that extend the MongoDBRepository
  *

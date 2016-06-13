@@ -3,7 +3,6 @@ package uk.ac.ebi.ddi.service.db.service.publication;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
-import uk.ac.ebi.ddi.service.db.model.dataset.Dataset;
 import uk.ac.ebi.ddi.service.db.model.publication.PublicationDataset;
 
 import java.util.List;
@@ -34,6 +33,12 @@ public interface IPublicationDatasetService {
      * @return A list of datasetAccess
      */
     public Page<PublicationDataset> readAll(int pageStart, int size);
+
+    /**
+     * Read all publication datasets
+     * @return
+     */
+    public List<PublicationDataset> readAll();
 
     /**
      * Update a datasetAccess entry in the database using the information of the new datasetAccess

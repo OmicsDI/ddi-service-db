@@ -1,7 +1,6 @@
 package uk.ac.ebi.ddi.service.db.model.logger;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.Date;
 
 import org.bson.types.ObjectId;

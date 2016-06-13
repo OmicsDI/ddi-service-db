@@ -4,7 +4,6 @@ package uk.ac.ebi.ddi.service.db.model.logger;
 import java.io.Serializable;
 
 
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import uk.ac.ebi.ddi.service.db.utils.CategoryType;
 
@@ -76,8 +75,7 @@ public class DatasetResource extends AbstractResource implements Serializable{
 
         DatasetResource that = (DatasetResource) o;
 
-        if (!accession.equals(that.accession)) return false;
-        return database.equals(that.database);
+        return accession.equals(that.accession) && database.equals(that.database);
 
     }
 

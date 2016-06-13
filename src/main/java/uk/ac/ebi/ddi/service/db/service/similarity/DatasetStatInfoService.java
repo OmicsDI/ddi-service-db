@@ -79,8 +79,7 @@ public class DatasetStatInfoService implements IDatasetStatInfoService {
         if ((accession == null||database == null))
             throw new DBWriteException(" The accession/database to the original resource should contain a string");
 
-        DatasetStatInfo datasetStatInfo = accessRepo.findByAccessionQuery(accession, database);
-        return datasetStatInfo;
+        return accessRepo.findByAccessionQuery(accession, database);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package uk.ac.ebi.ddi.service.db.model.logger;
 
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 import uk.ac.ebi.ddi.service.db.utils.CategoryType;
@@ -162,9 +161,8 @@ public class HttpEvent extends AbstractEvent implements Serializable{
         if (request != null ? !request.equals(httpEvent.request) : httpEvent.request != null) return false;
         if (response_size != null ? !response_size.equals(httpEvent.response_size) : httpEvent.response_size != null)
             return false;
-        if (status != null ? !status.equals(httpEvent.status) : httpEvent.status != null) return false;
-        if (user != null ? !user.equals(httpEvent.user) : httpEvent.user != null) return false;
-        return !(userAgent != null ? !userAgent.equals(httpEvent.userAgent) : httpEvent.userAgent != null);
+        //noinspection SimplifiableIfStatement
+        return status != null ? status.equals(httpEvent.status) : httpEvent.status == null && (user != null ? user.equals(httpEvent.user) : httpEvent.user == null && !(userAgent != null ? !userAgent.equals(httpEvent.userAgent) : httpEvent.userAgent != null));
 
     }
 

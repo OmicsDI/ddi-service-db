@@ -38,7 +38,7 @@ public class HttpEventService implements IHttpEventService {
     @Override
     public HttpEvent insert(HttpEvent httpEvent) {
         if((httpEvent.getResource() != null && httpEvent.getResource().getId() == null))
-            new DBWriteException(" The reference to the original resource should contain an Id");
+            throw new DBWriteException(" The reference to the original resource should contain an Id");
 
         return accessRepo.insert(httpEvent);
     }
@@ -46,7 +46,7 @@ public class HttpEventService implements IHttpEventService {
 
     public HttpEvent save(HttpEvent httpEvent) {
         if((httpEvent.getResource() != null && httpEvent.getResource().getId() == null))
-            new DBWriteException(" The reference to the original resource should contain an Id");
+            throw new DBWriteException(" The reference to the original resource should contain an Id");
         return accessRepo.save(httpEvent);
     }
 

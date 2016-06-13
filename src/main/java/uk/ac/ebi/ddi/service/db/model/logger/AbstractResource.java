@@ -1,9 +1,5 @@
 package uk.ac.ebi.ddi.service.db.model.logger;
 
-import org.springframework.data.mongodb.core.index.Indexed;
-
-import java.util.Enumeration;
-
 /**
  * A Generic resourceUUID in the database, the resourceUUID can be use as the way of storing all the resources in:
  *  - ftp url

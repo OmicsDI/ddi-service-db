@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 import uk.ac.ebi.ddi.service.db.exception.DBWriteException;
-import uk.ac.ebi.ddi.service.db.model.similarity.ExpOutputDataset;
 import uk.ac.ebi.ddi.service.db.model.similarity.TermInDB;
 import uk.ac.ebi.ddi.service.db.repo.similarity.ITermInDBRepo;
 

@@ -4,8 +4,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import uk.ac.ebi.ddi.service.db.model.logger.AbstractDocument;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 

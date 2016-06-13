@@ -2,10 +2,10 @@ package uk.ac.ebi.ddi.service.db.model.dataset;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Yasset Perez-Riverol (ypriverol@gmail.com)
@@ -17,6 +17,7 @@ public class Database {
     @Id
     ObjectId _id;
 
+    @Indexed(unique = true)
     String name;
 
     String description;
@@ -30,6 +31,15 @@ public class Database {
     String url;
 
     public Database() {
+    }
+
+    public Database(String name, String description, String releaseDate, String releaseTag, List<String> omicsType, String url) {
+        this.name = name;
+        this.description = description;
+        this.releaseDate = releaseDate;
+        this.releaseTag = releaseTag;
+        this.omicsType = omicsType;
+        this.url = url;
     }
 
     public Database(ObjectId _id, String name, String description, String releaseDate, String releaseTag, List<String> omicsType, String url) {

@@ -1,7 +1,5 @@
 package uk.ac.ebi.ddi.service.db.model.logger;
 
-import org.bson.types.ObjectId;
-
 /**
  * @author Yasset Perez-Riverol (ypriverol@gmail.com)
  * @date 05/05/2015

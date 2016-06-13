@@ -5,7 +5,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import uk.ac.ebi.ddi.service.db.utils.DatasetCategory;
 
@@ -59,7 +58,6 @@ public class Dataset implements Serializable{
         this.accession = accession;
         this.database = database;
         this.currentStatus = DatasetCategory.INSERTED.getType();
-
     }
 
     /**
@@ -89,7 +87,7 @@ public class Dataset implements Serializable{
         this.additional = additional;
         this.crossReferences = crossReferences;
         this.currentStatus = category.getType();
-        this.initHashCode = hashCode();
+        this.initHashCode = initHashCode();
     }
 
     public String getName() {
@@ -176,6 +174,10 @@ public class Dataset implements Serializable{
         return initHashCode;
     }
 
+    public void setInitHashCode(int initHashCode) {
+        this.initHashCode = initHashCode;
+    }
+
     @Override
     public int hashCode() {
         int hashCode = super.hashCode();
@@ -187,6 +189,18 @@ public class Dataset implements Serializable{
         hashCode  = (additional!=null)?31 * hashCode + additional.hashCode():hashCode;
         hashCode  = (crossReferences != null)? 31 * hashCode + crossReferences.hashCode():hashCode;
 
+        return hashCode;
+    }
+
+    public int initHashCode(){
+        int hashCode = 31;
+        hashCode  = (accession != null )? 31 * hashCode + accession.hashCode():hashCode;
+        hashCode  = (database != null) ?  31 * hashCode + database.hashCode():hashCode;
+        hashCode  = (name != null) ? 31 * hashCode + name.hashCode(): hashCode;
+        hashCode  = (description != null) ? 31 * hashCode + description.hashCode():hashCode;
+        hashCode  = (dates != null) ? 31 * hashCode + dates.hashCode():hashCode;
+        hashCode  = (additional!=null)?31 * hashCode + additional.hashCode():hashCode;
+        hashCode  = (crossReferences != null)? 31 * hashCode + crossReferences.hashCode():hashCode;
         return hashCode;
     }
 

@@ -5,8 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import uk.ac.ebi.ddi.service.db.model.logger.AbstractDocument;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -24,14 +23,11 @@ public class DatasetEnrichmentInfo extends AbstractDocument implements Serializa
     private Date enrichTime;
     private String status;
 
-    private List<WordInField> title;
-    private String titleString;
-    private List<WordInField> abstractDescription;
-    private String abstractString;
-    private List<WordInField> sampleProtocol;
-    private String sampleProtocolString;
-    private List<WordInField> dataProtocol;
-    private String dataProtocolString;
+    // Key is the attribute with all the synonyms for that key
+    Map<String, List<WordInField>> synonyms;
+
+    // Original value of the attribute.
+    Map<String, String> originalAttributes;
 
     @PersistenceConstructor
     public DatasetEnrichmentInfo(String accession, String database) {
@@ -39,21 +35,6 @@ public class DatasetEnrichmentInfo extends AbstractDocument implements Serializa
         this.database= database;
     }
 
-    public void setTitle(List<WordInField> title) {
-        this.title = title;
-    }
-
-    public void setAbstractDescription( List<WordInField> abstractDescription) {
-        this.abstractDescription = abstractDescription;
-    }
-
-    public void setSampleProtocol( List<WordInField> sampleProtocol) {
-        this.sampleProtocol = sampleProtocol;
-    }
-
-    public void setDataProtocol(List<WordInField> dataProtocol) {
-        this.dataProtocol = dataProtocol;
-    }
     public void setEnrichTime(Date enrichTime) {
         this.enrichTime = enrichTime;
     }
@@ -78,24 +59,6 @@ public class DatasetEnrichmentInfo extends AbstractDocument implements Serializa
         return status;
     }
 
-    public List<WordInField> getTitle() {
-        return title;
-    }
-
-
-    public List<WordInField> getAbstractDescription() {
-        return abstractDescription;
-    }
-
-
-    public List<WordInField> getSampleProtocol() {
-        return sampleProtocol;
-    }
-
-
-    public List<WordInField> getDataProtocol() {
-        return dataProtocol;
-    }
 
     public void setAccession(String accession) {
         this.accession = accession;
@@ -109,51 +72,53 @@ public class DatasetEnrichmentInfo extends AbstractDocument implements Serializa
         this.database = database;
     }
 
-    public String getTitleString() {
-        return titleString;
+    public Map<String, List<WordInField>> getSynonyms() {
+        return synonyms;
     }
 
-    public void setTitleString(String titleString) {
-        this.titleString = titleString;
+    public void setSynonyms(Map<String, List<WordInField>> synonyms) {
+        this.synonyms = synonyms;
     }
 
-    public String getAbstractString() {
-        return abstractString;
+    public Map<String, String> getOriginalAttributes() {
+        return originalAttributes;
     }
 
-    public void setAbstractString(String abstractString) {
-        this.abstractString = abstractString;
+    public void setOriginalAttributes(Map<String, String> originalAttributes) {
+        this.originalAttributes = originalAttributes;
     }
 
-    public String getSampleProtocolString() {
-        return sampleProtocolString;
+    public void addNewAttributeValue(String key, String value){
+        if(originalAttributes == null)
+            originalAttributes = new HashMap<>();
+        originalAttributes.put(key, value);
     }
 
-    public void setSampleProtocolString(String sampleProtocolString) {
-        this.sampleProtocolString = sampleProtocolString;
+    public void addSynonymstoAttribute(String key, List<WordInField> synonyms){
+        if(this.synonyms == null)
+            this.synonyms = new HashMap<>();
+        this.synonyms.put(key, synonyms);
     }
 
-    public String getDataProtocolString() {
-        return dataProtocolString;
-    }
-
-    public void setDataProtocolString(String dataProtocolString) {
-        this.dataProtocolString = dataProtocolString;
+    public void addSynonymstoAttribute(String key, WordInField synonym){
+        if(this.synonyms != null)
+            this.synonyms = new HashMap<>();
+        if(!this.synonyms.containsKey(key))
+            this.synonyms.put(key, new ArrayList<WordInField>());
+        List<WordInField> list = this.synonyms.get(key);
+        list.add(synonym);
+        this.synonyms.put(key, list);
     }
 
     @Override
     public String toString() {
         return "DatasetEnrichmentInfo{" +
                 "accession='" + accession + '\'' +
-                "database='" + database + '\'' +
+                ", database='" + database + '\'' +
                 ", enrichTime=" + enrichTime +
                 ", status='" + status + '\'' +
-                ", title='" + title + '\'' +
-                ", abstractDescription='" + abstractDescription + '\'' +
-                ", sampleProtocol='" + sampleProtocol + '\'' +
-                ", dataProtocol='" + dataProtocol + '\'' +
+                ", synonyms=" + synonyms +
+                ", originalAttributes=" + originalAttributes +
                 '}';
     }
-
-
 }

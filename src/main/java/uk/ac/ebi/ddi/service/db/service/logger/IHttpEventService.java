@@ -4,8 +4,6 @@ import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import uk.ac.ebi.ddi.service.db.model.logger.HttpEvent;
 
-import java.math.BigInteger;
-
 /**
  * @quthor Yasset Perez-Riverol (ypriverol@gmail.com)
  */

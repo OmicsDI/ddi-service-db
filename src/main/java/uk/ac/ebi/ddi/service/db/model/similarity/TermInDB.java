@@ -1,6 +1,5 @@
 package uk.ac.ebi.ddi.service.db.model.similarity;
 
-import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 import uk.ac.ebi.ddi.service.db.model.logger.AbstractDocument;
 

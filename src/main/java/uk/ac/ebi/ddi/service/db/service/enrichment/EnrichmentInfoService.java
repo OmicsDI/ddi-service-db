@@ -4,7 +4,6 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.ddi.service.db.exception.DBWriteException;
@@ -27,7 +26,7 @@ public class EnrichmentInfoService implements IEnrichmentInfoService {
 
         DatasetEnrichmentInfo oldDatasetEnrichmentInfo = accessRepo.findByAccessionDatabaseStatusQuery(datasetEnrichmentInfo.getAccession(),
                 datasetEnrichmentInfo.getDatabase(), "new");
-        if (oldDatasetEnrichmentInfo!=null){
+        if (oldDatasetEnrichmentInfo != null){
             oldDatasetEnrichmentInfo.setStatus("old");
             accessRepo.save(oldDatasetEnrichmentInfo);
         }
@@ -66,9 +65,7 @@ public class EnrichmentInfoService implements IEnrichmentInfoService {
         if ((accession == null || database== null))
             throw new DBWriteException(" The accession/databaseName to the original resource should contain a string");
 
-        DatasetEnrichmentInfo datasetEnrichmentInfo = accessRepo.findByAccessionDatabaseStatusQuery(accession,database,"new");
-
-        return datasetEnrichmentInfo;
+        return accessRepo.findByAccessionDatabaseStatusQuery(accession,database,"new");
 
     }
 
