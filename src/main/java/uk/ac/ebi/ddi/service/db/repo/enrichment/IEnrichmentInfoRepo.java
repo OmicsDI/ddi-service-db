@@ -17,4 +17,7 @@ public interface IEnrichmentInfoRepo extends MongoRepository<DatasetEnrichmentIn
     @Query("{'$and':[{'accession': ?0},{'database': ?1}, {'status': ?2}]}")
     public DatasetEnrichmentInfo findByAccessionDatabaseStatusQuery(String accession, String database, String status);
 
+    @Query("{'$and':[{'accession': ?0},{'database': ?1}]}")
+    public DatasetEnrichmentInfo findByAccessionDatabaseQuery(String accession, String database);
+
 }

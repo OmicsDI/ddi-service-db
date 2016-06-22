@@ -1,5 +1,7 @@
 package uk.ac.ebi.ddi.service.db.model.similarity;
 
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 import uk.ac.ebi.ddi.service.db.model.logger.AbstractDocument;
 
@@ -10,11 +12,17 @@ import java.util.List;
  * Created by mingze on 25/09/15.
  */
 @Document(collection = "enrichment.DatasetStatInfo")
+@CompoundIndexes({
+        @CompoundIndex(name = "accession_database", def = "{'accession' : 1, 'database': 1}", unique = true)
+})
 public class DatasetStatInfo extends AbstractDocument implements Serializable {
 
     private String accession;
+
     private String database;
+
     private String expDataType;
+
     private List<IntersectionInfo> intersectionInfos;
 
     public DatasetStatInfo(String accession, String database, String expDataType, List<IntersectionInfo> intersectionInfos) {

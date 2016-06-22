@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
-import java.util.Map;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -23,16 +23,25 @@ public class DatasetSimilars implements Serializable{
     @Indexed
     private String database;
 
-    private Map<String, Set<String>> similars;
+    private Set<SimilarDataset> similars;
+
+    public DatasetSimilars() {
+    }
 
     public DatasetSimilars(String accession, String database) {
         this.accession = accession;
         this.database = database;
     }
 
-    public DatasetSimilars(String accession, String database, Map<String, Set<String>> similars) {
+    public DatasetSimilars(String accession, String database, Set<SimilarDataset> similars) {
         this(accession, database);
         this.similars = similars;
+    }
+
+    public DatasetSimilars(String accession, String database, SimilarDataset similar) {
+        this(accession, database);
+        this.similars = new HashSet<>();
+        this.similars.add(similar);
     }
 
     public String getAccession() {
@@ -51,11 +60,11 @@ public class DatasetSimilars implements Serializable{
         this.database = database;
     }
 
-    public Map<String, Set<String>> getSimilars() {
+    public Set<SimilarDataset> getSimilars() {
         return similars;
     }
 
-    public void setSimilars(Map<String, Set<String>> similars) {
+    public void setSimilars(Set<SimilarDataset> similars) {
         this.similars = similars;
     }
 }

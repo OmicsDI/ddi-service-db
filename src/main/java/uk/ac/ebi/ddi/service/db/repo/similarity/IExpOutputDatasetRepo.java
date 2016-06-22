@@ -14,14 +14,6 @@ import uk.ac.ebi.ddi.service.db.model.similarity.ExpOutputDataset;
 
 public interface IExpOutputDatasetRepo extends MongoRepository<ExpOutputDataset,ObjectId>{
 
-//    @Query(value = "{'abstractResource.$accession' : ?0, 'abstractResource.$database' : ?1}", count = true)
-//    long getNumberEventByHttpEventDataSetResource(String acc, String database);
-//
-//    @Query(value = "{'abstractResource.$id' : ?0}", count = true)
-//    long getNumberEventByDataResource(ObjectId _id);
-//
-//    List<HttpEvent> findByAbstractResource(AbstractResource abstractResource);
-
     @Query("{$and: [{accession: ?0},{database: ?1}]}")
     public ExpOutputDataset findByAccessionQuery(String accession, String database);
 

@@ -70,6 +70,16 @@ public class EnrichmentInfoService implements IEnrichmentInfoService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public DatasetEnrichmentInfo readByAccessionDatabase(String accession, String database) {
+        if ((accession == null || database== null))
+            throw new DBWriteException(" The accession/databaseName to the original resource should contain a string");
+
+        return accessRepo.findByAccessionDatabaseQuery(accession,database);
+
+    }
+
+    @Override
     public boolean isDatasetExist(String accession, String database) {
         DatasetEnrichmentInfo dataset = accessRepo.findByAccessionDatabaseStatusQuery(accession, database, "new");
         if ((dataset != null)) return true;

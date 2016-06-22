@@ -19,6 +19,7 @@ public interface ITermInDBService {
      */
     TermInDB insert(TermInDB termInDB);
 
+    List<TermInDB> insert(List<TermInDB> terms);
 
     /**
      * read a term from database

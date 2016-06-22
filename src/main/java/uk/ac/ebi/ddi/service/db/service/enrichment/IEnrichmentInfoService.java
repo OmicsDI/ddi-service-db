@@ -50,6 +50,9 @@ public interface IEnrichmentInfoService {
 
     DatasetEnrichmentInfo readByAccession(String accession, String database);
 
+    DatasetEnrichmentInfo readByAccessionDatabase(String accession, String database);
+
+
     boolean isDatasetExist(String accession, String database);
 
     void deleteAll();

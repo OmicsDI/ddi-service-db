@@ -1,5 +1,7 @@
 package uk.ac.ebi.ddi.service.db.model.similarity;
 
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 import uk.ac.ebi.ddi.service.db.model.logger.AbstractDocument;
 
@@ -7,49 +9,52 @@ import uk.ac.ebi.ddi.service.db.model.logger.AbstractDocument;
  * Created by mingze on 07/09/15.
  */
 @Document(collection = "enrichment.TermInDB")
-public class TermInDB extends AbstractDocument {
-    private String termName;
-    private int datasetFrequency;//the number of documents which concains this term
-    private int timeOfAccurrenceInDB;
+@CompoundIndexes({
+        @CompoundIndex(name = "accession_database", def = "{'accession' : 1, 'database': 1, 'termAccession': 1}", unique = true)
+})
+public class TermInDB extends AbstractDocument{
+
+    private String termAccession;
+
+    private String database;
+
+    private String accession;
+
     private String dataType;
 
-    public TermInDB(String termName, String dataType) {
-        this.termName = termName;
-        this.timeOfAccurrenceInDB = 1;
-        this.datasetFrequency = 1;
-        this.dataType = dataType;
+    public TermInDB(String accession, String database, String termAccession, String dataType) {
+        this.termAccession = termAccession;
+        this.dataType      = dataType;
+        this.accession     = accession;
+        this.database      = database;
     }
 
-    public int getTimeOfAccurrenceInDB() {
-        return timeOfAccurrenceInDB;
+    public String getTermAccession() {
+        return termAccession;
     }
 
-    public void setTimeOfAccurrenceInDB(int timeOfAccurrenceInDB) {
-        this.timeOfAccurrenceInDB = timeOfAccurrenceInDB;
+    public void setTermAccession(String termAccession) {
+        this.termAccession = termAccession;
+    }
+
+    public String getDatabase() {
+        return database;
+    }
+
+    public void setDatabase(String database) {
+        this.database = database;
+    }
+
+    public String getAccession() {
+        return accession;
+    }
+
+    public void setAccession(String accession) {
+        this.accession = accession;
     }
 
     public String getTermName() {
-        return termName;
-    }
-
-    public void setTermName(String termName) {
-        this.termName = termName;
-    }
-
-    public void increaseTimeOfAccurrenceInDB() {
-        this.timeOfAccurrenceInDB++;
-    }
-
-    public void increaseDatasetFrequency() {
-        this.datasetFrequency++;
-    }
-
-    public int getDatasetFrequency() {
-        return datasetFrequency;
-    }
-
-    public void setDatasetFrequency(int datasetFrequency) {
-        this.datasetFrequency = datasetFrequency;
+        return termAccession;
     }
 
     public String getDataType() {

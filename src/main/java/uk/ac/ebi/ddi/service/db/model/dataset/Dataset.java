@@ -10,6 +10,7 @@ import uk.ac.ebi.ddi.service.db.utils.DatasetCategory;
 
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -176,6 +177,12 @@ public class Dataset implements Serializable{
 
     public void setInitHashCode(int initHashCode) {
         this.initHashCode = initHashCode;
+    }
+
+    public void addAdditional(String key, Set<String> values){
+        if(additional == null)
+            additional = new HashMap<>();
+        additional.put(key, values);
     }
 
     @Override

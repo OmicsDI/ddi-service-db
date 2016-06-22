@@ -7,9 +7,12 @@ package uk.ac.ebi.ddi.service.db.model.similarity;
 public class IntersectionInfo {
 
     private String relatedDatasetAcc;
+
     private String relatedDatasetDatabase;
+
     private double cosineScore;
-    private int sharedTermsNo;
+
+    private int    sharedTermsNo;
 
     public String getRelatedDatasetAcc() {
         return relatedDatasetAcc;

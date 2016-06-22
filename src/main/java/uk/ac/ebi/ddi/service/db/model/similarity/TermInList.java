@@ -5,8 +5,9 @@ import org.bson.types.ObjectId;
 /**
  * Created by mingze on 11/09/15.
  */
+@Deprecated
 public class TermInList implements Comparable<TermInList>{
-    private ObjectId idInDB;
+
     private String termName;
 
     public TermInList(String termName) {
@@ -19,14 +20,6 @@ public class TermInList implements Comparable<TermInList>{
 
     public void setTermName(String termName) {
         this.termName = termName;
-    }
-
-    public ObjectId getIdInDB() {
-        return idInDB;
-    }
-
-    public void setIdInDB(ObjectId indexInDB) {
-        this.idInDB = indexInDB;
     }
 
     public int compareTo(TermInList anotherTerm) {

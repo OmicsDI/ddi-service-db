@@ -30,18 +30,17 @@ public class TermInDBService implements ITermInDBService {
 
     @Override
     public TermInDB insert(TermInDB termInDB) {
-        if (accessRepo.findByNameQuery(termInDB.getTermName()) != null) {
-            return termInDB;
-        }
 
         TermInDB insertedTerm = accessRepo.insert(termInDB);
         if ((insertedTerm.getId() == null))
             throw new DBWriteException("Insert failed, no _id assigned to this termInDB");
-//        insertedTerm.setNextTermInDB(insertedTerm.getId());
         return insertedTerm;
     }
 
-
+    @Override
+    public List<TermInDB> insert(List<TermInDB> terms) {
+        return accessRepo.insert(terms);
+    }
 
     @Override
     public TermInDB read(ObjectId id) {
@@ -56,9 +55,6 @@ public class TermInDBService implements ITermInDBService {
 
     @Override
     public TermInDB update(TermInDB termInDB) {
-//        TermInDB existingTermInDB = accessRepo.findOne(termInDB.getId());
-//        existingTermInDB.setNextTermInDB(termInDB.getNextTermInDB());
-
         return accessRepo.save(termInDB);
     }
 
@@ -79,8 +75,8 @@ public class TermInDBService implements ITermInDBService {
 
 
     @Override
-    public boolean isTermExist(String termName) {
-        TermInDB mainTerm = accessRepo.findByNameQuery(termName);
+    public boolean isTermExist(String termAccession) {
+        TermInDB mainTerm = accessRepo.findByNameQuery(termAccession);
         return (mainTerm != null);
     }
 
@@ -96,8 +92,6 @@ public class TermInDBService implements ITermInDBService {
 
     @Override
     public List<TermInDB> readAllInOneType(String dataType){
-        Query query = new Query();
-        query.addCriteria(Criteria.where("dataType").is(dataType));
-        return mongoOperation.find(query, TermInDB.class);
+        return accessRepo.findByDataType(dataType);
     }
 }

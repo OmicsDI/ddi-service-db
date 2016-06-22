@@ -14,14 +14,6 @@ import uk.ac.ebi.ddi.service.db.model.similarity.DatasetStatInfo;
 
 public interface IDatasetStatInfoRepo extends MongoRepository<DatasetStatInfo,ObjectId>{
 
-//    @Query(value = "{'abstractResource.$accession' : ?0, 'abstractResource.$database' : ?1}", count = true)
-//    long getNumberEventByHttpEventDataSetResource(String acc, String database);
-//
-//    @Query(value = "{'abstractResource.$id' : ?0}", count = true)
-//    long getNumberEventByDataResource(ObjectId _id);
-//
-//    List<HttpEvent> findByAbstractResource(AbstractResource abstractResource);
-
     @Query("{'$and': [{'accession': ?0},{'database': ?1}]}")
     public DatasetStatInfo findByAccessionQuery(String accession, String database);
 

@@ -34,16 +34,16 @@ public class TermInDBServiceTest {
 
     @Test
     public void readAll() {
-        for (int i = 0; i < 100; i++) {
-            TermInDB term = new TermInDB("testTerm"+i,"testType");
-            System.out.println(term.getId());
-            termService.insert(term);
-        }
-//        System.exit(1);
-        Page<TermInDB> terms = termService.readAll(0, 100000000);
-        for (TermInDB term : terms) {
-            System.out.println(term.toString());
-        }
+//        for (int i = 0; i < 100; i++) {
+//            TermInDB term = new TermInDB("testTerm"+i,"testType");
+//            System.out.println(term.getId());
+//            termService.insert(term);
+//        }
+////        System.exit(1);
+//        Page<TermInDB> terms = termService.readAll(0, 100000000);
+//        for (TermInDB term : terms) {
+//            System.out.println(term.toString());
+//        }
     }
 
 
