@@ -184,6 +184,13 @@ public class Dataset implements Serializable{
             additional = new HashMap<>();
         additional.put(key, values);
     }
+    public void addCrossReferences(String key, Set<String> values){
+        if(crossReferences == null)
+            crossReferences = new HashMap<>();
+        crossReferences.put(key, values);
+    }
+
+
 
     @Override
     public int hashCode() {
