@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import uk.ac.ebi.ddi.service.db.model.dataset.Database;
 import uk.ac.ebi.ddi.service.db.repo.dataset.IDatabaseRepo;
 
+import java.util.List;
+
 /**
  * Created by yperez on 26/05/2016.
  */
@@ -39,5 +41,10 @@ public class DatabaseService implements  IDatabaseService{
     @Override
     public Database read(String name) {
         return databaseRepo.findByNameQuery(name);
+    }
+
+    @Override
+    public List<Database> readAll(){
+        return databaseRepo.findAll();
     }
 }

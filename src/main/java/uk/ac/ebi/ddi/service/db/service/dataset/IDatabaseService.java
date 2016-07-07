@@ -3,6 +3,8 @@ package uk.ac.ebi.ddi.service.db.service.dataset;
 import org.bson.types.ObjectId;
 import uk.ac.ebi.ddi.service.db.model.dataset.Database;
 
+import java.util.List;
+
 /**
  * Created by yperez on 26/05/2016.
  */
@@ -39,5 +41,7 @@ public interface IDatabaseService {
      * @return Return the entry for the dataset
      */
     public Database read(String name);
+
+    public List<Database> readAll();
 
 }

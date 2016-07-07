@@ -49,4 +49,14 @@ public class IntersectionInfo {
     public void setRelatedDatasetDatabase(String relatedDatasetDatabase) {
         this.relatedDatasetDatabase = relatedDatasetDatabase;
     }
+
+    @Override
+    public String toString() {
+        return "IntersectionInfo{" +
+                "relatedDatasetAcc='" + relatedDatasetAcc + '\'' +
+                ", relatedDatasetDatabase='" + relatedDatasetDatabase + '\'' +
+                ", cosineScore=" + cosineScore +
+                ", sharedTermsNo=" + sharedTermsNo +
+                '}';
+    }
 }
