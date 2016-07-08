@@ -1,6 +1,7 @@
 package uk.ac.ebi.ddi.service.db.model.enrichment;
 
 import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import uk.ac.ebi.ddi.service.db.model.logger.AbstractDocument;
@@ -15,11 +16,13 @@ import java.util.List;
  * label is also the label of the word
  */
 @Document(collection = "enrichment.synonyms")
+
 public class Synonym extends AbstractDocument implements Serializable {
 
     private static final long serialVersionUID = 1326887243102331825L;
 
     @Field
+    @Indexed(unique = true)
     private String label;
 
     @Field

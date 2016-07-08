@@ -102,6 +102,11 @@ public class SynonymsService implements ISynonymsService {
      */
     @Override
     public Synonym update(Synonym synonym) {
+        Synonym existing = accessRepo.findByLabelQuery(synonym.getLabel());
+        if( existing != null){
+            existing.setSynonyms(synonym.getSynonyms());
+            return  accessRepo.save(existing);
+        }
         return accessRepo.save(synonym);
     }
 

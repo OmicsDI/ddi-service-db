@@ -53,5 +53,24 @@ public class WordInField implements Comparable<WordInField>{
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        WordInField that = (WordInField) o;
+
+        if (from != that.from) return false;
+        if (to != that.to) return false;
+        return text.equals(that.text);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = text.hashCode();
+        result = 31 * result + from;
+        result = 31 * result + to;
+        return result;
+    }
 }
