@@ -100,4 +100,9 @@ public class DatasetStatInfoService implements IDatasetStatInfoService {
     public void deleteAll() {
         accessRepo.deleteAll();
     }
+
+    @Override
+    public List<DatasetStatInfo> readAll(){
+        return accessRepo.findAll();
+    }
 }

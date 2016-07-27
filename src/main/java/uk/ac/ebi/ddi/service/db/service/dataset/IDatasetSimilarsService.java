@@ -43,7 +43,7 @@ public interface IDatasetSimilarsService {
      * @param id Identifier of the datasetAccess to be removed from the database
      * @return the removed datatsetAccess
      */
-    public void delete(ObjectId id);
+    public void delete(DatasetSimilars dataset);
 
     /**
      * Read a DatasetAccess from the database using the accession and the database
@@ -59,4 +59,6 @@ public interface IDatasetSimilarsService {
      * @return
      */
     public List<DatasetSimilars> findByAccession(String accession);
+
+    public List<DatasetSimilars> readAll();
 }

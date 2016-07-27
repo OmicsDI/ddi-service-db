@@ -6,6 +6,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import uk.ac.ebi.ddi.service.db.model.enrichment.DatasetEnrichmentInfo;
 
+import java.util.List;
+
 /**
  * The Access Repository it give information about the access to any resource in the database and the system.
  *
@@ -18,6 +20,6 @@ public interface IEnrichmentInfoRepo extends MongoRepository<DatasetEnrichmentIn
     public DatasetEnrichmentInfo findByAccessionDatabaseStatusQuery(String accession, String database, String status);
 
     @Query("{'$and':[{'accession': ?0},{'database': ?1}]}")
-    public DatasetEnrichmentInfo findByAccessionDatabaseQuery(String accession, String database);
+    public List<DatasetEnrichmentInfo> findByAccessionDatabaseQuery(String accession, String database);
 
 }
