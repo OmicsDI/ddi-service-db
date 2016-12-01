@@ -22,4 +22,8 @@ public interface ITermInDBRepo extends MongoRepository<TermInDB,ObjectId>{
     @Query("{dataType: ?0}")
     public List<TermInDB> findByDataType(String dataType);
 
+
+    @Query("{'$and':[{dataType: ?0},{IDFCalculated: 'false'}]}")
+    public List<TermInDB> findUncalculatedTermsByDataType(String dataType);
+
 }

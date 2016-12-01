@@ -61,4 +61,7 @@ public interface ITermInDBService {
     void deleteAll();
 
     List<TermInDB> readAllInOneType(String dataType);
+
+    List<TermInDB> readAllUncalculatedTermsInOneType(String dataType);
+
 }

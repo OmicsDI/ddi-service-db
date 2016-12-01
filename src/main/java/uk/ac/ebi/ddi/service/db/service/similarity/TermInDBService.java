@@ -94,4 +94,9 @@ public class TermInDBService implements ITermInDBService {
     public List<TermInDB> readAllInOneType(String dataType){
         return accessRepo.findByDataType(dataType);
     }
+
+    @Override
+    public List<TermInDB> readAllUncalculatedTermsInOneType(String dataType){
+        return accessRepo.findUncalculatedTermsByDataType(dataType);
+    }
 }
