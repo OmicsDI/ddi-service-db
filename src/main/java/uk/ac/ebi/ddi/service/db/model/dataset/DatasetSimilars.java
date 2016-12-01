@@ -1,5 +1,7 @@
 package uk.ac.ebi.ddi.service.db.model.dataset;
 
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -22,6 +24,9 @@ public class DatasetSimilars implements Serializable{
     private String accession;
     @Indexed
     private String database;
+
+    @Id
+    ObjectId _id;
 
     private Set<SimilarDataset> similars;
 
@@ -66,5 +71,9 @@ public class DatasetSimilars implements Serializable{
 
     public void setSimilars(Set<SimilarDataset> similars) {
         this.similars = similars;
+    }
+
+    public ObjectId get_id() {
+        return _id;
     }
 }

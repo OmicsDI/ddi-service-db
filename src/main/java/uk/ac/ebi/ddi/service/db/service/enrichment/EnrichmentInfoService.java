@@ -10,6 +10,8 @@ import uk.ac.ebi.ddi.service.db.exception.DBWriteException;
 import uk.ac.ebi.ddi.service.db.model.enrichment.DatasetEnrichmentInfo;
 import uk.ac.ebi.ddi.service.db.repo.enrichment.IEnrichmentInfoRepo;
 
+import java.util.List;
+
 /**
  * Created by mingze on 30/07/15.
  */
@@ -64,14 +66,12 @@ public class EnrichmentInfoService implements IEnrichmentInfoService {
     public DatasetEnrichmentInfo readByAccession(String accession, String database) {
         if ((accession == null || database== null))
             throw new DBWriteException(" The accession/databaseName to the original resource should contain a string");
-
         return accessRepo.findByAccessionDatabaseStatusQuery(accession,database,"new");
-
     }
 
     @Override
     @Transactional(readOnly = true)
-    public DatasetEnrichmentInfo readByAccessionDatabase(String accession, String database) {
+    public List<DatasetEnrichmentInfo> readByAccessionDatabase(String accession, String database) {
         if ((accession == null || database== null))
             throw new DBWriteException(" The accession/databaseName to the original resource should contain a string");
 

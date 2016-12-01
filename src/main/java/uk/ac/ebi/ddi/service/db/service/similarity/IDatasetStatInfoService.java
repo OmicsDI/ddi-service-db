@@ -59,4 +59,6 @@ public interface IDatasetStatInfoService {
     void deleteAll();
 
     List<DatasetStatInfo> readAllInOneType(String dataType);
+
+    List<DatasetStatInfo> readAll();
 }

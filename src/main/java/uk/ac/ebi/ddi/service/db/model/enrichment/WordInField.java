@@ -61,8 +61,7 @@ public class WordInField implements Comparable<WordInField>{
         WordInField that = (WordInField) o;
 
         if (from != that.from) return false;
-        if (to != that.to) return false;
-        return text.equals(that.text);
+        return to == that.to && text.equals(that.text);
 
     }
 

@@ -4,7 +4,6 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import uk.ac.ebi.ddi.service.db.model.dataset.Dataset;
 import uk.ac.ebi.ddi.service.db.model.dataset.DatasetSimilars;
 import uk.ac.ebi.ddi.service.db.repo.dataset.IDatasetSimilarsRepo;
 
@@ -44,8 +43,11 @@ public class DatasetSimilarsService implements IDatasetSimilarsService{
     }
 
     @Override
-    public void delete(ObjectId id) {
-        datasetRepo.delete(id);
+    public void delete(DatasetSimilars dataset) {
+        DatasetSimilars datasetExisting = datasetRepo.findByAccessionDatabaseQuery(dataset.getAccession(), dataset.getDatabase());
+        if(datasetExisting != null){
+            datasetRepo.delete(datasetExisting);
+        }
     }
 
     @Override
@@ -56,5 +58,10 @@ public class DatasetSimilarsService implements IDatasetSimilarsService{
     @Override
     public List<DatasetSimilars> findByAccession(String accession) {
         return datasetRepo.findByAccession(accession);
+    }
+
+    @Override
+    public List<DatasetSimilars> readAll(){
+        return datasetRepo.findAll();
     }
 }

@@ -4,6 +4,8 @@ import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import uk.ac.ebi.ddi.service.db.model.enrichment.DatasetEnrichmentInfo;
 
+import java.util.List;
+
 /**
  * Created by mingze on 30/07/15.
  */
@@ -50,7 +52,7 @@ public interface IEnrichmentInfoService {
 
     DatasetEnrichmentInfo readByAccession(String accession, String database);
 
-    DatasetEnrichmentInfo readByAccessionDatabase(String accession, String database);
+    List<DatasetEnrichmentInfo> readByAccessionDatabase(String accession, String database);
 
 
     boolean isDatasetExist(String accession, String database);

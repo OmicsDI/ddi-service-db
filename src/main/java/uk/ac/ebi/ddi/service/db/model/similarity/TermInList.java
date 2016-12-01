@@ -1,7 +1,5 @@
 package uk.ac.ebi.ddi.service.db.model.similarity;
 
-import org.bson.types.ObjectId;
-
 /**
  * Created by mingze on 11/09/15.
  */

@@ -23,6 +23,7 @@ public class DatasetStatInfo extends AbstractDocument implements Serializable {
 
     private String expDataType;
 
+    //Todo: This should be a set because you expect only one time the same value
     private List<IntersectionInfo> intersectionInfos;
 
     public DatasetStatInfo(String accession, String database, String expDataType, List<IntersectionInfo> intersectionInfos) {
