@@ -22,11 +22,14 @@ public class TermInDB extends AbstractDocument{
 
     private String dataType;
 
+    private boolean IDFCalculated;
+
     public TermInDB(String accession, String database, String termAccession, String dataType) {
         this.termAccession = termAccession;
         this.dataType      = dataType;
         this.accession     = accession;
         this.database      = database;
+        this.IDFCalculated = false;
     }
 
     public String getTermAccession() {
@@ -65,5 +68,11 @@ public class TermInDB extends AbstractDocument{
         this.dataType = dataType;
     }
 
+    public boolean isIDFCalculated(){
+        return IDFCalculated;
+    }
 
+    public void setIDFCalculatedAsTrue(){
+        this.IDFCalculated = true;
+    }
 }
