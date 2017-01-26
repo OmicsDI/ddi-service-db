@@ -8,7 +8,7 @@
     <parent>
         <groupId>uk.ac.ebi.ddi.maven</groupId>
         <artifactId>ddi-base-master</artifactId>
-        <version>1.0</version>
+        <version>1.1-SNAPSHOT</version>
     </parent>
 
     <groupId>uk.ac.ebi.ddi</groupId>
@@ -128,7 +128,15 @@
     </build>
 
     <repositories>
-
+ <!-- EBI repo -->
+        <repository>
+            <id>nexus-ebi-release-repo</id>
+            <url>http://www.ebi.ac.uk/Tools/maven/repos/content/groups/ebi-repo/</url>
+        </repository>
+        <repository>
+            <id>nexus-ebi-snapshot-repo</id>
+            <url>http://www.ebi.ac.uk/Tools/maven/repos/content/groups/ebi-snapshots/</url>
+        </repository>
         <!-- For main Spring releases -->
         <repository>
             <id>org.springframework.maven.release</id>
@@ -164,14 +172,18 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-
-        <repository>
-            <id>jboss</id>
-            <name>JBoss repository</name>
-            <url>https://repository.jboss.org/nexus/content/repositories/releases</url>
-        </repository>
-
     </repositories>
-
+<distributionManagement>
+<!-- EBI repo -->
+<repository>
+   <id>nexus-ebi-repo</id>
+   <url>http://www.ebi.ac.uk/Tools/maven/repos/content/groups/ebi-repo/</url>
+</repository>
+<!-- EBI SNAPSHOT repo -->
+<snapshotRepository>
+   <id>nexus-ebi-repo-snapshots</id>
+   <url>http://www.ebi.ac.uk/Tools/maven/repos/content/groups/ebi-snapshots/</url>
+</snapshotRepository>
+</distributionManagement>
 
 </project>
