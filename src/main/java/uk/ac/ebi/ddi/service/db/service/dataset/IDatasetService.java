@@ -19,34 +19,34 @@ public interface IDatasetService {
      * @param datasetResource The new datset access to be save in the database
      * @return the inserted datasetaccess
      */
-    public Dataset save(Dataset datasetResource);
+    Dataset save(Dataset datasetResource);
 
     /**
      * Read a datasetAccess entry from the database
      * @param id of the datasetaccess entry
      * @return A DatasetAccess
      */
-    public Dataset read(ObjectId id);
+    Dataset read(ObjectId id);
 
     /**
      * Read all the datasetAccess from the database
      * @return A list of datasetAccess
      */
-    public Page<Dataset> readAll(int pageStart, int size);
+    Page<Dataset> readAll(int pageStart, int size);
 
     /**
      * Update a datasetAccess entry in the database using the information of the new datasetAccess
      * @param datasetResource the new datasetAccess information
      * @return the updated datasetAccess.
      */
-    public Dataset update(ObjectId id, Dataset datasetResource);
+    Dataset update(ObjectId id, Dataset datasetResource);
 
     /**
      * Remove a DatasetAccess in the Database using the id.
      * @param id Identifier of the datasetAccess to be removed from the database
      * @return the removed datatsetAccess
      */
-    public void delete(ObjectId id);
+    void delete(ObjectId id);
 
     /**
      * Read a DatasetAccess from the database using the accession and the database
@@ -54,18 +54,18 @@ public interface IDatasetService {
      * @param database  Database of the DatasetAceess
      * @return Return the entry for the dataset
      */
-    public Dataset read(String acc, String database);
+    Dataset read(String acc, String database);
 
-    public List<Dataset> readDatasetHashCode(String database);
+    List<Dataset> readDatasetHashCode(String database);
 
-    public Dataset updateCategory(Dataset dataset);
+    Dataset updateCategory(Dataset dataset);
 
     /**
      * Find all datasets by an specific accession
      * @param accession
      * @return
      */
-    public List<Dataset> findByAccession(String accession);
+    List<Dataset> findByAccession(String accession);
 
 
 }

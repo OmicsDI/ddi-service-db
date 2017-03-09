@@ -18,34 +18,34 @@ public interface IDatasetResourceService {
      * @param datasetResource The new datset access to be save in the database
      * @return the inserted datasetaccess
      */
-    public DatasetResource save(DatasetResource datasetResource);
+    DatasetResource save(DatasetResource datasetResource);
 
     /**
      * Read a datasetAccess entry from the database
      * @param id of the datasetaccess entry
      * @return A DatasetAccess
      */
-    public DatasetResource read(ObjectId id);
+    DatasetResource read(ObjectId id);
 
     /**
      * Read all the datasetAccess from the database
      * @return A list of datasetAccess
      */
-    public Page<DatasetResource> readAll(int pageStart, int size);
+    Page<DatasetResource> readAll(int pageStart, int size);
 
     /**
      * Update a datasetAccess entry in the database using the information of the new datasetAccess
      * @param datasetResource the new datasetAccess information
      * @return the updated datasetAccess.
      */
-    public DatasetResource update(DatasetResource datasetResource);
+    DatasetResource update(DatasetResource datasetResource);
 
     /**
      * Remove a DatasetAccess in the Database using the id.
      * @param id Identifier of the datasetAccess to be removed from the database
      * @return the removed datatsetAccess
      */
-    public DatasetResource delete(ObjectId id);
+    DatasetResource delete(ObjectId id);
 
     /**
      * This function add a new Access to the DatasetAccess
@@ -53,7 +53,7 @@ public interface IDatasetResourceService {
      * @param database Domain Accession
      * @return DatasetAccess updated with the new access
      */
-    public DatasetResource addAccess(String acc, String database, HttpEvent httpEvent);
+    DatasetResource addAccess(String acc, String database, HttpEvent httpEvent);
 
     /**
      * Read a DatasetAccess from the database using the accession and the database
@@ -61,7 +61,7 @@ public interface IDatasetResourceService {
      * @param database  Database of the DatasetAceess
      * @return Return the entry for the dataset
      */
-    public DatasetResource read(String acc, String database);
+    DatasetResource read(String acc, String database);
 
 
 }

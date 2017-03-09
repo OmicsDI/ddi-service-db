@@ -4,6 +4,7 @@ package uk.ac.ebi.ddi.service.db.repo.similarity;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
+import org.springframework.stereotype.Repository;
 import uk.ac.ebi.ddi.service.db.model.similarity.TermInDB;
 
 import java.util.List;
@@ -13,17 +14,17 @@ import java.util.List;
  *
  * @author mingze
  */
-
+@Repository
 public interface ITermInDBRepo extends MongoRepository<TermInDB,ObjectId>{
 
     @Query("{termAccession: ?0}")
-    public TermInDB findByNameQuery(String termName);
+    TermInDB findByNameQuery(String termName);
 
     @Query("{dataType: ?0}")
-    public List<TermInDB> findByDataType(String dataType);
+    List<TermInDB> findByDataType(String dataType);
 
 
     @Query("{'$and':[{dataType: ?0},{IDFCalculated: 'false'}]}")
-    public List<TermInDB> findUncalculatedTermsByDataType(String dataType);
+    List<TermInDB> findUncalculatedTermsByDataType(String dataType);
 
 }

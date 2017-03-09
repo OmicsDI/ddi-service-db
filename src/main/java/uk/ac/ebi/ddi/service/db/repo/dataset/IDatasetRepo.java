@@ -5,6 +5,7 @@ import org.bson.types.ObjectId;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
+import org.springframework.stereotype.Repository;
 import uk.ac.ebi.ddi.service.db.model.dataset.Dataset;
 
 
@@ -15,19 +16,19 @@ import java.util.List;
  *
  * @author Mingze
  */
-
+@Repository
 public interface IDatasetRepo extends MongoRepository<Dataset,ObjectId>{
 
     @Query("{'$and':[{accession : ?0}, {database : ?1}]}")
-    public Dataset findByAccessionDatabaseQuery(String acc, String database);
+    Dataset findByAccessionDatabaseQuery(String acc, String database);
 
     @Query(value="{ database : ?0 }", fields ="{database : 1, accession : 1, hashCode: 1, currentStatus: 1}")
-    public List<Dataset> findByDatabase(String name);
+    List<Dataset> findByDatabase(String name);
 
     @Query("{_id: ?0}")
-    public Dataset findByIdDatabaseQuery(ObjectId _id);
+    Dataset findByIdDatabaseQuery(ObjectId _id);
 
     @Query("{accession: ?0}")
-    public List<Dataset> findByAccession(String accession);
+    List<Dataset> findByAccession(String accession);
 
 }

@@ -6,21 +6,23 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import uk.ac.ebi.ddi.service.db.exception.DBWriteException;
 import uk.ac.ebi.ddi.service.db.model.similarity.TermInDB;
 import uk.ac.ebi.ddi.service.db.repo.similarity.ITermInDBRepo;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
  * Created by mingze on 30/07/15.
  */
 
-@Component
+@Service
 public class TermInDBService implements ITermInDBService {
 
 
-    @Autowired
+    @Resource
     private ITermInDBRepo accessRepo;
 
     @Autowired

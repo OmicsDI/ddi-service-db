@@ -12,21 +12,21 @@ public interface IEvent {
      * of the log registered
      * @return return an string with no format about the logger message.
      */
-    public String getRawMessage();
+    String getRawMessage();
 
     /**
      * The log source should be a path of the log file that produce the log, or google analytics report url,
      * the logSource is a reference to the original source of the message.
      * @return
      */
-    public String getLogSource();
+    String getLogSource();
 
     /**
      * The resource is a reference to another IDocument that generate this raw message.
      * It can be null if the resource is not annotated in the database.
      * @return IDocument the referenced Document that origin the problem.
      */
-    public IDocument getResource();
+    IDocument getResource();
 
 
 }

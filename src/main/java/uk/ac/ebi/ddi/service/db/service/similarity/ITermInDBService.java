@@ -2,6 +2,7 @@ package uk.ac.ebi.ddi.service.db.service.similarity;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Repository;
 import uk.ac.ebi.ddi.service.db.model.similarity.TermInDB;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 /**
  * Created by mingze on 30/07/15.
  */
+@Repository
 public interface ITermInDBService {
 
     /**

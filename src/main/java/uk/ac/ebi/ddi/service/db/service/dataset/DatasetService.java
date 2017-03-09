@@ -5,9 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import uk.ac.ebi.ddi.service.db.model.dataset.Dataset;
 import uk.ac.ebi.ddi.service.db.repo.dataset.IDatasetRepo;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 
@@ -16,10 +18,10 @@ import java.util.List;
  *
  * @author Yasset Perez-Riverol
  */
-@Component
+@Service
 public class DatasetService implements IDatasetService {
 
-    @Autowired
+    @Resource
     private IDatasetRepo datasetAccessRepo;
 
     @Override

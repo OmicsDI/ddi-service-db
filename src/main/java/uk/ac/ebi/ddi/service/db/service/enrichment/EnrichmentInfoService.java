@@ -82,8 +82,7 @@ public class EnrichmentInfoService implements IEnrichmentInfoService {
     @Override
     public boolean isDatasetExist(String accession, String database) {
         DatasetEnrichmentInfo dataset = accessRepo.findByAccessionDatabaseStatusQuery(accession, database, "new");
-        if ((dataset != null)) return true;
-        else return false;
+        return (dataset != null);
     }
 
     @Override

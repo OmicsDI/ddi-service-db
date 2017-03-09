@@ -11,14 +11,14 @@
 		base-package="uk.ac.ebi.ddi.service.db.repo" />
 
 	<!-- Default bean name is 'mongo' -->
-	<mongo:mongo host="127.0.0.1" port="27017" />
-
+	<mongo:mongo host="mongos-hxvm7-dev-001.ebi.ac.uk" port="27017" />
+    <mongo:db-factory id="mongoDbFactory" host="mongos-hxvm7-dev-001.ebi.ac.uk" port="27017" dbname="ddi_db" />
 	<!-- Offers convenience methods and automatic mapping between MongoDB JSON 
 		documents and your domain classes. -->
-	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+<!--	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg ref="mongo" />
 		<constructor-arg name="databaseName" value="test" />
-	</bean>
+	</bean>-->
 	
 <!-- alternate config with in memory java driver to mongo With this, you are not going through mongo local db, instead of that, you are using a inmemory mongo instance --> 
 	<!--<bean name="fongo" class="com.github.fakemongo.Fongo">-->
@@ -32,9 +32,22 @@
 	<!-- localhost settings for mongo -->
 	<!--<mongo:db-factory id="mongoDbFactory" /> -->
 <!--  -->
-	<!--<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">-->
-		<!--<constructor-arg ref="mongoDbFactory" />-->
-	<!--</bean>-->
+
+    <mongo:mongo id="replicaSetMongo" replica-set="mongos-hxvm7-dev-001.ebi.ac.uk:27017" />
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <!-- <constructor-arg name="mongoDbFactory" ref="mongoDbFactory" /> -->
+        <constructor-arg ref="replicaSetMongo" />
+        <constructor-arg name="databaseName" value="ddi_db" />
+        <constructor-arg name="userCredentials" ref="mongoCredentials" />
+    </bean>
+    <bean id="mongoCredentials" class="org.springframework.data.authentication.UserCredentials">
+        <constructor-arg name="username" value="${mongo.username}" />
+        <constructor-arg name="password" value="${mongo.password}" />
+    </bean>
+
+	<!--<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg ref="mongoDbFactory" />
+	</bean>-->
 
     <bean id="service" class="uk.ac.ebi.ddi.service.db.service.logger.DatasetResourceService"/>
     <bean id="accessService" class="uk.ac.ebi.ddi.service.db.service.logger.HttpEventService"/>
@@ -45,7 +58,7 @@
 	<bean id="termInDBService" class="uk.ac.ebi.ddi.service.db.service.similarity.TermInDBService"/>
 	<bean id="expOutputDatasetService" class="uk.ac.ebi.ddi.service.db.service.similarity.ExpOutputDatasetService"/>
 	<bean id="InDBServiceRepo" class="uk.ac.ebi.ddi.service.db.repo.similarity.ITermInDBRepoImpl"/>
-
+	<!--<bean id = "expOutputDatasetRepo" class = "uk.ac.ebi.ddi.service.db.repo.similarity.IExpOutputDatasetRepoimpl"/>-->
 	<bean id="datasetService"       class="uk.ac.ebi.ddi.service.db.service.dataset.DatasetService" />
 	<bean id="datasetStatusService" class="uk.ac.ebi.ddi.service.db.service.dataset.DatasetStatusService"/>
 

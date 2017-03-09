@@ -39,9 +39,8 @@ public abstract class AbstractResource extends AbstractDocument{
 
         AbstractResource that = (AbstractResource) o;
 
-        if (resourceUUID != null ? !resourceUUID.equals(that.resourceUUID) : that.resourceUUID != null) return false;
+        return resourceUUID != null ? resourceUUID.equals(that.resourceUUID) : that.resourceUUID == null;
 
-        return true;
     }
 
     @Override

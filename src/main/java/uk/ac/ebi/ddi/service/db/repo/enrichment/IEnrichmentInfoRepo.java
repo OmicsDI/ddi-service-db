@@ -4,6 +4,7 @@ package uk.ac.ebi.ddi.service.db.repo.enrichment;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
+import org.springframework.stereotype.Repository;
 import uk.ac.ebi.ddi.service.db.model.enrichment.DatasetEnrichmentInfo;
 
 import java.util.List;
@@ -13,13 +14,13 @@ import java.util.List;
  *
  * @author Mingze
  */
-
+@Repository
 public interface IEnrichmentInfoRepo extends MongoRepository<DatasetEnrichmentInfo,ObjectId>{
 
     @Query("{'$and':[{'accession': ?0},{'database': ?1}, {'status': ?2}]}")
-    public DatasetEnrichmentInfo findByAccessionDatabaseStatusQuery(String accession, String database, String status);
+    DatasetEnrichmentInfo findByAccessionDatabaseStatusQuery(String accession, String database, String status);
 
     @Query("{'$and':[{'accession': ?0},{'database': ?1}]}")
-    public List<DatasetEnrichmentInfo> findByAccessionDatabaseQuery(String accession, String database);
+    List<DatasetEnrichmentInfo> findByAccessionDatabaseQuery(String accession, String database);
 
 }

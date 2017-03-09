@@ -8,21 +8,23 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import uk.ac.ebi.ddi.service.db.exception.DBWriteException;
 import uk.ac.ebi.ddi.service.db.model.similarity.DatasetStatInfo;
 import uk.ac.ebi.ddi.service.db.repo.similarity.IDatasetStatInfoRepo;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
  * Created by mingze on 30/07/15.
  */
 
-@Component
+@Service
 public class DatasetStatInfoService implements IDatasetStatInfoService {
 
 
-    @Autowired
+    @Resource
     private IDatasetStatInfoRepo accessRepo;
 
     @Autowired
@@ -85,10 +87,7 @@ public class DatasetStatInfoService implements IDatasetStatInfoService {
     @Override
     public boolean isDatasetExist(String accession, String database) {
         DatasetStatInfo dataset = accessRepo.findByAccessionQuery(accession, database);
-        if ((dataset != null)) return true;
-        else {
-            return false;
-        }
+        return (dataset != null);
     }
 
     @Override

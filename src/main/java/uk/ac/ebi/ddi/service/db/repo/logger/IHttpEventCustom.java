@@ -10,6 +10,6 @@ import java.util.List;
  */
 public interface IHttpEventCustom {
 
-    public List<ResourceStatVisit> getHttpEventByDatasetResource(int size);
+    List<ResourceStatVisit> getHttpEventByDatasetResource(int size);
 
 }

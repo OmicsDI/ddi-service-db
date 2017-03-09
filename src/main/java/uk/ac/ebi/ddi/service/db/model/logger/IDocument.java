@@ -12,19 +12,19 @@ public interface IDocument {
      * Every Document should contain an Id
      * @return
      */
-    public ObjectId getId();
+    ObjectId getId();
 
     /**
      * All the documents should be able to export to String
      * @return
      */
-    public String toString();
+    String toString();
 
     /**
      * This function allows to retrieve the type of the Object, is really useful
      * for query purpose where the user doesn't known the original type of the object.
      * @return
      */
-    public String getCategory();
+    String getCategory();
 
 }

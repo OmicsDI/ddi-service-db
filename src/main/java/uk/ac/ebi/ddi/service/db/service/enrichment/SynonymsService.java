@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import uk.ac.ebi.ddi.service.db.exception.DBWriteException;
 import uk.ac.ebi.ddi.service.db.model.enrichment.Synonym;
 import uk.ac.ebi.ddi.service.db.repo.enrichment.ISynonymsRepo;
+
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -20,7 +22,7 @@ import java.util.List;
 public class SynonymsService implements ISynonymsService {
 
 
-    @Autowired
+    @Resource
     private ISynonymsRepo accessRepo;
 
     /**

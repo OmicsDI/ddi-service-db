@@ -18,12 +18,12 @@ import java.util.List;
 public interface IPublicationDatasetRepo extends MongoRepository<PublicationDataset,ObjectId>{
 
     @Query("{'$and':[{accession : ?0}, {database : ?1}]}")
-    public PublicationDataset findByAccessionDatabaseQuery(String acc, String database);
+    PublicationDataset findByAccessionDatabaseQuery(String acc, String database);
 
     @Query(value="{ pubmedId : ?0 }")
-    public List<PublicationDataset> findByPubmedId(String name);
+    List<PublicationDataset> findByPubmedId(String name);
 
     @Query("{_id: ?0}")
-    public Dataset findByIdQuery(ObjectId _id);
+    Dataset findByIdQuery(ObjectId _id);
 
 }

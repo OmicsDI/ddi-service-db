@@ -128,7 +128,6 @@
     </build>
 
     <repositories>
-
         <repository>
             <id>nexus-ebi-release-repo</id>
             <url>http://www.ebi.ac.uk/Tools/maven/repos/content/groups/ebi-repo/</url>
@@ -172,7 +171,6 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-
     </repositories>
     <distributionManagement>
         <!-- EBI repo -->
@@ -188,3 +186,4 @@
     </distributionManagement>
 
 </project>
+

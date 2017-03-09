@@ -15,6 +15,6 @@ import uk.ac.ebi.ddi.service.db.model.similarity.DatasetStatInfo;
 public interface IDatasetStatInfoRepo extends MongoRepository<DatasetStatInfo,ObjectId>{
 
     @Query("{'$and': [{'accession': ?0},{'database': ?1}]}")
-    public DatasetStatInfo findByAccessionQuery(String accession, String database);
+    DatasetStatInfo findByAccessionQuery(String accession, String database);
 
 }
