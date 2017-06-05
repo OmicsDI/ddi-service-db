@@ -52,6 +52,8 @@ public class Dataset implements Serializable{
 
     private String currentStatus;
 
+    private boolean isClaimed;
+
     public Dataset() {
     }
 
@@ -190,7 +192,13 @@ public class Dataset implements Serializable{
         crossReferences.put(key, values);
     }
 
+    public boolean isClaimed() {
+        return isClaimed;
+    }
 
+    public void setClaimed(boolean claimed) {
+        isClaimed = claimed;
+    }
 
     @Override
     public int hashCode() {

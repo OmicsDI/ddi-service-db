@@ -3,7 +3,11 @@ package uk.ac.ebi.ddi.service.db.service.dataset;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import sun.misc.BASE64Decoder;
+import uk.ac.ebi.ddi.service.db.model.aggregate.BaseAggregate;
 import uk.ac.ebi.ddi.service.db.model.dataset.Dataset;
+import uk.ac.ebi.ddi.service.db.model.publication.PublicationDataset;
 
 import java.util.List;
 
@@ -67,5 +71,13 @@ public interface IDatasetService {
      */
     List<Dataset> findByAccession(String accession);
 
+
+    List<PublicationDataset> getMutiomicsDatasets();
+
+    <T extends BaseAggregate> List<T> getAggregationResults(Aggregation aggregation, String collectionName, Class<T> outputType);
+
+    List<Dataset> getSimilarByPubmed(String pubmedId);
+
+    void updateDatasetClaim(String[] databases);
 
 }

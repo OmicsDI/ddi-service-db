@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.ddi.service.db.model.dataset.Dataset;
+import uk.ac.ebi.ddi.service.db.model.publication.PublicationDataset;
 import uk.ac.ebi.ddi.service.db.utils.DatasetCategory;
 
 import java.util.HashMap;
@@ -25,11 +26,11 @@ public class DatasetServiceTest {
     private IDatasetService datasetService;
 
 
-    @Test
+ /*   @Test
     public void testSave() throws Exception {
         Map<String, Set<String>> dates = new HashMap<>();
         Map<String, Set<String>> additional = new HashMap<>();
-        Dataset newDataset = new Dataset("ArrayExpress", "E-ATMX-14", "Example Name", "Description Example", dates, additional,additional, DatasetCategory.INSERTED);
+        Dataset newDataset = new Dataset("ArrayExpress", "E-ATMX-14", "Example Name", "Description Example", dates, additional, additional, DatasetCategory.INSERTED);
         datasetService.save(newDataset);
     }
 
@@ -59,5 +60,23 @@ public class DatasetServiceTest {
     @Test
     public void testRead1() throws Exception {
 
+    }*/
+
+   /* @Test
+    public void testMultiomics() throws Exception {
+        System.out.println("SIZE   OF MULTIOMICS DATA IS " + datasetService.getMutiomicsDatasets().size());
+        for(PublicationDataset data : datasetService.getMutiomicsDatasets())
+        {
+            System.out.println(data);
+        }
+    }*/
+
+    @Test
+    public void testPubmedId() throws Exception {
+        System.out.println("SIZE   OF SIMILAR DATA IS " + datasetService.getSimilarByPubmed("16585740"));
+        for(Dataset data : datasetService.getSimilarByPubmed("16585740"))
+        {
+            System.out.println(data);
+        }
     }
 }

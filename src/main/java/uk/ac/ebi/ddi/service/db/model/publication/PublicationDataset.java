@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.annotation.*;
+import uk.ac.ebi.ddi.service.db.model.aggregate.BaseAggregate;
 
 /**
  * @author Yasset Perez-Riverol (ypriverol@gmail.com)
@@ -14,7 +15,7 @@ import org.springframework.data.annotation.*;
 @CompoundIndexes({
         @CompoundIndex(name = "dataset_publication", def = "{'accession' : 1, 'database': 1, 'pubmedId':1}", unique = true)
 })
-public class PublicationDataset {
+public class PublicationDataset extends BaseAggregate{
 
     @Id
     ObjectId _id;
