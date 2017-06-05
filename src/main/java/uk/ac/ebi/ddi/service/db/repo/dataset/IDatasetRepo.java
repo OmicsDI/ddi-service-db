@@ -31,4 +31,7 @@ public interface IDatasetRepo extends MongoRepository<Dataset,ObjectId>{
     @Query("{accession: ?0}")
     List<Dataset> findByAccession(String accession);
 
+    @Query("{crossReferences.pubmed:?0}")
+    List<Dataset> findByCrossReferencesPubmed(String pubmedId);
+
 }

@@ -4,10 +4,18 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import uk.ac.ebi.ddi.service.db.model.dataset.Dataset;
 import uk.ac.ebi.ddi.service.db.repo.dataset.IDatasetRepo;
+import uk.ac.ebi.ddi.service.db.model.aggregate.*;
+import uk.ac.ebi.ddi.service.db.utils.Constants;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -20,6 +28,9 @@ import java.util.List;
  */
 @Service
 public class DatasetService implements IDatasetService {
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @Resource
     private IDatasetRepo datasetAccessRepo;
@@ -88,5 +99,26 @@ public class DatasetService implements IDatasetService {
         return datasetAccessRepo.findByAccession(accession);
     }
 
+    @Override
+    public <T extends BaseAggregate> List<T> getAggregationResults(Aggregation aggregation, String collectionName, Class<T> outputType)
+    {
+        AggregationResults<T> output
+                = mongoTemplate.aggregate(aggregation, collectionName,outputType);
 
+        return output.getMappedResults();
+    }
+
+    public List<Dataset> getSimilarByPubmed(String pubmedId){
+        return datasetAccessRepo.findByCrossReferencesPubmed(pubmedId);
+    }
+
+    public void updateDatasetClaim(String[] databases){
+        Query searchQuery = new Query();
+        searchQuery.addCriteria(new Criteria(Constants.DATABASE_FIELD).in(databases));
+
+        Update updateClaim = new Update();
+        updateClaim.set(Constants.ISCLAIMED_FIELD,true);
+
+        mongoTemplate.updateMulti(searchQuery,updateClaim,Constants.DATASET_COLLECTION);
+    }
 }

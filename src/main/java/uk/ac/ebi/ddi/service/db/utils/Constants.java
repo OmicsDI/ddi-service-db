@@ -7,5 +7,8 @@ package uk.ac.ebi.ddi.service.db.utils;
 public class Constants {
 
     public static String UNKNOWN_DATABASE = "unkownDatabase";
+    public static String DATABASE_FIELD = "database";
+    public static String ISCLAIMED_FIELD = "isClaimed";
+    public static String DATASET_COLLECTION = "datasets.dataset";
 
 }

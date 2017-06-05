@@ -11,8 +11,8 @@
 		base-package="uk.ac.ebi.ddi.service.db.repo" />
 
 	<!-- Default bean name is 'mongo' -->
-	<mongo:mongo host="mongos-hxvm7-dev-001.ebi.ac.uk" port="27017" />
-    <mongo:db-factory id="mongoDbFactory" host="mongos-hxvm7-dev-001.ebi.ac.uk" port="27017" dbname="ddi_db" />
+	<mongo:mongo host="localhost" port="27017" />
+    <mongo:db-factory id="mongoDbFactory" host="localhost" port="27017" dbname="ddi_db" />
 	<!-- Offers convenience methods and automatic mapping between MongoDB JSON 
 		documents and your domain classes. -->
 <!--	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
@@ -33,7 +33,7 @@
 	<!--<mongo:db-factory id="mongoDbFactory" /> -->
 <!--  -->
 
-    <mongo:mongo id="replicaSetMongo" replica-set="mongos-hxvm7-dev-001.ebi.ac.uk:27017" />
+    <mongo:mongo id="replicaSetMongo" replica-set="localhost" />
     <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
         <!-- <constructor-arg name="mongoDbFactory" ref="mongoDbFactory" /> -->
         <constructor-arg ref="replicaSetMongo" />
