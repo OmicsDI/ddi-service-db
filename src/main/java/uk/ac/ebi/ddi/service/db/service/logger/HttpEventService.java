@@ -1,24 +1,36 @@
 package uk.ac.ebi.ddi.service.db.service.logger;
 
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.*;
 import org.springframework.stereotype.Component;
 import uk.ac.ebi.ddi.service.db.exception.DBWriteException;
+import uk.ac.ebi.ddi.service.db.model.dataset.Dataset;
+import uk.ac.ebi.ddi.service.db.model.dataset.MostAccessedDatasets;
 import uk.ac.ebi.ddi.service.db.model.logger.AbstractResource;
 import uk.ac.ebi.ddi.service.db.model.logger.DatasetResource;
 import uk.ac.ebi.ddi.service.db.model.logger.HttpEvent;
 import uk.ac.ebi.ddi.service.db.model.logger.ResourceStatVisit;
 import uk.ac.ebi.ddi.service.db.repo.logger.IDatasetResourceRepo;
 import uk.ac.ebi.ddi.service.db.repo.logger.IHttpEventRepo;
+import uk.ac.ebi.ddi.service.db.service.dataset.DatasetService;
+import uk.ac.ebi.ddi.service.db.service.dataset.MostAccessedDatasetService;
 import uk.ac.ebi.ddi.service.db.utils.Tuple;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
+import static org.springframework.data.mongodb.core.aggregation.Fields.fields;
 
 
 /**
@@ -30,10 +42,19 @@ import java.util.Map;
 public class HttpEventService implements IHttpEventService {
 
     @Autowired
+    MongoTemplate mongoTemplate;
+
+    @Autowired
     private IHttpEventRepo accessRepo;
 
     @Autowired
     private IDatasetResourceRepo datasetRepo;
+
+    @Autowired
+    private DatasetService datasetService;
+
+    @Autowired
+    private MostAccessedDatasetService mostAccessedDatasetService;
 
     @Override
     public HttpEvent insert(HttpEvent httpEvent) {
@@ -111,6 +132,65 @@ public class HttpEventService implements IHttpEventService {
                 datasets.put(resourceMap,visit.getTotal());
             }
         }
+
         return datasets;
+    }
+
+    public Map<Tuple<String, String>, Integer> moreAccessedDataset(int size){
+
+        AggregationOptions options = Aggregation.newAggregationOptions().allowDiskUse(true).build();
+
+/*        Aggregation agg = Aggregation.newAggregation(
+                group(fields().and("database","abstractResource.database")
+                        .and("accession","abstractResource.accession")).count().as("total"),
+                sort(Sort.Direction.DESC, "total")*//*,
+                        new AggregationOperation() {
+                         @Override
+                         public DBObject toDBObject(AggregationOperationContext context) {
+                         return new BasicDBObject("$out", "mostAccessed");      }    }*//*
+
+        );
+
+        //Convert the aggregation result into a List
+        AggregationResults<ResourceStatVisit> groupResults
+                = mongoTemplate.aggregate(agg, "logger.event", ResourceStatVisit.class);
+        List<ResourceStatVisit> result = groupResults.getMappedResults();*/
+
+        Map<Tuple<String, String>, Integer> datasets = new HashMap<>();
+
+        Aggregation agg = Aggregation.newAggregation(
+                group("abstractResource._id").count().as("total")
+                        .first("abstractResource.accession").as("accession")
+                        .first("abstractResource.database").as("database"),
+                project()//.andExpression("_id").as("mostAccessedDatasets._id")
+                        .andInclude("total","accession","database"),
+                sort(Sort.Direction.DESC, "total")//,
+                //limit(20)
+        ).withOptions(options);
+        //try {
+        //Convert the aggregation result into a List
+        AggregationResults<MostAccessedDatasets> groupResults
+                = mongoTemplate.aggregate(agg, "logger.event", MostAccessedDatasets.class);
+        List<MostAccessedDatasets> currentMostAccessed = groupResults.getMappedResults();
+        mostAccessedDatasetService.deleteAll();
+
+            for (MostAccessedDatasets visit : currentMostAccessed) {
+                if (visit.getId() != null) {
+                    Tuple<String, String> resourceMap = new Tuple<>(visit.getAccession(), visit.getDatabase());
+                    datasets.put(resourceMap, visit.getTotal());
+                    Dataset datasetOut = datasetService.read(visit.getAccession(), visit.getDatabase());
+                    if (datasetOut != null) {
+                        MostAccessedDatasets dataset = new MostAccessedDatasets(datasetOut, visit.getTotal());
+                        mostAccessedDatasetService.save(dataset);
+                    }
+                }
+            }
+/*        }
+        catch (Exception ex)
+        {
+            System.out.println(ex.getMessage());
+        }*/
+        return datasets;
+
     }
 }

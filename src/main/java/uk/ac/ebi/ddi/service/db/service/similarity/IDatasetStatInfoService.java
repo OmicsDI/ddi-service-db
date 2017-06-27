@@ -61,4 +61,6 @@ public interface IDatasetStatInfoService {
     List<DatasetStatInfo> readAllInOneType(String dataType);
 
     List<DatasetStatInfo> readAll();
+
+    void reanalysisCount();
 }

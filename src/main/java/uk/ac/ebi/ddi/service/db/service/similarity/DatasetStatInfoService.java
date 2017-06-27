@@ -4,17 +4,26 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import uk.ac.ebi.ddi.service.db.exception.DBWriteException;
+import uk.ac.ebi.ddi.service.db.model.dataset.DatasetSimilars;
+import uk.ac.ebi.ddi.service.db.model.logger.ResourceStatVisit;
 import uk.ac.ebi.ddi.service.db.model.similarity.DatasetStatInfo;
 import uk.ac.ebi.ddi.service.db.repo.similarity.IDatasetStatInfoRepo;
+import uk.ac.ebi.ddi.service.db.utils.DatasetSimilarsType;
 
 import javax.annotation.Resource;
 import java.util.List;
+
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
+import static org.springframework.data.mongodb.core.aggregation.Fields.fields;
 
 /**
  * Created by mingze on 30/07/15.
@@ -103,5 +112,19 @@ public class DatasetStatInfoService implements IDatasetStatInfoService {
     @Override
     public List<DatasetStatInfo> readAll(){
         return accessRepo.findAll();
+    }
+
+    @Override
+    public void reanalysisCount(){
+        Aggregation agg = Aggregation.newAggregation(
+                unwind("similars"),
+                match(new Criteria("similars.relationType").is("Other Omics Data in:")),
+                group(fields().and("abstractResource.database","database")
+                        .and("abstractResource.accession","accession")).count().as("total"),
+                sort(Sort.Direction.DESC, "total"));
+
+        AggregationResults<ResourceStatVisit> groupResults
+                = mongoOperation.aggregate(agg, DatasetSimilars.class, ResourceStatVisit.class);
+        List<ResourceStatVisit> result = groupResults.getMappedResults();
     }
 }

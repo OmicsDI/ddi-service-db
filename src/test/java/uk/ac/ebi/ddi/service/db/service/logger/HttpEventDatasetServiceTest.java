@@ -33,6 +33,9 @@ public class HttpEventDatasetServiceTest {
     @Autowired
     DatasetResourceService datasetAccessService;
 
+    @Autowired
+    HttpEventService httpEventService;
+
     @Before
     public void setUp(){
 
@@ -90,5 +93,10 @@ public class HttpEventDatasetServiceTest {
 //
 //        // get an instance of the hijacked com.mongodb.Mongo
 //        Mongo mongo = fongo.getMongo();
+    }
+
+    @Test
+    public void mostAccessed(){
+        httpEventService.moreAccessedDataset(20);
     }
 }

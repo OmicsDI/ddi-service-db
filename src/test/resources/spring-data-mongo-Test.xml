@@ -3,39 +3,39 @@
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	   xmlns:mongo="http://www.springframework.org/schema/data/mongo"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans
-	   		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-   			http://www.springframework.org/schema/data/mongo
-    		http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd">
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/data/mongo
+        http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
 
 	<mongo:repositories
 		base-package="uk.ac.ebi.ddi.service.db.repo" />
 
-	<!-- Default bean name is 'mongo' -->
-	<mongo:mongo host="localhost" port="27017" />
-    <mongo:db-factory id="mongoDbFactory" host="localhost" port="27017" dbname="ddi_db" />
-	<!-- Offers convenience methods and automatic mapping between MongoDB JSON 
-		documents and your domain classes. -->
-<!--	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
-		<constructor-arg ref="mongo" />
-		<constructor-arg name="databaseName" value="test" />
-	</bean>-->
-	
-<!-- alternate config with in memory java driver to mongo With this, you are not going through mongo local db, instead of that, you are using a inmemory mongo instance --> 
-	<!--<bean name="fongo" class="com.github.fakemongo.Fongo">-->
-		<!--<constructor-arg value="InMemoryMongo" />-->
-	<!--</bean>-->
-	
-	<!--<bean id="mongofongo" factory-bean="fongo" factory-method="getMongo" />-->
 
-	<!--<mongo:db-factory id="mongoDbFactory" mongo-ref="mongofongo" />-->
+	<mongo:mongo-client credentials="ad:ad@ddi_db" id="mongoClient" replica-set="localhost:27017,localhost:27017,localhost:27017">
+		<mongo:client-options connections-per-host="5"
+							  threads-allowed-to-block-for-connection-multiplier="10"
+							  connect-timeout="100000"
+							  max-wait-time="30000"
+							  socket-keep-alive="true"
+							  socket-timeout="1000000"
+							  write-concern="NORMAL"
+							  read-preference="PRIMARY_PREFERRED"/>
+	</mongo:mongo-client>
 
-	<!-- localhost settings for mongo -->
-	<!--<mongo:db-factory id="mongoDbFactory" /> -->
-<!--  -->
 
-    <mongo:mongo id="replicaSetMongo" replica-set="localhost" />
+	<mongo:db-factory dbname="ddi_db" port="27017" mongo-ref="mongoClient" id="mongoDbFactory"/>
+
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+	</bean>
+
+
+<!--    <mongo:mongo id="replicaSetMongo" replica-set="localhost" />
     <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
-        <!-- <constructor-arg name="mongoDbFactory" ref="mongoDbFactory" /> -->
+        &lt;!&ndash; <constructor-arg name="mongoDbFactory" ref="mongoDbFactory" /> &ndash;&gt;
         <constructor-arg ref="replicaSetMongo" />
         <constructor-arg name="databaseName" value="ddi_db" />
         <constructor-arg name="userCredentials" ref="mongoCredentials" />
@@ -43,7 +43,7 @@
     <bean id="mongoCredentials" class="org.springframework.data.authentication.UserCredentials">
         <constructor-arg name="username" value="${mongo.username}" />
         <constructor-arg name="password" value="${mongo.password}" />
-    </bean>
+    </bean>-->
 
 	<!--<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg ref="mongoDbFactory" />
@@ -63,7 +63,7 @@
 	<bean id="datasetStatusService" class="uk.ac.ebi.ddi.service.db.service.dataset.DatasetStatusService"/>
 
 	<bean id="publicationService" class="uk.ac.ebi.ddi.service.db.service.publication.PublicationDatasetService" />
-
+	<bean id="mostAccessedDatasetService" class="uk.ac.ebi.ddi.service.db.service.dataset.MostAccessedDatasetService"/>
     <bean class="uk.ac.ebi.ddi.service.db.utils.CascadingMongoEventListener" />
 
 </beans>
