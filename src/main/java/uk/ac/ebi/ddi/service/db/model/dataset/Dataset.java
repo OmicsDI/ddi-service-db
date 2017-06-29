@@ -52,15 +52,15 @@ public class Dataset implements Serializable{
 
     private String currentStatus;
 
-    public boolean isClaimed() {
-        return isClaimed;
+    public boolean isClaimable() {
+        return isClaimable;
     }
 
-    public void setClaimed(boolean claimed) {
-        isClaimed = claimed;
+    public void setClaimable(boolean claimable) {
+        isClaimable = claimable;
     }
 
-    private boolean isClaimed;
+    private boolean isClaimable;
 
     public Dataset() {
     }

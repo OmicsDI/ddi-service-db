@@ -8,7 +8,7 @@ public class Constants {
 
     public static String UNKNOWN_DATABASE = "unkownDatabase";
     public static String DATABASE_FIELD = "database";
-    public static String ISCLAIMED_FIELD = "isClaimed";
+    public static String ISCLAIMED_FIELD = "isClaimable";
     public static String DATASET_COLLECTION = "datasets.dataset";
 
 }
