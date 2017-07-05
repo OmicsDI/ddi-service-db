@@ -136,27 +136,9 @@ public class HttpEventService implements IHttpEventService {
         return datasets;
     }
 
-    public Map<Tuple<String, String>, Integer> moreAccessedDataset(int size){
+    public void moreAccessedDataset(int size){
 
         AggregationOptions options = Aggregation.newAggregationOptions().allowDiskUse(true).build();
-
-/*        Aggregation agg = Aggregation.newAggregation(
-                group(fields().and("database","abstractResource.database")
-                        .and("accession","abstractResource.accession")).count().as("total"),
-                sort(Sort.Direction.DESC, "total")*//*,
-                        new AggregationOperation() {
-                         @Override
-                         public DBObject toDBObject(AggregationOperationContext context) {
-                         return new BasicDBObject("$out", "mostAccessed");      }    }*//*
-
-        );
-
-        //Convert the aggregation result into a List
-        AggregationResults<ResourceStatVisit> groupResults
-                = mongoTemplate.aggregate(agg, "logger.event", ResourceStatVisit.class);
-        List<ResourceStatVisit> result = groupResults.getMappedResults();*/
-
-        Map<Tuple<String, String>, Integer> datasets = new HashMap<>();
 
         Aggregation agg = Aggregation.newAggregation(
                 group("abstractResource._id").count().as("total")
@@ -167,6 +149,7 @@ public class HttpEventService implements IHttpEventService {
                 sort(Sort.Direction.DESC, "total")//,
                 //limit(20)
         ).withOptions(options);
+
         //try {
         //Convert the aggregation result into a List
         AggregationResults<MostAccessedDatasets> groupResults
@@ -176,8 +159,6 @@ public class HttpEventService implements IHttpEventService {
 
             for (MostAccessedDatasets visit : currentMostAccessed) {
                 if (visit.getId() != null) {
-                    Tuple<String, String> resourceMap = new Tuple<>(visit.getAccession(), visit.getDatabase());
-                    datasets.put(resourceMap, visit.getTotal());
                     Dataset datasetOut = datasetService.read(visit.getAccession(), visit.getDatabase());
                     if (datasetOut != null) {
                         MostAccessedDatasets dataset = new MostAccessedDatasets(datasetOut, visit.getTotal());
@@ -190,7 +171,6 @@ public class HttpEventService implements IHttpEventService {
         {
             System.out.println(ex.getMessage());
         }*/
-        return datasets;
 
     }
 }
