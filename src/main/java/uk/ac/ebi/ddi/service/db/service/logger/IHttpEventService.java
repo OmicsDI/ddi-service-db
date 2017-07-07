@@ -47,4 +47,6 @@ public interface IHttpEventService {
     HttpEvent delete(ObjectId id);
 
     Map<Tuple<String, String>, Integer> moreAccessedDatasetResource(int size);
+
+    public void moreAccessedDataset(int size);
 }
