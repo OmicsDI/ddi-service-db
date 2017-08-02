@@ -10,14 +10,15 @@ import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import uk.ac.ebi.ddi.service.db.exception.DBWriteException;
 import uk.ac.ebi.ddi.service.db.model.dataset.DatasetSimilars;
-import uk.ac.ebi.ddi.service.db.model.logger.ResourceStatVisit;
+import uk.ac.ebi.ddi.service.db.model.dataset.MostAccessedDatasets;
 import uk.ac.ebi.ddi.service.db.model.similarity.DatasetStatInfo;
+import uk.ac.ebi.ddi.service.db.model.similarity.ReanalysisData;
 import uk.ac.ebi.ddi.service.db.repo.similarity.IDatasetStatInfoRepo;
-import uk.ac.ebi.ddi.service.db.utils.DatasetSimilarsType;
+import uk.ac.ebi.ddi.service.db.utils.Constants;
+
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -115,16 +116,22 @@ public class DatasetStatInfoService implements IDatasetStatInfoService {
     }
 
     @Override
-    public void reanalysisCount(){
+    public List<ReanalysisData> reanalysisCount(){
         Aggregation agg = Aggregation.newAggregation(
-                unwind("similars"),
-                match(new Criteria("similars.relationType").is("Other Omics Data in:")),
-                group(fields().and("abstractResource.database","database")
-                        .and("abstractResource.accession","accession")).count().as("total"),
-                sort(Sort.Direction.DESC, "total"));
+                unwind(Constants.SIMILARS_FIELD),
+                match(new Criteria(Constants.SIMILARS_RELATIONTYPE).is(Constants.REANALYSIS_TYPE)),
+                group(fields().and(Constants.DATABASE_FIELD,Constants.DATABASE_FIELD)
+                        .and(Constants.ACCESSION_FIELD,Constants.ACCESSION_FIELD)).count().as(Constants.TOTAL_FIELD),
+                sort(Sort.Direction.DESC, Constants.TOTAL_FIELD),
+                project(Constants.TOTAL_FIELD).and(Constants.ACCESSION_FIELD).as(Constants.ACCESSION_FIELD).and(Constants.DATABASE_FIELD)
+                        .as(Constants.DATABASE_FIELD));
 
-        AggregationResults<ResourceStatVisit> groupResults
-                = mongoOperation.aggregate(agg, DatasetSimilars.class, ResourceStatVisit.class);
-        List<ResourceStatVisit> result = groupResults.getMappedResults();
+        AggregationResults<ReanalysisData> groupResults
+                = mongoOperation.aggregate(agg, DatasetSimilars.class, ReanalysisData.class);
+
+        List<ReanalysisData> result = groupResults.getMappedResults();
+
+        return result;
     }
+
 }

@@ -74,4 +74,6 @@ public interface IDatasetService {
     List<Dataset> getSimilarByPubmed(String pubmedId);
 
     void updateDatasetClaim(String[] databases);
+
+    long getDatasetCount();
 }

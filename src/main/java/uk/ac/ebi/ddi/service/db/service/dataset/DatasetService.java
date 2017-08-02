@@ -121,4 +121,8 @@ public class DatasetService implements IDatasetService {
 
         mongoTemplate.updateMulti(searchQuery,updateClaim,Constants.DATASET_COLLECTION);
     }
+
+    public long getDatasetCount(){
+        return datasetAccessRepo.count();
+    }
 }

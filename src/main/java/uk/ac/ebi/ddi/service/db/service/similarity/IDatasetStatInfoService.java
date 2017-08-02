@@ -3,6 +3,7 @@ package uk.ac.ebi.ddi.service.db.service.similarity;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import uk.ac.ebi.ddi.service.db.model.similarity.DatasetStatInfo;
+import uk.ac.ebi.ddi.service.db.model.similarity.ReanalysisData;
 
 import java.util.List;
 
@@ -62,5 +63,5 @@ public interface IDatasetStatInfoService {
 
     List<DatasetStatInfo> readAll();
 
-    void reanalysisCount();
+    List<ReanalysisData> reanalysisCount();
 }
