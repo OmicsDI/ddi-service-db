@@ -2,19 +2,23 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	   xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	   xmlns:context="http://www.springframework.org/schema/context"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.1.xsd
         http://www.springframework.org/schema/util
         http://www.springframework.org/schema/util/spring-util.xsd
         http://www.springframework.org/schema/data/mongo
         http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
 
+	<context:property-placeholder location="classpath*:commontest.properties" />
+
 	<mongo:repositories
 		base-package="uk.ac.ebi.ddi.service.db.repo" />
 
 
-	<mongo:mongo-client credentials="ad:ad@ddi_db" id="mongoClient" replica-set="localhost:27017,localhost:27017,localhost:27017">
+<!--	<mongo:mongo-client credentials="ad:ad@ddi_db" id="mongoClient" replica-set="localhost:27017,localhost:27017,localhost:27017">
 		<mongo:client-options connections-per-host="5"
 							  threads-allowed-to-block-for-connection-multiplier="10"
 							  connect-timeout="100000"
@@ -23,12 +27,24 @@
 							  socket-timeout="1000000"
 							  write-concern="NORMAL"
 							  read-preference="PRIMARY_PREFERRED"/>
+	</mongo:mongo-client>-->
+
+	<mongo:mongo-client credentials="${ddi.common.mongo.app.user}:${ddi.common.mongo.app.password}@${ddi.common.mongo.app.authenticationDatabase}" id="mongoClient" replica-set="${ddi.common.mongo.app.machine.one}:${ddi.common.mongo.app.port},${ddi.common.mongo.app.machine.two}:${ddi.common.mongo.app.port},${ddi.common.mongo.app.machine.three}:${ddi.common.mongo.app.port}">
+		<mongo:client-options connections-per-host="10"
+							  threads-allowed-to-block-for-connection-multiplier="10"
+							  connect-timeout="1000000"
+							  max-wait-time="120000"
+							  socket-keep-alive="true"
+							  socket-timeout="1000000"
+							  write-concern="NORMAL"
+							  read-preference="SECONDARY"/>
 	</mongo:mongo-client>
 
 
-	<mongo:db-factory dbname="ddi_db" port="27017" mongo-ref="mongoClient" id="mongoDbFactory"/>
+	<mongo:db-factory dbname="${ddi.common.mongo.app.db}" port="${ddi.common.mongo.app.port}" mongo-ref="mongoClient"/>
 
-	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
 	</bean>
 
@@ -64,6 +80,7 @@
 
 	<bean id="publicationService" class="uk.ac.ebi.ddi.service.db.service.publication.PublicationDatasetService" />
 	<bean id="mostAccessedDatasetService" class="uk.ac.ebi.ddi.service.db.service.dataset.MostAccessedDatasetService"/>
-    <bean class="uk.ac.ebi.ddi.service.db.utils.CascadingMongoEventListener" />
+	<bean class="uk.ac.ebi.ddi.service.db.utils.CascadingMongoEventListener" />
+	<bean id="databaseService" class="uk.ac.ebi.ddi.service.db.service.dataset.DatabaseService"/>
 
 </beans>
