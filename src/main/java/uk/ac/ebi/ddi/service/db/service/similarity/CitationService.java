@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import uk.ac.ebi.ddi.service.db.model.similarity.Citations;
 import uk.ac.ebi.ddi.service.db.repo.similarity.ICitationRepo;
 
+import java.util.List;
+
 /**
  * Created by gaur on 20/07/17.
  */
@@ -14,5 +16,9 @@ public class CitationService implements ICitationService {
 
     public void saveCitation(Citations citations){
         citationRepo.save(citations);
+    }
+
+    public Citations read(String accession,String database){
+        return citationRepo.readCitationCount(accession,database);
     }
 }
