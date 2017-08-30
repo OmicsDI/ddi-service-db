@@ -18,6 +18,6 @@ public class ReanalysisDataService implements IReanalysisDataService {
     }
 
     public void getReanalysisCount(String accession,String database){
-        reanalysisRepo.
+        reanalysisRepo.getReanalysisCount(accession,database);
     }
 }
