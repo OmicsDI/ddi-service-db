@@ -7,7 +7,7 @@ import uk.ac.ebi.ddi.service.db.model.similarity.EBISearchPubmedCount;
  */
 public interface IEBIPubmedSearchService {
 
-    public void saveEbiSearchPubmed(EBISearchPubmedCount ebiSearchPubmedCount);
+    void saveEbiSearchPubmed(EBISearchPubmedCount ebiSearchPubmedCount);
 
-
+    void getSearchCount(String accession,String database);
 }
