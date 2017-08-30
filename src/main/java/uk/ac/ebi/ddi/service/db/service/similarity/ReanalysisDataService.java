@@ -10,6 +10,7 @@ import uk.ac.ebi.ddi.service.db.repo.similarity.IReanalysisRepo;
  * Created by gaur on 27/07/17.
  */
 public class ReanalysisDataService implements IReanalysisDataService {
+
     @Autowired
     public IReanalysisRepo reanalysisRepo;
 
@@ -17,7 +18,7 @@ public class ReanalysisDataService implements IReanalysisDataService {
         reanalysisRepo.save(reanalysisData);
     }
 
-    public void getReanalysisCount(String accession,String database){
-        reanalysisRepo.getReanalysisCount(accession,database);
+    public ReanalysisData getReanalysisCount(String accession,String database){
+        return reanalysisRepo.getReanalysisCount(accession,database);
     }
 }
