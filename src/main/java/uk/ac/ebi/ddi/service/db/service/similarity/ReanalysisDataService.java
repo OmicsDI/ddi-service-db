@@ -16,4 +16,8 @@ public class ReanalysisDataService implements IReanalysisDataService {
     public void saveReanalysis(ReanalysisData reanalysisData){
         reanalysisRepo.save(reanalysisData);
     }
+
+    public void getReanalysisCount(String accession,String database){
+        reanalysisRepo.
+    }
 }
