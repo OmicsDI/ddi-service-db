@@ -9,5 +9,5 @@ public interface IEBIPubmedSearchService {
 
     void saveEbiSearchPubmed(EBISearchPubmedCount ebiSearchPubmedCount);
 
-    void getSearchCount(String accession,String database);
+    EBISearchPubmedCount getSearchCount(String accession,String database);
 }
