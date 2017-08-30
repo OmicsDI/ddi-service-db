@@ -8,5 +8,7 @@ import uk.ac.ebi.ddi.service.db.model.similarity.ReanalysisData;
 public interface IReanalysisDataService {
 
 
-    public void saveReanalysis(ReanalysisData reanalysisData);
+    void saveReanalysis(ReanalysisData reanalysisData);
+
+    void getReanalysisCount(String accession,String database);
 }
