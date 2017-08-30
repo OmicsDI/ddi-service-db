@@ -15,4 +15,8 @@ public class EBIPubmedSearchService implements IEBIPubmedSearchService{
     public void saveEbiSearchPubmed(EBISearchPubmedCount ebiSearchPubmedCount){
         ebiSearchPubmedRepo.save(ebiSearchPubmedCount);
     }
+
+    public void getSearchCount(String accession,String database){
+        ebiSearchPubmedRepo.getSearchCount(accession,database);
+    }
 }
