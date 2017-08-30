@@ -11,7 +11,7 @@ import uk.ac.ebi.ddi.service.db.model.similarity.ReanalysisData;
  */
 public interface IEBISearchPubmedDataRepo extends MongoRepository<EBISearchPubmedCount,ObjectId> {
 
-    @Query("{'$and': [{'accession': ?0},{'database': ?1}]}")
-    EBISearchPubmedCount getSearchCount(String accession, String database);
+    @Query("{'$and': [{'accession': ?0}]}")
+    EBISearchPubmedCount getSearchCount(String accession);
 
 }
