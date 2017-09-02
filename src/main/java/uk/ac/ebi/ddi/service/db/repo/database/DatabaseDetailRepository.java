@@ -1,0 +1,17 @@
+package uk.ac.ebi.ddi.service.db.repo.database;
+
+import org.springframework.data.mongodb.repository.Query;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.stereotype.Repository;
+import uk.ac.ebi.ddi.service.db.model.database.DatabaseDetail;
+
+/**
+ * Created by root on 16.05.17.
+ */
+@Repository
+public interface DatabaseDetailRepository extends PagingAndSortingRepository<DatabaseDetail,String>{
+
+
+    @Query("{databaseName : ?0}")
+    DatabaseDetail findDatabaseByName(String databaseName);
+}
