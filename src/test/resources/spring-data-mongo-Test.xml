@@ -81,6 +81,6 @@
 	<bean id="publicationService" class="uk.ac.ebi.ddi.service.db.service.publication.PublicationDatasetService" />
 	<bean id="mostAccessedDatasetService" class="uk.ac.ebi.ddi.service.db.service.dataset.MostAccessedDatasetService"/>
 	<bean class="uk.ac.ebi.ddi.service.db.utils.CascadingMongoEventListener" />
-	<bean id="databaseService" class="uk.ac.ebi.ddi.service.db.service.dataset.DatabaseService"/>
+	<bean id="databaseService" class="uk.ac.ebi.ddi.service.db.service.database.DatabaseService"/>
 
 </beans>

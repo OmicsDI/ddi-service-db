@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.stereotype.Service;
 import uk.ac.ebi.ddi.service.db.model.aggregate.BaseAggregate;
 import uk.ac.ebi.ddi.service.db.model.dataset.Dataset;
 import uk.ac.ebi.ddi.service.db.model.dataset.MostAccessedDatasets;
@@ -23,6 +24,7 @@ import java.util.List;
 /**
  * Created by gaur on 25/06/17.
  */
+@Service
 public class MostAccessedDatasetService implements IMostAccessedDatasetService{
     @Autowired
     private MongoTemplate mongoTemplate;

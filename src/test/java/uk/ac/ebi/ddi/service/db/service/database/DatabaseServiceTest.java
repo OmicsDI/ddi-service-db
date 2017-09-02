@@ -1,4 +1,4 @@
-package uk.ac.ebi.ddi.service.db.service.dataset;
+package uk.ac.ebi.ddi.service.db.service.database;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
