@@ -128,6 +128,6 @@ public class DatasetService implements IDatasetService {
 
     @Override
     public List<Dataset> findByDatabase(String database) {
-        return datasetAccessRepo.findByDatabase(database);
+        return datasetAccessRepo.findByDatabaseBioModels(database);
     }
 }
