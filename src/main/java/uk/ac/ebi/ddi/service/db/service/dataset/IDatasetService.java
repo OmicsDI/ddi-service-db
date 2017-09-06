@@ -76,4 +76,6 @@ public interface IDatasetService {
     void updateDatasetClaim(String[] databases);
 
     long getDatasetCount();
+
+    List<Dataset> findByDatabase(String database);
 }
