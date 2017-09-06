@@ -126,5 +126,8 @@ public class DatasetService implements IDatasetService {
         return datasetAccessRepo.count();
     }
 
-
+    @Override
+    public List<Dataset> findByDatabase(String database) {
+        return datasetAccessRepo.findByDatabase(database);
+    }
 }
