@@ -11,4 +11,6 @@ import uk.ac.ebi.ddi.service.db.model.dataset.MostAccessedDatasets;
 @Repository
 public interface IMostAccessedRepo extends MongoRepository<MostAccessedDatasets, ObjectId> {
 
+    MostAccessedDatasets getByAccessionAndDatabase(String acession,String database);
+
 }
