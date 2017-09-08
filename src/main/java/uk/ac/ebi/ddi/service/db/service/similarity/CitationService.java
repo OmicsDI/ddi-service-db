@@ -1,6 +1,7 @@
 package uk.ac.ebi.ddi.service.db.service.similarity;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import uk.ac.ebi.ddi.service.db.model.similarity.Citations;
 import uk.ac.ebi.ddi.service.db.repo.similarity.ICitationRepo;
 
@@ -9,6 +10,7 @@ import java.util.List;
 /**
  * Created by gaur on 20/07/17.
  */
+@Service
 public class CitationService implements ICitationService {
 
     @Autowired
