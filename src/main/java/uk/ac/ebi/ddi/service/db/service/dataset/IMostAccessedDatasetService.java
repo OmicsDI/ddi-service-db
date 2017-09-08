@@ -15,4 +15,5 @@ public interface IMostAccessedDatasetService {
 
     public void deleteAll();
 
+    public MostAccessedDatasets getDatasetView(String acc, String database);
 }
