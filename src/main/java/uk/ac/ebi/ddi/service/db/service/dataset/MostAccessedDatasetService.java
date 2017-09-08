@@ -45,5 +45,8 @@ public class MostAccessedDatasetService implements IMostAccessedDatasetService{
         mostAccessedRepo.deleteAll();
     }
 
-
+    @Override
+    public MostAccessedDatasets getDatasetView(String acc, String database){
+        return mostAccessedRepo.getByAccessionAndDatabase(acc, database);
+    }
 }
