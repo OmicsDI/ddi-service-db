@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import uk.ac.ebi.ddi.service.db.exception.DBWriteException;
 import uk.ac.ebi.ddi.service.db.model.dataset.Dataset;
 import uk.ac.ebi.ddi.service.db.model.dataset.MostAccessedDatasets;
+import uk.ac.ebi.ddi.service.db.model.dataset.Scores;
 import uk.ac.ebi.ddi.service.db.model.logger.AbstractResource;
 import uk.ac.ebi.ddi.service.db.model.logger.DatasetResource;
 import uk.ac.ebi.ddi.service.db.model.logger.HttpEvent;
@@ -137,7 +138,7 @@ public class HttpEventService implements IHttpEventService {
     }
 
     public void moreAccessedDataset(int size){
-
+        try{
         AggregationOptions options = Aggregation.newAggregationOptions().allowDiskUse(true).build();
 
         Aggregation agg = Aggregation.newAggregation(
@@ -161,16 +162,25 @@ public class HttpEventService implements IHttpEventService {
                 if (visit.getId() != null) {
                     Dataset datasetOut = datasetService.read(visit.getAccession(), visit.getDatabase());
                     if (datasetOut != null) {
+
+                        if(datasetOut.getScores() != null) {
+                            datasetOut.getScores().setViewCount(visit.getTotal());
+                        }else{
+                            Scores scores = new Scores();
+                            scores.setViewCount(visit.getTotal());
+                            datasetOut.setScores(scores);
+                        }
+                        datasetService.update(datasetOut.getId(),datasetOut);
                         MostAccessedDatasets dataset = new MostAccessedDatasets(datasetOut, visit.getTotal());
                         mostAccessedDatasetService.save(dataset);
                     }
                 }
             }
-/*        }
+        }
         catch (Exception ex)
         {
             System.out.println(ex.getMessage());
-        }*/
+        }
 
     }
 }
