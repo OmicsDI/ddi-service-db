@@ -52,6 +52,16 @@ public class Dataset implements Serializable{
 
     private String currentStatus;
 
+    public Scores getScores() {
+        return scores;
+    }
+
+    public void setScores(Scores scores) {
+        this.scores = scores;
+    }
+
+    private Scores scores;
+
     public boolean isClaimable() {
         return isClaimable;
     }
