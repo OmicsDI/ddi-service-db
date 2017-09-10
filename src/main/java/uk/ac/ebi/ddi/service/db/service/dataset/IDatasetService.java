@@ -77,5 +77,5 @@ public interface IDatasetService {
 
     long getDatasetCount();
 
-    List<Dataset> findByDatabase(String database);
+    List<Dataset> findByDatabaseBioModels(String database);
 }
