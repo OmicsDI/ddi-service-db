@@ -1,16 +1,19 @@
-package uk.ac.ebi.ddi.service.db.service.dataset;
+package uk.ac.ebi.ddi.service.db.service.database;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import uk.ac.ebi.ddi.service.db.model.dataset.Database;
 import uk.ac.ebi.ddi.service.db.repo.dataset.IDatabaseRepo;
+import uk.ac.ebi.ddi.service.db.service.dataset.IDatabaseService;
 
 import java.util.List;
 
 /**
  * Created by yperez on 26/05/2016.
  */
-public class DatabaseService implements  IDatabaseService{
+@Service
+public class DatabaseService implements IDatabaseService {
 
     @Autowired
     private IDatabaseRepo databaseRepo;

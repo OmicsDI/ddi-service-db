@@ -4,6 +4,7 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 import uk.ac.ebi.ddi.service.db.model.dataset.DatasetSimilars;
 import uk.ac.ebi.ddi.service.db.repo.dataset.IDatasetSimilarsRepo;
 
@@ -12,6 +13,7 @@ import java.util.List;
 /**
  * Created by yperez on 13/06/2016.
  */
+@Service
 public class DatasetSimilarsService implements IDatasetSimilarsService{
 
     @Autowired
