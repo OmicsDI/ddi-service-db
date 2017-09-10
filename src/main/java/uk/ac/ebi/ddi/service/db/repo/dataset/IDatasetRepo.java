@@ -34,7 +34,7 @@ public interface IDatasetRepo extends MongoRepository<Dataset,ObjectId>{
     @Query("{crossReferences.pubmed:?0}")
     List<Dataset> findByCrossReferencesPubmed(String pubmedId);
 
-    @Query("{'$and':[{accession : ?0}, {crossReferences.biomodels__db:{'$exists':true}}]}")
+    @Query("{'$and':[{database : ?0}, {crossReferences.biomodels__db:{'$exists':true}}]}")
     List<Dataset> findByDatabaseBioModels(String database);
 
 }
