@@ -66,6 +66,7 @@ public class DatasetService implements IDatasetService {
             existingDataset.setName(dataset.getName());
             existingDataset.setFilePath(dataset.getFilePath());
             existingDataset.setInitHashCode(dataset.getInitHashCode());
+            existingDataset.setScores(dataset.getScores());
             return datasetAccessRepo.save(existingDataset);
         }
         return existingDataset;
