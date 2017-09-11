@@ -24,6 +24,7 @@ import uk.ac.ebi.ddi.service.db.repo.logger.IDatasetResourceRepo;
 import uk.ac.ebi.ddi.service.db.repo.logger.IHttpEventRepo;
 import uk.ac.ebi.ddi.service.db.service.dataset.DatasetService;
 import uk.ac.ebi.ddi.service.db.service.dataset.MostAccessedDatasetService;
+import uk.ac.ebi.ddi.service.db.utils.Constants;
 import uk.ac.ebi.ddi.service.db.utils.Tuple;
 
 import java.util.HashMap;
@@ -160,7 +161,8 @@ public class HttpEventService implements IHttpEventService {
 
             for (MostAccessedDatasets visit : currentMostAccessed) {
                 if (visit.getId() != null) {
-                    Dataset datasetOut = datasetService.read(visit.getAccession(), visit.getDatabase());
+                    String database = Constants.Database.retriveAnchorName(visit.getDatabase());
+                    Dataset datasetOut = datasetService.read(visit.getAccession(),database);
                     if (datasetOut != null) {
 
                         if(datasetOut.getScores() != null) {
