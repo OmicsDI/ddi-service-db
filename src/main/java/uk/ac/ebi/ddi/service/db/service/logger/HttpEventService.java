@@ -28,6 +28,7 @@ import uk.ac.ebi.ddi.service.db.utils.Constants;
 import uk.ac.ebi.ddi.service.db.utils.Tuple;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -171,6 +172,9 @@ public class HttpEventService implements IHttpEventService {
                             Scores scores = new Scores();
                             scores.setViewCount(visit.getTotal());
                             datasetOut.setScores(scores);
+                            HashSet<String> count = new HashSet<String>();
+                            count.add(String.valueOf(visit.getTotal()));
+                            datasetOut.getAdditional().put("viewCount",count);
                         }
                         datasetService.update(datasetOut.getId(),datasetOut);
                         MostAccessedDatasets dataset = new MostAccessedDatasets(datasetOut, visit.getTotal());
