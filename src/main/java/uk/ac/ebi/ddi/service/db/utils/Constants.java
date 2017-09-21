@@ -15,6 +15,7 @@ public class Constants {
     public static String REANALYSIS_TYPE = "Reanalysis of";
     public static String ACCESSION_FIELD = "accession";
     public static String TOTAL_FIELD ="total";
+    public static String VIEWCOUNT_FIELD = "viewCount";
 
     public enum Database{
         PRIDE("Pride", "pride"),
