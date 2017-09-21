@@ -9,6 +9,9 @@ import uk.ac.ebi.ddi.service.db.model.similarity.ReanalysisData;
 import uk.ac.ebi.ddi.service.db.repo.similarity.ICitationRepo;
 import uk.ac.ebi.ddi.service.db.repo.similarity.IReanalysisRepo;
 import uk.ac.ebi.ddi.service.db.service.dataset.DatasetService;
+import uk.ac.ebi.ddi.service.db.utils.Constants;
+
+import java.util.HashSet;
 
 /**
  * Created by gaur on 27/07/17.
@@ -23,6 +26,7 @@ public class ReanalysisDataService implements IReanalysisDataService {
     private DatasetService datasetService;
 
     public void saveReanalysis(ReanalysisData reanalysisData){
+        //String database = Constants.Database.retriveAnchorName(visit.getDatabase());
         Dataset dataset = datasetService.read(reanalysisData.getAccession(),reanalysisData.getDatabase());
         if (dataset != null) {
             if(dataset.getScores() != null) {
@@ -31,6 +35,9 @@ public class ReanalysisDataService implements IReanalysisDataService {
                 Scores scores = new Scores();
                 scores.setReanalysisCount(reanalysisData.getTotal());
                 dataset.setScores(scores);
+                HashSet<String> count = new HashSet<String>();
+                count.add(reanalysisData.getTotal().toString());
+                dataset.getAdditional().put("reanalysisCount",count);
             }
             datasetService.update(dataset.getId(),dataset);
         }
