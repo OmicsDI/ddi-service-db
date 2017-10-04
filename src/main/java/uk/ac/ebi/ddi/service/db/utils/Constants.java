@@ -13,9 +13,10 @@ public class Constants {
     public static String SIMILARS_FIELD = "similars";
     public static String SIMILARS_RELATIONTYPE = "similars.relationType";
     public static String REANALYSIS_TYPE = "Reanalysis of";
+    public static String REANALYZED_TYPE = "Reanalyzed by";
     public static String ACCESSION_FIELD = "accession";
     public static String TOTAL_FIELD ="total";
-    public static String VIEWCOUNT_FIELD = "viewCount";
+    public static String REANALYSIS_FIELD = "reanalysisCount";
 
     public enum Database{
         PRIDE("Pride", "pride"),
