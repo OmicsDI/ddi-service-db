@@ -119,7 +119,7 @@ public class DatasetStatInfoService implements IDatasetStatInfoService {
     public List<ReanalysisData> reanalysisCount(){
         Aggregation agg = Aggregation.newAggregation(
                 unwind(Constants.SIMILARS_FIELD),
-                match(new Criteria(Constants.SIMILARS_RELATIONTYPE).is(Constants.REANALYSIS_TYPE)),
+                match(new Criteria(Constants.SIMILARS_RELATIONTYPE).is(Constants.REANALYZED_TYPE)),
                 group(fields().and(Constants.DATABASE_FIELD,Constants.DATABASE_FIELD)
                         .and(Constants.ACCESSION_FIELD,Constants.ACCESSION_FIELD)).count().as(Constants.TOTAL_FIELD),
                 sort(Sort.Direction.DESC, Constants.TOTAL_FIELD),
@@ -130,6 +130,8 @@ public class DatasetStatInfoService implements IDatasetStatInfoService {
                 = mongoOperation.aggregate(agg, DatasetSimilars.class, ReanalysisData.class);
 
         List<ReanalysisData> result = groupResults.getMappedResults();
+
+
 
         return result;
     }
