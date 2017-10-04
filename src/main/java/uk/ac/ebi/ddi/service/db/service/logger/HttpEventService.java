@@ -150,7 +150,7 @@ public class HttpEventService implements IHttpEventService {
                 project()//.andExpression("_id").as("mostAccessedDatasets._id")
                         .andInclude("total","accession","database"),
                 sort(Sort.Direction.DESC, "total")//,
-                //,limit(200)
+                ,limit(150000)
         ).withOptions(options);
 
         //try {
