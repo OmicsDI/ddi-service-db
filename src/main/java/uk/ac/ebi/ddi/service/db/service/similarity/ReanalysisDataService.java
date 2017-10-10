@@ -35,10 +35,10 @@ public class ReanalysisDataService implements IReanalysisDataService {
                 Scores scores = new Scores();
                 scores.setReanalysisCount(reanalysisData.getTotal());
                 dataset.setScores(scores);
-                HashSet<String> count = new HashSet<String>();
-                count.add(reanalysisData.getTotal().toString());
-                dataset.getAdditional().put(Constants.REANALYSIS_FIELD,count);
             }
+            HashSet<String> count = new HashSet<String>();
+            count.add(reanalysisData.getTotal().toString());
+            dataset.getAdditional().put(Constants.REANALYSIS_FIELD,count);
             datasetService.update(dataset.getId(),dataset);
         }
         reanalysisRepo.save(reanalysisData);
