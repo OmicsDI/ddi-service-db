@@ -172,10 +172,10 @@ public class HttpEventService implements IHttpEventService {
                             Scores scores = new Scores();
                             scores.setViewCount(visit.getTotal());
                             datasetOut.setScores(scores);
-                            HashSet<String> count = new HashSet<String>();
-                            count.add(String.valueOf(visit.getTotal()));
-                            datasetOut.getAdditional().put("viewCount",count);
                         }
+                        HashSet<String> count = new HashSet<String>();
+                        count.add(String.valueOf(visit.getTotal()));
+                        datasetOut.getAdditional().put("viewCount",count);
                         datasetService.update(datasetOut.getId(),datasetOut);
                         MostAccessedDatasets dataset = new MostAccessedDatasets(datasetOut, visit.getTotal());
                         mostAccessedDatasetService.save(dataset);
