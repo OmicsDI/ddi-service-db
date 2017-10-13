@@ -156,7 +156,7 @@ public class HttpEventService implements IHttpEventService {
         //try {
         //Convert the aggregation result into a List
         AggregationResults<MostAccessedDatasets> groupResults
-                = mongoTemplate.aggregate(agg, "logger.event", MostAccessedDatasets.class);
+                = mongoTemplate.aggregate(agg, Constants.LOGGER_COLLECTION, MostAccessedDatasets.class);
         List<MostAccessedDatasets> currentMostAccessed = groupResults.getMappedResults();
         mostAccessedDatasetService.deleteAll();
 
