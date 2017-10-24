@@ -16,7 +16,9 @@ public class Constants {
     public static String REANALYZED_TYPE = "Reanalyzed by";
     public static String ACCESSION_FIELD = "accession";
     public static String TOTAL_FIELD ="total";
-    public static String REANALYSIS_FIELD = "reanalysisCount";
+    public static String REANALYSIS_FIELD = "reanalysis_count";
+    public static String VIEWCOUNT_FIELD = "view_count";
+    public static String LOGGER_COLLECTION = "logger.event";
 
     public enum Database{
         PRIDE("Pride", "pride"),
