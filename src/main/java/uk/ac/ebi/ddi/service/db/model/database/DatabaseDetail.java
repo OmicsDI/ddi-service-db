@@ -27,6 +27,16 @@ public class DatabaseDetail implements Serializable {
 
     String source;
 
+    public String getOrcidName() {
+        return orcidName;
+    }
+
+    public void setOrcidName(String orcidName) {
+        this.orcidName = orcidName;
+    }
+
+    String orcidName;
+
     public String getSource() {
         return source;
     }
