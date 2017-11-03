@@ -131,4 +131,9 @@ public class DatasetService implements IDatasetService {
     public List<Dataset> findByDatabaseBioModels(String database) {
         return datasetAccessRepo.findByDatabaseBioModels(database);
     }
+
+    @Override
+    public Dataset findByFullDatasetLink(String url){
+        return datasetAccessRepo.findByFullDatasetLink(url);
+    }
 }

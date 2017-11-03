@@ -37,4 +37,7 @@ public interface IDatasetRepo extends MongoRepository<Dataset,ObjectId>{
     @Query("{'$and':[{database : ?0}, {crossReferences.biomodels__db:{'$exists':true}}]}")
     List<Dataset> findByDatabaseBioModels(String database);
 
+    @Query("{additional.full_dataset_link:?0}")
+    Dataset findByFullDatasetLink(String url);
+
 }

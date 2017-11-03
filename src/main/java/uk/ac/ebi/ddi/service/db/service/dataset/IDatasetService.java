@@ -78,4 +78,6 @@ public interface IDatasetService {
     long getDatasetCount();
 
     List<Dataset> findByDatabaseBioModels(String database);
+
+    Dataset findByFullDatasetLink(String url);
 }
