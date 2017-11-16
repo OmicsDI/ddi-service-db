@@ -18,6 +18,7 @@ import uk.ac.ebi.ddi.service.db.model.aggregate.*;
 import uk.ac.ebi.ddi.service.db.utils.Constants;
 
 import javax.annotation.Resource;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -117,10 +118,14 @@ public class DatasetService implements IDatasetService {
         Query searchQuery = new Query();
         searchQuery.addCriteria(new Criteria(Constants.DATABASE_FIELD).in(databases));
 
+        HashSet<String> claimableStatus = new HashSet<String>();
+        claimableStatus.add("true");
+
         Update updateClaim = new Update();
-        updateClaim.set(Constants.ISCLAIMED_FIELD,true);
+        updateClaim.set(Constants.ISCLAIMED_FIELD,true).set(Constants.ADDITIONAL_CLAIMABLE,claimableStatus);
 
         mongoTemplate.updateMulti(searchQuery,updateClaim,Constants.DATASET_COLLECTION);
+
     }
 
     public long getDatasetCount(){
