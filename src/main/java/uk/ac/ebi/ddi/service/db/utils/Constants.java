@@ -19,6 +19,8 @@ public class Constants {
     public static String REANALYSIS_FIELD = "reanalysis_count";
     public static String VIEWCOUNT_FIELD = "view_count";
     public static String LOGGER_COLLECTION = "logger.event";
+    public static String ADDITIONAL_CLAIMABLE = "additional.isClaimable";
+    public static String TRUE_VALUE = "true";
 
     public enum Database{
         PRIDE("Pride", "pride"),
