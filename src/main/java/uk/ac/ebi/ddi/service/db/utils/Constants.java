@@ -22,6 +22,8 @@ public class Constants {
     public static String ADDITIONAL_CLAIMABLE = "additional.isClaimable";
     public static String TRUE_VALUE = "true";
 
+
+    @Deprecated
     public enum Database{
         PRIDE("Pride", "pride"),
         PEPTIDEATLAS("PeptideAtlas", "peptide_atlas"),
