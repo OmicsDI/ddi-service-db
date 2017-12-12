@@ -22,6 +22,7 @@ import uk.ac.ebi.ddi.service.db.model.logger.HttpEvent;
 import uk.ac.ebi.ddi.service.db.model.logger.ResourceStatVisit;
 import uk.ac.ebi.ddi.service.db.repo.logger.IDatasetResourceRepo;
 import uk.ac.ebi.ddi.service.db.repo.logger.IHttpEventRepo;
+import uk.ac.ebi.ddi.service.db.service.database.DatabaseDetailService;
 import uk.ac.ebi.ddi.service.db.service.dataset.DatasetService;
 import uk.ac.ebi.ddi.service.db.service.dataset.MostAccessedDatasetService;
 import uk.ac.ebi.ddi.service.db.utils.Constants;
@@ -58,6 +59,9 @@ public class HttpEventService implements IHttpEventService {
 
     @Autowired
     private MostAccessedDatasetService mostAccessedDatasetService;
+
+    @Autowired
+    private DatabaseDetailService databaseDetailService;
 
     @Override
     public HttpEvent insert(HttpEvent httpEvent) {
@@ -162,7 +166,7 @@ public class HttpEventService implements IHttpEventService {
 
             for (MostAccessedDatasets visit : currentMostAccessed) {
                 if (visit.getId() != null) {
-                    String database = Constants.Database.retriveAnchorName(visit.getDatabase());
+                    String database = databaseDetailService.retriveAnchorName(visit.getDatabase());
                     Dataset datasetOut = datasetService.read(visit.getAccession(),database);
                     if (datasetOut != null) {
 
