@@ -40,4 +40,7 @@ public interface IDatasetRepo extends MongoRepository<Dataset,ObjectId>{
     @Query("{additional.full_dataset_link:?0}")
     Dataset findByFullDatasetLink(String url);
 
+    @Query("{additional.secondary_accession:?0}")
+    List<Dataset> getBySecondaryAccession(String url);
+
 }

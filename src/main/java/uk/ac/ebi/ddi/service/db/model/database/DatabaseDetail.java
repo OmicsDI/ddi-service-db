@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * Created by root on 16.05.17.
@@ -59,6 +60,34 @@ public class DatabaseDetail implements Serializable {
 
     byte[] image;
 
+    String icon;
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public String getUrlTemplate() {
+        return urlTemplate;
+    }
+
+    public void setUrlTemplate(String urlTemplate) {
+        this.urlTemplate = urlTemplate;
+    }
+
+    public Set<String> getAccessionPrefix() {
+        return accessionPrefix;
+    }
+
+    public void setAccessionPrefix(Set<String> accessionPrefix) {
+        this.accessionPrefix = accessionPrefix;
+    }
+
+    String urlTemplate;
+    Set<String> accessionPrefix;
 
     public String getDatabaseName() {
         return databaseName;

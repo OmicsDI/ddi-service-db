@@ -80,4 +80,13 @@ public interface IDatasetService {
     List<Dataset> findByDatabaseBioModels(String database);
 
     Dataset findByFullDatasetLink(String url);
+
+
+    /**
+     * Find all datasets by an specific accession
+     * @param accession
+     * @return
+     */
+    List<Dataset> getBySecondaryAccession(String accession);
+
 }

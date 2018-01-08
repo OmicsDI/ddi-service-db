@@ -141,4 +141,9 @@ public class DatasetService implements IDatasetService {
     public Dataset findByFullDatasetLink(String url){
         return datasetAccessRepo.findByFullDatasetLink(url);
     }
+
+    @Override
+    public List<Dataset> getBySecondaryAccession(String accession){
+        return datasetAccessRepo.getBySecondaryAccession(accession);
+    }
 }
