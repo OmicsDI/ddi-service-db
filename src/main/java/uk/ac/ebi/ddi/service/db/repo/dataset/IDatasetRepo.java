@@ -10,6 +10,7 @@ import uk.ac.ebi.ddi.service.db.model.dataset.Dataset;
 
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * The Access Repository it give information about the access to any resource in the database and the system.
@@ -17,7 +18,7 @@ import java.util.List;
  * @author Mingze
  */
 @Repository
-public interface IDatasetRepo extends MongoRepository<Dataset,ObjectId>{
+public interface IDatasetRepo extends MongoRepository<Dataset,ObjectId>, IDatasetRepoExtension{
 
     @Query("{'$and':[{accession : ?0}, {database : ?1}]}")
     Dataset findByAccessionDatabaseQuery(String acc, String database);

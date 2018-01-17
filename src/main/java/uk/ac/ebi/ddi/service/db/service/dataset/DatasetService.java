@@ -20,6 +20,8 @@ import uk.ac.ebi.ddi.service.db.utils.Constants;
 import javax.annotation.Resource;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.locks.ReentrantLock;
 
 
 /**
@@ -145,5 +147,26 @@ public class DatasetService implements IDatasetService {
     @Override
     public List<Dataset> getBySecondaryAccession(String accession){
         return datasetAccessRepo.getBySecondaryAccession(accession);
+    }
+
+    Set<String> secondaryAccessionsSet = null;
+    ReentrantLock lock = new ReentrantLock();
+
+    @Override
+    public Boolean existsBySecondaryAccession(String accession){
+        lock.lock();
+        try {
+            if (null == this.secondaryAccessionsSet) {
+                this.secondaryAccessionsSet = datasetAccessRepo.getSecondaryAccessions();
+            }
+            return (this.secondaryAccessionsSet.contains(accession));
+        }finally{
+            lock.unlock();
+        }
+    }
+
+    @Override
+    public Set<String> getAllSecondaryAccessions(){
+        return(datasetAccessRepo.getSecondaryAccessions());
     }
 }

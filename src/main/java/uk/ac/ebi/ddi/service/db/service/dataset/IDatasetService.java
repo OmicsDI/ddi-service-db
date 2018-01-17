@@ -8,6 +8,7 @@ import uk.ac.ebi.ddi.service.db.model.aggregate.BaseAggregate;
 import uk.ac.ebi.ddi.service.db.model.dataset.Dataset;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * THis interface allows the creation of and handling of DatasetAccess in the database.
@@ -88,5 +89,14 @@ public interface IDatasetService {
      * @return
      */
     List<Dataset> getBySecondaryAccession(String accession);
+
+    /**
+     * Performance optimisation - quick search if secondary accession exists
+     * @param accession
+     * @return boolean
+     */
+    Boolean existsBySecondaryAccession(String accession);
+
+    Set<String> getAllSecondaryAccessions();
 
 }
