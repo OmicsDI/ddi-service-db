@@ -3,6 +3,7 @@ package uk.ac.ebi.ddi.service.db.service.enrichment;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import uk.ac.ebi.ddi.service.db.model.enrichment.DatasetEnrichmentInfo;
+import uk.ac.ebi.ddi.service.db.model.enrichment.Identifier;
 
 import java.util.List;
 
@@ -58,4 +59,9 @@ public interface IEnrichmentInfoService {
     boolean isDatasetExist(String accession, String database);
 
     void deleteAll();
+
+    void updateIdentifiers(Iterable<Identifier> identifiers);
+
+    public List<String> getAdditionalAccession(String accession);
+
 }
