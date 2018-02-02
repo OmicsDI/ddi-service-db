@@ -8,8 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.ddi.service.db.exception.DBWriteException;
 import uk.ac.ebi.ddi.service.db.model.enrichment.DatasetEnrichmentInfo;
+import uk.ac.ebi.ddi.service.db.model.enrichment.Identifier;
 import uk.ac.ebi.ddi.service.db.repo.enrichment.IEnrichmentInfoRepo;
+import uk.ac.ebi.ddi.service.db.repo.enrichment.IIdentifierRepo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,6 +25,9 @@ public class EnrichmentInfoService implements IEnrichmentInfoService {
 
     @Autowired
     private IEnrichmentInfoRepo accessRepo;
+
+    @Autowired
+    private IIdentifierRepo identifierRepo;
 
     @Override
     public DatasetEnrichmentInfo insert(DatasetEnrichmentInfo datasetEnrichmentInfo) {
@@ -89,5 +95,21 @@ public class EnrichmentInfoService implements IEnrichmentInfoService {
     public void deleteAll() {
         accessRepo.deleteAll();
     }
+
+    @Override
+    public void updateIdentifiers(Iterable<Identifier> identifiers){
+        identifierRepo.deleteAll();
+        identifierRepo.save(identifiers);
+    }
+
+    @Override
+    public List<String> getAdditionalAccession(String accession){
+        List<String> result = new ArrayList<String>();
+        for(Identifier i : identifierRepo.getByAdditionalAccession(accession)){
+            result.add(i.getAccession());
+        }
+        return result;
+    }
+
 
 }
