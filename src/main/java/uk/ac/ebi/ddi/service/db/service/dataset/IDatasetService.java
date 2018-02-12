@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import uk.ac.ebi.ddi.service.db.model.aggregate.BaseAggregate;
 import uk.ac.ebi.ddi.service.db.model.dataset.Dataset;
+import uk.ac.ebi.ddi.service.db.model.dataset.MergeCandidate;
 
 import java.util.List;
 import java.util.Set;
@@ -98,5 +99,7 @@ public interface IDatasetService {
     Boolean existsBySecondaryAccession(String accession);
 
     Set<String> getAllSecondaryAccessions();
+
+    List<MergeCandidate> getMergeCandidates(int start, int size);
 
 }

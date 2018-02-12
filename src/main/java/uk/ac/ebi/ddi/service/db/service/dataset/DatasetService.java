@@ -13,11 +13,13 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import uk.ac.ebi.ddi.service.db.model.dataset.Dataset;
+import uk.ac.ebi.ddi.service.db.model.dataset.MergeCandidate;
 import uk.ac.ebi.ddi.service.db.repo.dataset.IDatasetRepo;
 import uk.ac.ebi.ddi.service.db.model.aggregate.*;
 import uk.ac.ebi.ddi.service.db.utils.Constants;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -168,5 +170,10 @@ public class DatasetService implements IDatasetService {
     @Override
     public Set<String> getAllSecondaryAccessions(){
         return(datasetAccessRepo.getSecondaryAccessions());
+    }
+
+    @Override
+    public List<MergeCandidate> getMergeCandidates(int start, int size){
+        return new ArrayList<MergeCandidate>();
     }
 }
