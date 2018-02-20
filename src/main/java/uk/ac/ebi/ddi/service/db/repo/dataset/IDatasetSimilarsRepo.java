@@ -12,10 +12,7 @@ import java.util.List;
  * Created by yperez on 13/06/2016.
  */
 @Repository
-public interface IDatasetSimilarsRepo extends MongoRepository<DatasetSimilars,ObjectId> {
-
-    @Query("{'$and':[{accession : ?0}, {database : ?1}]}")
-    DatasetSimilars findByAccessionDatabaseQuery(String acc, String database);
+public interface IDatasetSimilarsRepo extends MongoRepository<DatasetSimilars,ObjectId>, IDatasetSimilarsRepoExtension {
 
     @Query(value="{ database : ?0 }", fields ="{database : 1, accession : 1, hashCode: 1, currentStatus: 1}")
     List<DatasetSimilars> findByDatabase(String name);
@@ -23,6 +20,8 @@ public interface IDatasetSimilarsRepo extends MongoRepository<DatasetSimilars,Ob
     @Query("{_id: ?0}")
     DatasetSimilars findByIdDatabaseQuery(ObjectId _id);
 
+/******* where it can be used?? just acc, no db
     @Query("{accession: ?0}")
     List<DatasetSimilars> findByAccession(String accession);
+******/
 }

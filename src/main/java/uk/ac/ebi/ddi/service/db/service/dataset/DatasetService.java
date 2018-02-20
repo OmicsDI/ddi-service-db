@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import uk.ac.ebi.ddi.service.db.model.dataset.Dataset;
+import uk.ac.ebi.ddi.service.db.model.dataset.DatasetShort;
 import uk.ac.ebi.ddi.service.db.model.dataset.MergeCandidate;
 import uk.ac.ebi.ddi.service.db.repo.dataset.IDatasetRepo;
 import uk.ac.ebi.ddi.service.db.model.aggregate.*;
@@ -174,6 +175,44 @@ public class DatasetService implements IDatasetService {
 
     @Override
     public List<MergeCandidate> getMergeCandidates(int start, int size){
-        return new ArrayList<MergeCandidate>();
+
+        List<MergeCandidate> results = datasetAccessRepo.getMergeCandidates(start,size);
+
+        for(MergeCandidate m: results){
+            Dataset ds = datasetAccessRepo.findByAccessionDatabaseQuery(m.getAccession(), m.getDatabase());
+            if(null!=ds) {
+                m.setName(ds.getName());
+            }
+            for(DatasetShort s : m.getSimilars()){
+                Dataset ds1 = datasetAccessRepo.findByAccessionDatabaseQuery(s.getAccession(), s.getDatabase());
+                if(null!=ds1) {
+                    s.setName(ds1.getName());
+                }
+            }
+        }
+
+        return results;
+    }
+
+    @Override
+    public Integer getMergeCandidateCount(){
+        return datasetAccessRepo.getMergeCandidateCount();
+    }
+
+    @Override
+    public void mergeDatasets(MergeCandidate mergeData){
+
+        datasetAccessRepo.mergeDataset(mergeData);
+        datasetAccessRepo.deleteMergeCandidte(mergeData.getDatabase(), mergeData.getAccession());
+
+        for(DatasetShort d : mergeData.getSimilars()) {
+            datasetAccessRepo.addSecondaryAccession(mergeData.getDatabase(), mergeData.getAccession(), d.getAccession());
+
+            datasetAccessRepo.delete(d.getDatabase(), d.getAccession());
+
+            datasetAccessRepo.deleteMergeCandidte(d.getDatabase(), d.getAccession());
+        }
+
+        return;
     }
 }

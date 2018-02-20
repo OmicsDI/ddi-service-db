@@ -57,10 +57,12 @@ public class DatasetSimilarsService implements IDatasetSimilarsService{
         return datasetRepo.findByAccessionDatabaseQuery(acc, database);
     }
 
+    /****** AZ: removed, why we need to query by accession, w/o database?
     @Override
     public List<DatasetSimilars> findByAccession(String accession) {
         return datasetRepo.findByAccession(accession);
     }
+    *******/
 
     @Override
     public List<DatasetSimilars> readAll(){

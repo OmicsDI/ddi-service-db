@@ -102,4 +102,8 @@ public interface IDatasetService {
 
     List<MergeCandidate> getMergeCandidates(int start, int size);
 
+    Integer getMergeCandidateCount();
+
+    void mergeDatasets(MergeCandidate mergeCandidate);
+
 }

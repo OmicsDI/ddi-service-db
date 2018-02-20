@@ -57,8 +57,11 @@ public interface IDatasetSimilarsService {
      * Find all datasets by an specific accession
      * @param accession
      * @return
+     *
+     *
+     * List<DatasetSimilars> findByAccession(String accession);
      */
-    List<DatasetSimilars> findByAccession(String accession);
+
 
     List<DatasetSimilars> readAll();
 }
