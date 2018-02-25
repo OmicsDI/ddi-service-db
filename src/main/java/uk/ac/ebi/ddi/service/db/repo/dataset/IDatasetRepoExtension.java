@@ -22,4 +22,6 @@ public interface IDatasetRepoExtension {
     void deleteMergeCandidte(String database, String accession);
 
     void addSecondaryAccession(String database, String accession, String secondaryAccession);
+
+    long getMergedDatasetCount(String database, String accession);
 }
