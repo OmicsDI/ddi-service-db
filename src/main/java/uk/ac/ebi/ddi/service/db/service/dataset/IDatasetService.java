@@ -106,4 +106,6 @@ public interface IDatasetService {
 
     void mergeDatasets(MergeCandidate mergeCandidate);
 
+    long getMergedDatasetCount(String database, String accession);
+
 }
