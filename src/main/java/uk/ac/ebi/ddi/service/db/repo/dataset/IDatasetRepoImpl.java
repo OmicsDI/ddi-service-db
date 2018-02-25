@@ -143,5 +143,10 @@ public class IDatasetRepoImpl implements IDatasetRepoExtension {
 
         mongoOperations.updateFirst(new BasicQuery("{ accession : '"+ accession +"', database : '"+ database +"' }"),update, "datasets.dataset");
     }
+
+    @Override
+    public long getMergedDatasetCount(String database, String accession){
+        return mongoOperations.count(new BasicQuery("{ accession : '"+ accession +"', database : '"+ database +"' }"),"mergeCandidates");
+    }
 }
 
