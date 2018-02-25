@@ -215,4 +215,9 @@ public class DatasetService implements IDatasetService {
 
         return;
     }
+
+    @Override
+    public long getMergedDatasetCount(String database, String accession) {
+        return datasetAccessRepo.getMergedDatasetCount(database,accession);
+    }
 }
