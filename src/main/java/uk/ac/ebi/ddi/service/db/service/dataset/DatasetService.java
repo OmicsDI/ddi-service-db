@@ -14,16 +14,17 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import uk.ac.ebi.ddi.service.db.model.dataset.Dataset;
 import uk.ac.ebi.ddi.service.db.model.dataset.DatasetShort;
+import uk.ac.ebi.ddi.service.db.model.dataset.DbDatasetCount;
 import uk.ac.ebi.ddi.service.db.model.dataset.MergeCandidate;
 import uk.ac.ebi.ddi.service.db.repo.dataset.IDatasetRepo;
 import uk.ac.ebi.ddi.service.db.model.aggregate.*;
 import uk.ac.ebi.ddi.service.db.utils.Constants;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.group;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.match;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.locks.ReentrantLock;
 
 
@@ -219,5 +220,19 @@ public class DatasetService implements IDatasetService {
     @Override
     public long getMergedDatasetCount(String database, String accession) {
         return datasetAccessRepo.getMergedDatasetCount(database,accession);
+    }
+
+    @Override
+    public List<DbDatasetCount> getDbDatasetsCount(){
+        Aggregation agg = newAggregation(
+                group("database").count().as("dbCount")
+        );
+        //Convert the aggregation result into a List
+        AggregationResults<DbDatasetCount> groupResults
+                = mongoTemplate.aggregate(agg,Dataset.class, DbDatasetCount.class);
+        List<DbDatasetCount> result = groupResults.getMappedResults();
+
+        return result;
+
     }
 }
