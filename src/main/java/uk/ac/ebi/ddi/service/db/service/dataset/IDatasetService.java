@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import uk.ac.ebi.ddi.service.db.model.aggregate.BaseAggregate;
 import uk.ac.ebi.ddi.service.db.model.dataset.Dataset;
+import uk.ac.ebi.ddi.service.db.model.dataset.DbDatasetCount;
 import uk.ac.ebi.ddi.service.db.model.dataset.MergeCandidate;
 
 import java.util.List;
@@ -107,5 +108,7 @@ public interface IDatasetService {
     void mergeDatasets(MergeCandidate mergeCandidate);
 
     long getMergedDatasetCount(String database, String accession);
+
+    List<DbDatasetCount> getDbDatasetsCount();
 
 }
