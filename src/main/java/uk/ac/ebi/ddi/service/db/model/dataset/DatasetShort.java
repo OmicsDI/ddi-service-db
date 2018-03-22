@@ -30,6 +30,16 @@ public class DatasetShort {
         this.name = name;
     }
 
+    public String getSourceUrl() {
+        return sourceUrl;
+    }
+
+    public void setSourceUrl(String sourceUrl) {
+        this.sourceUrl = sourceUrl;
+    }
+
     String accession;
     String name;
+    String sourceUrl;
+
 }
