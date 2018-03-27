@@ -21,6 +21,8 @@ public class Constants {
     public static String LOGGER_COLLECTION = "logger.event";
     public static String ADDITIONAL_CLAIMABLE = "additional.isClaimable";
     public static String TRUE_VALUE = "true";
+    public static String OMICS_TYPE = "omics_type";
+    public static String MULTIOMICS_TYPE ="Multiomics";
 
 
     @Deprecated
