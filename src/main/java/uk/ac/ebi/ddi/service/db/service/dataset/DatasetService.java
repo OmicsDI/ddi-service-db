@@ -12,13 +12,14 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import uk.ac.ebi.ddi.service.db.model.dataset.Dataset;
-import uk.ac.ebi.ddi.service.db.model.dataset.DatasetShort;
-import uk.ac.ebi.ddi.service.db.model.dataset.DbDatasetCount;
-import uk.ac.ebi.ddi.service.db.model.dataset.MergeCandidate;
+import uk.ac.ebi.ddi.service.db.model.dataset.*;
+import uk.ac.ebi.ddi.service.db.model.publication.PublicationDataset;
 import uk.ac.ebi.ddi.service.db.repo.dataset.IDatasetRepo;
 import uk.ac.ebi.ddi.service.db.model.aggregate.*;
 import uk.ac.ebi.ddi.service.db.utils.Constants;
+import uk.ac.ebi.ddi.service.db.utils.DatasetSimilarsType;
+import uk.ac.ebi.ddi.service.db.utils.Utilities;
+
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.group;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.match;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
@@ -41,6 +42,9 @@ public class DatasetService implements IDatasetService {
 
     @Resource
     private IDatasetRepo datasetAccessRepo;
+
+    @Autowired
+    private IDatasetSimilarsService datasetSimilarsService;
 
     @Override
     public Dataset save(Dataset dataset) {
@@ -235,4 +239,28 @@ public class DatasetService implements IDatasetService {
         return result;
 
     }
+
+    public void skipMerge(MergeCandidate mergeCandidate){
+        for(DatasetShort d : mergeCandidate.getSimilars()) {
+            datasetAccessRepo.deleteMergeCandidte(d.getDatabase(), d.getAccession());
+        }
+    }
+
+    public void addMultiomics(MergeCandidate mergeCandidate){
+        for(DatasetShort d : mergeCandidate.getSimilars()) {
+            Dataset dataset = datasetAccessRepo.findByAccessionDatabaseQuery(d.getAccession(),d.getDatabase());
+
+        }
+        mergeCandidate.getSimilars().parallelStream().forEach(dt -> {
+            Dataset dataset = datasetAccessRepo.findByAccessionDatabaseQuery(dt.getAccession(), dt.getDatabase());
+            if (dataset != null) {
+                dataset = Utilities.addAdditionalField(dataset, Constants.OMICS_TYPE, Constants.MULTIOMICS_TYPE);
+                save(dataset);
+                datasetSimilarsService.addDatasetSimilars(dataset, mergeCandidate.getSimilars(),
+                        DatasetSimilarsType.OTHER_OMICS_DATA.getType());
+            }
+        }
+        );
+    }
+
 }
