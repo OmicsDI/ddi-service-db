@@ -111,4 +111,8 @@ public interface IDatasetService {
 
     List<DbDatasetCount> getDbDatasetsCount();
 
+    void skipMerge(MergeCandidate mergeCandidate);
+
+    void addMultiomics(MergeCandidate mergeCandidate);
+
 }
