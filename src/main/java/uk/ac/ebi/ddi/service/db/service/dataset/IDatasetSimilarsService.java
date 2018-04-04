@@ -2,6 +2,8 @@ package uk.ac.ebi.ddi.service.db.service.dataset;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
+import uk.ac.ebi.ddi.service.db.model.dataset.Dataset;
+import uk.ac.ebi.ddi.service.db.model.dataset.DatasetShort;
 import uk.ac.ebi.ddi.service.db.model.dataset.DatasetSimilars;
 
 import java.util.List;
@@ -57,8 +59,13 @@ public interface IDatasetSimilarsService {
      * Find all datasets by an specific accession
      * @param accession
      * @return
+     *
+     *
+     * List<DatasetSimilars> findByAccession(String accession);
      */
-    List<DatasetSimilars> findByAccession(String accession);
+
 
     List<DatasetSimilars> readAll();
+
+    void addDatasetSimilars(Dataset dataset, List<DatasetShort> similars, String relationtype);
 }
