@@ -261,6 +261,7 @@ public class DatasetService implements IDatasetService {
             }
         }
         );
+        skipMerge(mergeCandidate);
     }
 
 }
