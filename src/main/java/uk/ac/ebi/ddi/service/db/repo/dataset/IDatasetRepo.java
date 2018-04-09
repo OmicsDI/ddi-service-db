@@ -20,7 +20,7 @@ import java.util.Set;
 @Repository
 public interface IDatasetRepo extends MongoRepository<Dataset,ObjectId>, IDatasetRepoExtension{
 
-    @Query("{'$and':[{accession : ?0}, {database : ?1}]}")
+    @Query("{'$and':[{accession : ?0}, {database : ?1},{'additional.isPrivateg':{'$ne':true}}]}")
     Dataset findByAccessionDatabaseQuery(String acc, String database);
 
     @Query(value="{ database : ?0 }", fields ="{database : 1, accession : 1, hashCode: 1, currentStatus: 1}")
@@ -43,5 +43,9 @@ public interface IDatasetRepo extends MongoRepository<Dataset,ObjectId>, IDatase
 
     @Query("{additional.secondary_accession:?0}")
     List<Dataset> getBySecondaryAccession(String url);
+
+    @Query("{database:?0 ,'$where':'this.accession==this.name'}")
+    List<Dataset> getPrivateByDatabase(String database);
+
 
 }
