@@ -115,4 +115,7 @@ public interface IDatasetService {
 
     void addMultiomics(MergeCandidate mergeCandidate);
 
+    List<Dataset> getPrivateDatasets(String database);
+
+    void updatePrivateDatasets(String database);
 }
