@@ -1,5 +1,7 @@
 package uk.ac.ebi.ddi.service.db.service.dataset;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -246,6 +248,10 @@ public class DatasetService implements IDatasetService {
         }
     }
 
+    public List<Dataset> getPrivateDatasets(String database){
+        return datasetAccessRepo.getPrivateByDatabase(database);
+    }
+
     public void addMultiomics(MergeCandidate mergeCandidate){
         for(DatasetShort d : mergeCandidate.getSimilars()) {
             Dataset dataset = datasetAccessRepo.findByAccessionDatabaseQuery(d.getAccession(),d.getDatabase());
@@ -263,5 +269,26 @@ public class DatasetService implements IDatasetService {
         );
         skipMerge(mergeCandidate);
     }
+
+    public void updatePrivateDatasets(String database){
+
+
+        Criteria criteria = new Criteria() {
+            @Override
+            public DBObject getCriteriaObject() {
+                DBObject obj = new BasicDBObject();
+                obj.put("$where", "this.accession == this.name");
+                return obj;
+            }
+        };
+        Query query  = new Query(Criteria.where(Constants.DATABASE_FIELD).is(database).
+                and("$where").is("this.accession == this.name"));
+
+        Update update = new Update();
+        update.addToSet("additional.isPrivate","true");
+
+        mongoTemplate.updateMulti(query, update,Constants.DATASET_COLLECTION);
+    }
+
 
 }
