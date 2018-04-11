@@ -253,10 +253,10 @@ public class DatasetService implements IDatasetService {
     }
 
     public void addMultiomics(MergeCandidate mergeCandidate){
-        for(DatasetShort d : mergeCandidate.getSimilars()) {
+/*        for(DatasetShort d : mergeCandidate.getSimilars()) {
             Dataset dataset = datasetAccessRepo.findByAccessionDatabaseQuery(d.getAccession(),d.getDatabase());
 
-        }
+        }*/
         mergeCandidate.getSimilars().parallelStream().forEach(dt -> {
             Dataset dataset = datasetAccessRepo.findByAccessionDatabaseQuery(dt.getAccession(), dt.getDatabase());
             if (dataset != null) {
