@@ -12,9 +12,11 @@ import uk.ac.ebi.ddi.service.db.model.dataset.SimilarDataset;
 import uk.ac.ebi.ddi.service.db.model.publication.PublicationDataset;
 import uk.ac.ebi.ddi.service.db.repo.dataset.IDatasetSimilarsRepo;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by yperez on 13/06/2016.
@@ -97,6 +99,24 @@ public class DatasetSimilarsService implements IDatasetSimilarsService{
             similarDatasets.addAll(similarsData);
             datasetExisting.setSimilars(similarDatasets);
             datasetRepo.save(datasetExisting);
+        }
+    }
+
+    public void addDatasetSim(Dataset dataset, List<DatasetShort> similars, String relationtype){
+        DatasetSimilars datasetExis = datasetRepo.findByAccessionDatabaseQuery(dataset.getAccession(), dataset.getDatabase());
+        Set<SimilarDataset> similarDatasets = new HashSet<>();
+        similarDatasets = similars.stream().filter(ds -> !ds.getAccession().equals(dataset.getAccession()))
+                .map(dt -> new SimilarDataset(datasetService.read(dt.getAccession(), dt.getDatabase()), relationtype))
+                .collect(Collectors.toSet());
+
+        if(datasetExis == null){
+            datasetExis = new DatasetSimilars(dataset.getAccession(), dataset.getDatabase(), similarDatasets);
+            datasetRepo.save(datasetExis);
+        }else{
+            Set<SimilarDataset> similarsData = datasetExis.getSimilars();
+            similarDatasets.addAll(similarsData);
+            datasetExis.setSimilars(similarDatasets);
+            datasetRepo.save(datasetExis);
         }
     }
 }
