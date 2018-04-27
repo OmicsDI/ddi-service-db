@@ -68,4 +68,6 @@ public interface IDatasetSimilarsService {
     List<DatasetSimilars> readAll();
 
     void addDatasetSimilars(Dataset dataset, List<DatasetShort> similars, String relationtype);
+
+    void addDatasetSim(Dataset dataset, List<DatasetShort> similars, String relationtype);
 }
