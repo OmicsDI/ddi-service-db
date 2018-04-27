@@ -257,7 +257,7 @@ public class DatasetService implements IDatasetService {
             Dataset dataset = datasetAccessRepo.findByAccessionDatabaseQuery(d.getAccession(),d.getDatabase());
 
         }*/
-        mergeCandidate.getSimilars().parallelStream().forEach(dt -> {
+/*        mergeCandidate.getSimilars().stream().forEach(dt -> {
             Dataset dataset = datasetAccessRepo.findByAccessionDatabaseQuery(dt.getAccession(), dt.getDatabase());
             if (dataset != null) {
                 dataset = Utilities.addAdditionalField(dataset, Constants.OMICS_TYPE, Constants.MULTIOMICS_TYPE);
@@ -266,7 +266,18 @@ public class DatasetService implements IDatasetService {
                         DatasetSimilarsType.OTHER_OMICS_DATA.getType());
             }
         }
-        );
+        );*/
+
+        for (DatasetShort dt:mergeCandidate.getSimilars()
+             ) {
+            Dataset dataset = datasetAccessRepo.findByAccessionDatabaseQuery(dt.getAccession(), dt.getDatabase());
+            if (dataset != null) {
+                dataset = Utilities.addAdditionalField(dataset, Constants.OMICS_TYPE, Constants.MULTIOMICS_TYPE);
+                save(dataset);
+                datasetSimilarsService.addDatasetSim(dataset, mergeCandidate.getSimilars(),
+                        DatasetSimilarsType.OTHER_OMICS_DATA.getType());
+            }
+        }
         skipMerge(mergeCandidate);
     }
 
