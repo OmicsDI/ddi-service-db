@@ -213,7 +213,10 @@ public class DatasetService implements IDatasetService {
         datasetAccessRepo.deleteMergeCandidte(mergeData.getDatabase(), mergeData.getAccession());
 
         for(DatasetShort d : mergeData.getSimilars()) {
-            datasetAccessRepo.addSecondaryAccession(mergeData.getDatabase(), mergeData.getAccession(), d.getAccession() + "~" + d.getSourceUrl());
+            Dataset ds = datasetAccessRepo.findByAccessionDatabaseQuery(d.getAccession(), d.getDatabase());
+            String link = ds.getAdditional().get("full_dataset_link") != null ? ds.getAdditional().get("full_dataset_link").iterator().next() :"";
+            String accessionLink = d.getAccession() + "~" + link;
+            datasetAccessRepo.addSecondaryAccession(mergeData.getDatabase(), mergeData.getAccession(), accessionLink);
 
             datasetAccessRepo.delete(d.getDatabase(), d.getAccession());
 
