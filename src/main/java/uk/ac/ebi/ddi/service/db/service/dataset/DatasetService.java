@@ -48,6 +48,9 @@ public class DatasetService implements IDatasetService {
     @Autowired
     private IDatasetSimilarsService datasetSimilarsService;
 
+    @Autowired
+    private IUnMergeDatasetService unMergeDatasetService;
+
     @Override
     public Dataset save(Dataset dataset) {
         return datasetAccessRepo.save(dataset);
@@ -210,7 +213,7 @@ public class DatasetService implements IDatasetService {
     public void mergeDatasets(MergeCandidate mergeData){
 
         datasetAccessRepo.mergeDataset(mergeData);
-        datasetAccessRepo.deleteMergeCandidte(mergeData.getDatabase(), mergeData.getAccession());
+        //datasetAccessRepo.deleteMergeCandidte(mergeData.getDatabase(), mergeData.getAccession());
 
         for(DatasetShort d : mergeData.getSimilars()) {
             Dataset ds = datasetAccessRepo.findByAccessionDatabaseQuery(d.getAccession(), d.getDatabase());
@@ -218,12 +221,17 @@ public class DatasetService implements IDatasetService {
             String accessionLink = d.getAccession() + "~" + link;
             datasetAccessRepo.addSecondaryAccession(mergeData.getDatabase(), mergeData.getAccession(), accessionLink);
 
-            datasetAccessRepo.delete(d.getDatabase(), d.getAccession());
-
+            //datasetAccessRepo.delete(d.getDatabase(), d.getAccession());
+            UnMergeDatasets unMergeDatasets = new UnMergeDatasets();
+            unMergeDatasets.setDataset(new MergedDataset(ds));
+            unMergeDatasets.setMasterAccession(mergeData.getAccession());
+            unMergeDatasets.setMasterDatabase(mergeData.getDatabase());
+            unMergeDatasetService.save(unMergeDatasets);
             datasetAccessRepo.deleteMergeCandidte(d.getDatabase(), d.getAccession());
+            datasetAccessRepo.delete(d.getDatabase(), d.getAccession());
         }
 
-        return;
+
     }
 
     @Override
