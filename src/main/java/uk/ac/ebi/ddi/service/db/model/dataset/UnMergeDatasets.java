@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 
 @Document(collection = "unmerged")
-public class UnMergeDatasets{
+public class UnMergeDatasets implements IDataset{
 
     private String masterAccession;
 
