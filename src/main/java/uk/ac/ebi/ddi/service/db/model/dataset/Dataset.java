@@ -23,7 +23,7 @@ import java.util.Set;
 @CompoundIndexes({
         @CompoundIndex(name = "accession_database", def = "{'accession' : 1, 'database': 1}", unique = true)
 })
-public class Dataset implements Serializable{
+public class Dataset implements Serializable, IDataset{
 
     @Indexed
     private String accession;
