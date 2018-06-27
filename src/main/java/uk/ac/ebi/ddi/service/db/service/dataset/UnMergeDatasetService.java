@@ -2,8 +2,11 @@ package uk.ac.ebi.ddi.service.db.service.dataset;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import uk.ac.ebi.ddi.service.db.model.dataset.Dataset;
 import uk.ac.ebi.ddi.service.db.model.dataset.UnMergeDatasets;
 import uk.ac.ebi.ddi.service.db.repo.dataset.IUnMergeDatasetsRepo;
+import uk.ac.ebi.ddi.service.db.utils.Constants;
+import uk.ac.ebi.ddi.service.db.utils.DatasetCategory;
 
 import java.util.List;
 
@@ -13,6 +16,9 @@ public class UnMergeDatasetService implements IUnMergeDatasetService{
     @Autowired
     private IUnMergeDatasetsRepo iUnMergeDatasetsRepo;
 
+    @Autowired
+    private DatasetService datasetService;
+
     public void save(UnMergeDatasets unMergeDatasets){
         iUnMergeDatasetsRepo.save(unMergeDatasets);
     }
@@ -20,5 +26,20 @@ public class UnMergeDatasetService implements IUnMergeDatasetService{
     public List<UnMergeDatasets> findAll(){
         List<UnMergeDatasets> datasets = iUnMergeDatasetsRepo.findAll();
         return datasets;
+    }
+
+    public void unmergeDataset(List<UnMergeDatasets> unMergeDatasets)
+    {
+        unMergeDatasets.stream().map(mp -> {
+            Dataset dataset = new Dataset(mp.getDataset().getAccession(),mp.getDataset().getDatabase(),
+                    mp.getDataset().getName(),mp.getDataset().getDescription(),mp.getDataset().getDates(),
+                    mp.getDataset().getAdditional(),mp.getDataset().getCrossReferences(), DatasetCategory.UPDATED);
+            datasetService.save(dataset);
+            Dataset masterDataset = datasetService.read(mp.getMasterAccession(), mp.getMasterDatabase());
+            masterDataset.getAdditional().get(Constants.SECONDARY_ACCESSION).remove(mp.getDataset().getAccession() + "~" + mp.getDataset().getAdditional().get(Constants.DATASET_URL_LINK));
+            datasetService.save(masterDataset);
+            return true;
+        }
+        );
     }
 }
