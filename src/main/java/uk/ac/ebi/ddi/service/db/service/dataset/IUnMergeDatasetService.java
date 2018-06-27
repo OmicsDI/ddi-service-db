@@ -9,4 +9,6 @@ public interface IUnMergeDatasetService {
     public void save(UnMergeDatasets unMergeDatasets);
 
     public List<UnMergeDatasets> findAll();
+
+    void unmergeDataset(List<UnMergeDatasets> unMergeDatasets);
 }
