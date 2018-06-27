@@ -19,6 +19,7 @@ import uk.ac.ebi.ddi.service.db.model.publication.PublicationDataset;
 import uk.ac.ebi.ddi.service.db.repo.dataset.IDatasetRepo;
 import uk.ac.ebi.ddi.service.db.model.aggregate.*;
 import uk.ac.ebi.ddi.service.db.utils.Constants;
+import uk.ac.ebi.ddi.service.db.utils.DatasetCategory;
 import uk.ac.ebi.ddi.service.db.utils.DatasetSimilarsType;
 import uk.ac.ebi.ddi.service.db.utils.Utilities;
 
@@ -223,7 +224,8 @@ public class DatasetService implements IDatasetService {
 
             //datasetAccessRepo.delete(d.getDatabase(), d.getAccession());
             UnMergeDatasets unMergeDatasets = new UnMergeDatasets();
-            unMergeDatasets.setDataset(new MergedDataset(ds));
+            MergedDataset mergedDataset = new MergedDataset(ds);
+            unMergeDatasets.setDataset(mergedDataset);
             unMergeDatasets.setMasterAccession(mergeData.getAccession());
             unMergeDatasets.setMasterDatabase(mergeData.getDatabase());
             unMergeDatasetService.save(unMergeDatasets);
