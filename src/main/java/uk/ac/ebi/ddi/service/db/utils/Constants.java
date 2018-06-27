@@ -23,6 +23,8 @@ public class Constants {
     public static String TRUE_VALUE = "true";
     public static String OMICS_TYPE = "omics_type";
     public static String MULTIOMICS_TYPE ="Multiomics";
+    public static String SECONDARY_ACCESSION = "secondary_accession";
+    public static String DATASET_URL_LINK="full_dataset_link";
 
 
 
