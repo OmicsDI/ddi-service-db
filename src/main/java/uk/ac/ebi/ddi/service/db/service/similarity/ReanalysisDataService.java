@@ -28,9 +28,13 @@ public class ReanalysisDataService implements IReanalysisDataService {
     public void saveReanalysis(ReanalysisData reanalysisData){
         //String database = Constants.Database.retriveAnchorName(visit.getDatabase());
         Dataset dataset = datasetService.read(reanalysisData.getAccession(),reanalysisData.getDatabase());
+
         if (dataset != null) {
             if(dataset.getScores() != null) {
-                dataset.getScores().setReanalysisCount(reanalysisData.getTotal());
+                Scores score = dataset.getScores();
+
+                score.setReanalysisCount(reanalysisData.getTotal());
+                dataset.setScores(score);
             }else{
                 Scores scores = new Scores();
                 scores.setReanalysisCount(reanalysisData.getTotal());
@@ -41,7 +45,7 @@ public class ReanalysisDataService implements IReanalysisDataService {
             dataset.getAdditional().put(Constants.REANALYSIS_FIELD,count);
             datasetService.update(dataset.getId(),dataset);
         }
-        reanalysisRepo.save(reanalysisData);
+        //reanalysisRepo.save(reanalysisData);
     }
 
     public ReanalysisData getReanalysisCount(String accession,String database){
