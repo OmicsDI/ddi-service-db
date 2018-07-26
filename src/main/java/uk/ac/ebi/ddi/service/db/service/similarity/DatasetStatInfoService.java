@@ -22,6 +22,7 @@ import uk.ac.ebi.ddi.service.db.utils.Constants;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
 import static org.springframework.data.mongodb.core.aggregation.Fields.fields;
@@ -131,6 +132,7 @@ public class DatasetStatInfoService implements IDatasetStatInfoService {
 
         List<ReanalysisData> result = groupResults.getMappedResults();
 
+        List<ReanalysisData> filtered = result.stream().filter(it -> "PXD000561".equals(it.getAccession())).collect(Collectors.toList());
 
 
         return result;
