@@ -12,4 +12,6 @@ public interface IReanalysisRepo extends MongoRepository<ReanalysisData,ObjectId
 
     @Query("{'$and': [{'accession': ?0},{'database': ?1}]}")
     ReanalysisData getReanalysisCount(String accession, String database);
+
+
 }
