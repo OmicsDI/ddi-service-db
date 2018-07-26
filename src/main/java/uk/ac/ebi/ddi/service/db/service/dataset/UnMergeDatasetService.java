@@ -30,7 +30,7 @@ public class UnMergeDatasetService implements IUnMergeDatasetService{
 
     public void unmergeDataset(List<UnMergeDatasets> unMergeDatasets)
     {
-        unMergeDatasets.stream().map(mp -> {
+        unMergeDatasets.forEach(mp -> {
             Dataset dataset = new Dataset(mp.getDataset().getAccession(),mp.getDataset().getDatabase(),
                     mp.getDataset().getName(),mp.getDataset().getDescription(),mp.getDataset().getDates(),
                     mp.getDataset().getAdditional(),mp.getDataset().getCrossReferences(), DatasetCategory.UPDATED);
@@ -38,7 +38,8 @@ public class UnMergeDatasetService implements IUnMergeDatasetService{
             Dataset masterDataset = datasetService.read(mp.getMasterAccession(), mp.getMasterDatabase());
             masterDataset.getAdditional().get(Constants.SECONDARY_ACCESSION).remove(mp.getDataset().getAccession() + "~" + mp.getDataset().getAdditional().get(Constants.DATASET_URL_LINK));
             datasetService.save(masterDataset);
-            return true;
+            iUnMergeDatasetsRepo.deleteByDataset(mp.getDataset().getAccession(), mp.getDataset().getDatabase());
+
         }
         );
     }
