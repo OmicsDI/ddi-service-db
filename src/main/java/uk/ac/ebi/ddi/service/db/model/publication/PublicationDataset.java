@@ -7,6 +7,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.annotation.*;
 import uk.ac.ebi.ddi.service.db.model.aggregate.BaseAggregate;
 
+import java.util.Objects;
+
 /**
  * @author Yasset Perez-Riverol (ypriverol@gmail.com)
  * @date 04/05/2016
@@ -88,6 +90,23 @@ public class PublicationDataset extends BaseAggregate {
 
     public void setId(ObjectId _id) {
         this._id = _id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PublicationDataset that = (PublicationDataset) o;
+        return Objects.equals(pubmedId, that.pubmedId) &&
+                Objects.equals(accession, that.accession) &&
+                Objects.equals(database, that.database) &&
+                Objects.equals(omicsType, that.omicsType);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(pubmedId, accession, database, omicsType);
     }
 
     @Override

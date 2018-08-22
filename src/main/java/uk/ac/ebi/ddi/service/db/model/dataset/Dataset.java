@@ -12,6 +12,7 @@ import uk.ac.ebi.ddi.service.db.utils.DatasetCategory;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -210,20 +211,21 @@ public class Dataset implements Serializable, IDataset{
         crossReferences.put(key, values);
     }
 
-
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Dataset dataset = (Dataset) o;
+        return Objects.equals(accession, dataset.accession) &&
+                Objects.equals(database, dataset.database) &&
+                Objects.equals(name, dataset.name) &&
+                Objects.equals(description, dataset.description);
+    }
 
     @Override
     public int hashCode() {
-        int hashCode = super.hashCode();
-        hashCode  = (accession != null )? 31 * hashCode + accession.hashCode():hashCode;
-        hashCode  = (database != null) ?  31 * hashCode + database.hashCode():hashCode;
-        hashCode  = (name != null) ? 31 * hashCode + name.hashCode(): hashCode;
-        hashCode  = (description != null) ? 31 * hashCode + description.hashCode():hashCode;
-        hashCode  = (dates != null) ? 31 * hashCode + dates.hashCode():hashCode;
-        hashCode  = (additional!=null)?31 * hashCode + additional.hashCode():hashCode;
-        hashCode  = (crossReferences != null)? 31 * hashCode + crossReferences.hashCode():hashCode;
 
-        return hashCode;
+        return Objects.hash(accession, database, name, description);
     }
 
     public int initHashCode(){
