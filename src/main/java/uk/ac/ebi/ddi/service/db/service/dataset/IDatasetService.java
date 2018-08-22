@@ -118,4 +118,6 @@ public interface IDatasetService {
     List<Dataset> getPrivateDatasets(String database);
 
     void updatePrivateDatasets(String database);
+
+    Page<Dataset> getWithoutSearchDomains(int pageStart, int size);
 }

@@ -3,6 +3,8 @@ package uk.ac.ebi.ddi.service.db.repo.dataset;
 
 import org.bson.types.ObjectId;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -47,5 +49,6 @@ public interface IDatasetRepo extends MongoRepository<Dataset,ObjectId>, IDatase
     @Query("{database:?0 ,'$where':'this.accession==this.name'}")
     List<Dataset> getPrivateByDatabase(String database);
 
-
+    @Query("{additional.search_domains:{'$exists':false}}")
+    Page<Dataset> getByDatasetWithoutSearchDomain(Pageable pageable);
 }

@@ -314,5 +314,10 @@ public class DatasetService implements IDatasetService {
         mongoTemplate.updateMulti(query, update,Constants.DATASET_COLLECTION);
     }
 
+    @Override
+    public Page<Dataset> getWithoutSearchDomains(int pageStart, int size){
+        return datasetAccessRepo.getByDatasetWithoutSearchDomain(new PageRequest(pageStart, size));
+    }
+
 
 }
