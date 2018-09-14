@@ -132,8 +132,7 @@ public class DatasetStatInfoService implements IDatasetStatInfoService {
 
         List<ReanalysisData> result = groupResults.getMappedResults();
 
-        List<ReanalysisData> filtered = result.stream().filter(it -> "PXD000561".equals(it.getAccession())).collect(Collectors.toList());
-
+        //List<ReanalysisData> filtered = result.stream().filter(it -> "PXD000561".equals(it.getAccession())).collect(Collectors.toList());
 
         return result;
     }
