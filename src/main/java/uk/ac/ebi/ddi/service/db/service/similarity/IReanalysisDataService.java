@@ -11,4 +11,6 @@ public interface IReanalysisDataService {
     void saveReanalysis(ReanalysisData reanalysisData);
 
     ReanalysisData getReanalysisCount(String accession,String database);
+
+    void updateReanalysisKeywords();
 }
