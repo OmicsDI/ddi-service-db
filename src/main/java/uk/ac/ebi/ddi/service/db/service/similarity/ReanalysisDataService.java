@@ -12,6 +12,7 @@ import uk.ac.ebi.ddi.service.db.service.dataset.DatasetService;
 import uk.ac.ebi.ddi.service.db.utils.Constants;
 
 import java.util.HashSet;
+import java.util.List;
 
 /**
  * Created by gaur on 27/07/17.
@@ -52,5 +53,14 @@ public class ReanalysisDataService implements IReanalysisDataService {
         return reanalysisRepo.getReanalysisCount(accession,database);
     }
 
+    public void updateReanalysisKeywords(){
+        List<ReanalysisData> reanalysisDataList = reanalysisRepo.getDatasetsByRelation("Reanalysis of");
+
+        reanalysisDataList.parallelStream().map(dst -> {
+            Dataset dataset = datasetService.read(dst.getAccession(),dst.getDatabase());
+            if(dataset.getAdditional().containsKey())
+            return true;
+        });
+    }
 
 }
