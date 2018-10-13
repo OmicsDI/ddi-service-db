@@ -49,6 +49,9 @@ public interface IDatasetRepo extends MongoRepository<Dataset,ObjectId>, IDatase
     @Query("{database:?0 ,'$where':'this.accession==this.name'}")
     List<Dataset> getPrivateByDatabase(String database);
 
-    @Query("{additional.search_domains:{'$exists':false}}")
+    @Query(value = "{additional.search_domains:{'$exists':false}}", fields="{accession : 1, _id : 0,database:1}")
     Page<Dataset> getByDatasetWithoutSearchDomain(Pageable pageable);
+
+    @Query(value = "{additional.search_domains:{'$exists':false}}", fields="{accession : 1, _id : 0,database:1}")
+    List<Dataset> getByDatasetWithoutSearchDomain();
 }
