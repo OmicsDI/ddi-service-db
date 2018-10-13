@@ -26,6 +26,7 @@ public class Constants {
     public static String SECONDARY_ACCESSION = "secondary_accession";
     public static String DATASET_URL_LINK="full_dataset_link";
     public static String SUBMITTER_KEYWORDS_FIELD = "submitter_keywords";
+    public static String DOWNLOAD_COUNT = "download_count";
 
 
 
@@ -46,8 +47,8 @@ public class Constants {
         LINCS("LINCS","lincs"),
         PAXDB("PAXDB","paxdb"),
         JPOST("JPOST Repository","jpost"),
-        EVA("EVA","eva");
-
+        EVA("EVA","eva"),
+        ENA("ENA","ena");
         String databaseName;
         String solarName;
 
