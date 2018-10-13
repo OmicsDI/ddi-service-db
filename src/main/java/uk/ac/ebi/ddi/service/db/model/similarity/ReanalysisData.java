@@ -9,7 +9,8 @@ import java.util.Set;
 /**
  * Created by gaur on 27/07/17.
  */
-@Document(collection = "similars_reanalyis")
+//@Document(collection = "similars_reanalyis")
+@Document(collection = "datasets.similars")
 public class ReanalysisData {
 
     @Id
