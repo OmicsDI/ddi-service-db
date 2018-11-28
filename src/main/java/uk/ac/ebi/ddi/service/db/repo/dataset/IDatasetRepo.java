@@ -13,6 +13,7 @@ import uk.ac.ebi.ddi.service.db.model.dataset.Dataset;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 /**
  * The Access Repository it give information about the access to any resource in the database and the system.
@@ -54,4 +55,7 @@ public interface IDatasetRepo extends MongoRepository<Dataset,ObjectId>, IDatase
 
     @Query(value = "{additional.search_domains:{'$exists':false}}", fields="{accession : 1, _id : 0,database:1}")
     List<Dataset> getByDatasetWithoutSearchDomain();
+
+    @Query("{}")
+    Stream<Dataset> findAllAndStream();
 }
