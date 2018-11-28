@@ -11,6 +11,7 @@ import uk.ac.ebi.ddi.service.db.model.dataset.MergeCandidate;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 /**
  * THis interface allows the creation of and handling of DatasetAccess in the database.
@@ -115,9 +116,43 @@ public interface IDatasetService {
 
     void addMultiomics(MergeCandidate mergeCandidate);
 
+
     List<Dataset> getPrivateDatasets(String database);
 
+    /*
+    * update datasets which are private and not accessible
+    *
+    * @param database
+    * */
     void updatePrivateDatasets(String database);
 
+
+    /*
+    * get all datasets where search domain does not exists
+    * @param pageStart
+    * @param size
+    * @return Page<Dataset>
+    *
+    * */
     Page<Dataset> getWithoutSearchDomains(int pageStart, int size);
+
+    /**
+     * get all datasets by pages with
+     *
+     * @param pageStart,
+     * @param pageSize
+     *
+     * @return Page<Dataset>
+     */
+    Page<Dataset> getDatasetPage(int pageStart, int pageSize);
+
+    /*
+    * get stream of all datasets
+    *
+    * @return Stream<Dataset>
+    *
+    * */
+    Stream<Dataset> getAllData();
+
+
 }

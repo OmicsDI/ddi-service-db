@@ -30,6 +30,7 @@ import static org.springframework.data.mongodb.core.aggregation.Aggregation.newA
 import javax.annotation.Resource;
 import java.util.*;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.stream.Stream;
 
 
 /**
@@ -317,6 +318,29 @@ public class DatasetService implements IDatasetService {
     @Override
     public Page<Dataset> getWithoutSearchDomains(int pageStart, int size){
         return datasetAccessRepo.getByDatasetWithoutSearchDomain(new PageRequest(pageStart, size));
+    }
+
+    /*
+    * get streams of all datasets
+    * */
+    public Stream<Dataset> getAllData(){
+        return datasetAccessRepo.findAllAndStream();
+    }
+
+    /*
+    * get all datasets pages by page number and page size
+    *
+    *@param pageStart
+    *@param pageSize
+    *
+    *@return Page<Dataset>
+    *
+    * */
+    public Page<Dataset> getDatasetPage(int pageStart, int pageSize){
+        if(pageSize > 100){
+            pageSize = 100;
+        }
+        return datasetAccessRepo.findAll(new PageRequest(pageStart, pageSize));
     }
 
 

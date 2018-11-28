@@ -1,27 +1,20 @@
 package uk.ac.ebi.ddi.service.db.service.dataset;
 
-import com.google.common.collect.Multiset;
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import org.springframework.beans.factory.annotation.Autowired;
-import uk.ac.ebi.ddi.downloas.logs.ElasticSearchWsClient;
-import uk.ac.ebi.ddi.downloas.logs.ElasticSearchWsConfigProd;
-import uk.ac.ebi.ddi.service.db.model.dataset.Database;
-import uk.ac.ebi.ddi.service.db.model.dataset.Dataset;
-import uk.ac.ebi.ddi.service.db.utils.Constants;
+import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
-import java.time.LocalDate;
-import java.util.*;
-
-public class DatasetCountService{
+@Service
+public class DatasetCountService implements IDatasetCountService{
 
     @Autowired
     DatasetService datasetService;
 
 
+    public void saveDatasetDownloadCount() {
 
-    ElasticSearchWsClient elasticSearchClient = new ElasticSearchWsClient
-            (new ElasticSearchWsConfigProd(0,"","",""));
+    }
+   /* ElasticSearchWsClient elasticSearchClient = new ElasticSearchWsClient
+            (new ElasticSearchWsConfigProd(9200,"10.3.10.28","readall","readall"));
 
     List<String> databases = Arrays.asList(Constants.Database.ARRAY_EXPRESS.getDatabaseName(),
             Constants.Database.PRIDE.getDatabaseName(), Constants.Database.EXPRESSION_ATLAS.getDatabaseName(),
@@ -29,13 +22,17 @@ public class DatasetCountService{
             Constants.Database.ENA.getDatabaseName());
 
     public void saveDatasetDownloadCount() {
-
         long datasetCount = datasetService.getDatasetCount();
         int pageSize = 100;
 
         elasticSearchClient.setParallel(true);
 
-        for(int i =0; i < datasetCount /pageSize; i++ ) {
+*//*        Map<String, Map<String, Multiset<String>>> prideDownloads = elasticSearchClient.
+                getDataDownloads(ElasticSearchWsConfigProd.DB.Pride,
+                        "PXD000561", LocalDate.now());*//*
+
+        //prideDownloads.size();
+        for(int i =0; i < datasetCount/pageSize; i++ ) {
 
             datasetService.readAll(i, pageSize).map(dt ->  {
                 if(databases.contains(dt.getDatabase())) {
@@ -45,7 +42,10 @@ public class DatasetCountService{
                     Dataset dataset = datasetService.read(dt.getAccession(), dt.getDatabase());
                     Set<String> downloadCount = new HashSet<String>();
                     if(prideDownloads != null) {
-                        downloadCount.add(String.valueOf(prideDownloads.size()));
+                        int count = prideDownloads.entrySet().stream().mapToInt(dst ->
+                                dst.getValue().entrySet().stream().mapToInt(dtr -> dtr.getValue().elementSet().stream().mapToInt(dtrc -> dtr.getValue().count(dtrc)).sum() ).sum()
+                        ).sum();
+                        downloadCount.add(String.valueOf(count));
                         dataset.getAdditional().put(Constants.DOWNLOAD_COUNT, downloadCount);
                         datasetService.save(dataset);
                     }
@@ -53,7 +53,6 @@ public class DatasetCountService{
                 return true;
             });
         }
-
-    }
+    }*/
 
 }

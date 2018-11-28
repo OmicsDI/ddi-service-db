@@ -24,13 +24,16 @@ public class DatasetServiceTest {
     @Autowired
     private IDatasetService datasetService;
 
+    @Autowired
+    private DatasetCountService datasetCountService;
 
-    @Test
+
+   /* @Test
     public void testSave() throws Exception {
-        Map<String, Set<String>> dates = new HashMap<>();
+*//*        Map<String, Set<String>> dates = new HashMap<>();
         Map<String, Set<String>> additional = new HashMap<>();
         Dataset newDataset = new Dataset("ArrayExpress", "E-ATMX-14", "Example Name", "Description Example", dates, additional,additional, DatasetCategory.INSERTED);
-        datasetService.save(newDataset);
+        datasetService.save(newDataset);*//*
     }
 
     @Test
@@ -40,13 +43,13 @@ public class DatasetServiceTest {
         System.out.println(datasets);
 
     }
-
+*/
     @Test
     public void testReadAll() throws Exception {
-
+        datasetCountService.saveDatasetDownloadCount();
     }
 
-    @Test
+   /* @Test
     public void testUpdate() throws Exception {
 
     }
@@ -59,5 +62,5 @@ public class DatasetServiceTest {
     @Test
     public void testRead1() throws Exception {
 
-    }
+    }*/
 }
