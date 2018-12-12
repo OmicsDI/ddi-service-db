@@ -60,7 +60,7 @@ public class ReanalysisDataService implements IReanalysisDataService {
     public void updateReanalysisKeywords(){
         List<ReanalysisData> reanalysisDataList = reanalysisRepo.getDatasetsByRelation("Reanalysis of");
 
-        reanalysisDataList.parallelStream().map(dst -> {
+        reanalysisDataList.stream().map(dst -> {
             Dataset dataset = datasetService.read(dst.getAccession(),dst.getDatabase());
             if(dataset != null) {
                 String keyword = getReanalysisKeyword(dataset.getDatabase());
@@ -85,7 +85,7 @@ public class ReanalysisDataService implements IReanalysisDataService {
     public String getReanalysisKeyword(String database){
 
         String keyword = "";
-        Stream<String> resourceReanalysis = Stream.of("ExpressionAtlas" , "PeptideEaltas", "GPMDB");
+        Stream<String> resourceReanalysis = Stream.of("ExpressionAtlas" , "PeptideAtlas", "GPMDB");
         Stream<String> independentReanalysis = Stream.of("BioModels","GEO");
 
         if(resourceReanalysis.anyMatch(x -> Objects.equals(x, database))) {
