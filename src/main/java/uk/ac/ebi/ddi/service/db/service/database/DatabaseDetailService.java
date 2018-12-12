@@ -30,7 +30,7 @@ public class DatabaseDetailService {
     public List<DatabaseDetail> getDatabaseList() {
         List<DatabaseDetail> databaseDetailList = new ArrayList<>();
         Iterable<DatabaseDetail> iterable = databaseDetailRepository.findAll();
-        for(DatabaseDetail databaseDetail : databaseDetailRepository.findAll()){
+        for(DatabaseDetail databaseDetail : iterable){
             databaseDetail.setImage(null);
             databaseDetailList.add(databaseDetail);
         }
