@@ -161,7 +161,9 @@ public class DatasetService implements IDatasetService {
 
     @Override
     public List<Dataset> getBySecondaryAccession(String accession){
-        return datasetAccessRepo.getBySecondaryAccession(accession);
+        // Secondary accession always start with an accession and following by ~<url>
+        // So, it will be faster when use ^ regex
+        return datasetAccessRepo.getBySecondaryAccession("^" + accession);
     }
 
     Set<String> secondaryAccessionsSet = null;
