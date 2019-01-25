@@ -29,11 +29,18 @@ public class EnrichmentInfoService implements IEnrichmentInfoService {
     @Autowired
     private IIdentifierRepo identifierRepo;
 
+
+    @Override
+    public DatasetEnrichmentInfo getLatest(String accession, String database) {
+        return accessRepo.findByAccessionDatabaseStatusQuery(accession, database, "new");
+    }
+
+
     @Override
     public DatasetEnrichmentInfo insert(DatasetEnrichmentInfo datasetEnrichmentInfo) {
 
-        DatasetEnrichmentInfo oldDatasetEnrichmentInfo = accessRepo.findByAccessionDatabaseStatusQuery(datasetEnrichmentInfo.getAccession(),
-                datasetEnrichmentInfo.getDatabase(), "new");
+        DatasetEnrichmentInfo oldDatasetEnrichmentInfo = getLatest(datasetEnrichmentInfo.getAccession(),
+                datasetEnrichmentInfo.getDatabase());
         if (oldDatasetEnrichmentInfo != null){
             oldDatasetEnrichmentInfo.setStatus("old");
             accessRepo.save(oldDatasetEnrichmentInfo);

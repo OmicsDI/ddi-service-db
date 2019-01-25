@@ -27,6 +27,7 @@ public class Constants {
     public static String DATASET_URL_LINK="full_dataset_link";
     public static String SUBMITTER_KEYWORDS_FIELD = "submitter_keywords";
     public static String DOWNLOAD_COUNT = "download_count";
+    public static String DOWNLOAD_LAST_UPDATED = "download_last_updated";
 
 
 
