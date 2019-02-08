@@ -1,11 +1,8 @@
 package uk.ac.ebi.ddi.service.db.model.feedback;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import javax.swing.text.StyledEditorKit;
 
 /**
  * Created by gaur on 22/2/17.

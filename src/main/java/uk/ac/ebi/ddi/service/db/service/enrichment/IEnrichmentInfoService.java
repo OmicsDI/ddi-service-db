@@ -20,6 +20,15 @@ public interface IEnrichmentInfoService {
      */
     DatasetEnrichmentInfo insert(DatasetEnrichmentInfo datasetEnrichmentInfo);
 
+
+    /**
+     * Find the latest version of datasetEnrichmentInfo
+     * @param accession
+     * @param database
+     * @return
+     */
+    DatasetEnrichmentInfo getLatest(String accession, String database);
+
     /**
      * read a dataset from database by id
      *

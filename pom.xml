@@ -13,7 +13,7 @@
 
     <groupId>uk.ac.ebi.ddi</groupId>
     <artifactId>ddi-service-db</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.1.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
 
@@ -44,7 +44,7 @@
         <dependency>
         <groupId>uk.ac.ebi.ddi</groupId>
         <artifactId>ddi-ebi-logs</artifactId>
-        <version>1.1-SNAPSHOT</version>
+        <version>1.1.2-SNAPSHOT</version>
         </dependency>
         <!-- Spring test -->
         <dependency>
@@ -78,18 +78,6 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jcl-over-slf4j</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
         </dependency>
 
         <dependency>
