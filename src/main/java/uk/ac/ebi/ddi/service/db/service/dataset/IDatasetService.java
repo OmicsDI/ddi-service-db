@@ -6,9 +6,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import uk.ac.ebi.ddi.service.db.model.aggregate.BaseAggregate;
 import uk.ac.ebi.ddi.service.db.model.dataset.Dataset;
+import uk.ac.ebi.ddi.service.db.model.dataset.DatasetShort;
 import uk.ac.ebi.ddi.service.db.model.dataset.DbDatasetCount;
 import uk.ac.ebi.ddi.service.db.model.dataset.MergeCandidate;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -61,6 +63,14 @@ public interface IDatasetService {
      * @return Return the entry for the dataset
      */
     Dataset read(String acc, String database);
+
+    /**
+     * Find multiple datasets in one request
+     * Be aware that this will not report a problem if a dataset could not be found
+     * @param datasetShorts
+     * @return
+     */
+    List<Dataset> findMultipleDatasets(Collection<DatasetShort> datasetShorts);
 
     List<Dataset> readDatasetHashCode(String database);
 

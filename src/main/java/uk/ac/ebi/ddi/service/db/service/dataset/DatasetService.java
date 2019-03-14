@@ -12,25 +12,21 @@ import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import uk.ac.ebi.ddi.service.db.model.aggregate.BaseAggregate;
 import uk.ac.ebi.ddi.service.db.model.dataset.*;
-import uk.ac.ebi.ddi.service.db.model.publication.PublicationDataset;
 import uk.ac.ebi.ddi.service.db.repo.dataset.IDatasetRepo;
-import uk.ac.ebi.ddi.service.db.model.aggregate.*;
 import uk.ac.ebi.ddi.service.db.utils.Constants;
-import uk.ac.ebi.ddi.service.db.utils.DatasetCategory;
 import uk.ac.ebi.ddi.service.db.utils.DatasetSimilarsType;
 import uk.ac.ebi.ddi.service.db.utils.Utilities;
-
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.group;
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.match;
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
 
 import javax.annotation.Resource;
 import java.util.*;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Stream;
+
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.group;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
 
 
 /**
@@ -98,6 +94,21 @@ public class DatasetService implements IDatasetService {
     @Override
     public Dataset read(String acc, String database) {
         return datasetAccessRepo.findByAccessionDatabaseQuery(acc, database);
+    }
+
+    @Override
+    public List<Dataset> findMultipleDatasets(Collection<DatasetShort> datasetShorts) {
+        Query query = new Query();
+        Criteria criteria = new Criteria();
+        List<Criteria> orOperators = new ArrayList<>();
+        for (DatasetShort datasetShort : datasetShorts) {
+            orOperators.add(new Criteria().andOperator(
+                    Criteria.where("accession").is(datasetShort.getAccession()),
+                    Criteria.where("database").is(datasetShort.getDatabase()
+            )));
+        }
+        query.addCriteria(criteria.orOperator(orOperators.toArray(new Criteria[0])));
+        return mongoTemplate.find(query, Dataset.class);
     }
 
     @Override

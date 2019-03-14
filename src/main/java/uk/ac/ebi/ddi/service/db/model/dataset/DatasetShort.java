@@ -1,9 +1,21 @@
 package uk.ac.ebi.ddi.service.db.model.dataset;
 
+import java.util.Objects;
+
 /**
  * Created by azorin on 09/02/2018.
  */
 public class DatasetShort {
+
+
+    public DatasetShort(String database, String accession) {
+        this.database = database;
+        this.accession = accession;
+    }
+
+    public DatasetShort() {
+    }
+
     String database;
 
     public String getDatabase() {
@@ -42,4 +54,17 @@ public class DatasetShort {
     String name;
     String sourceUrl;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DatasetShort that = (DatasetShort) o;
+        return getDatabase().equals(that.getDatabase()) &&
+                getAccession().equals(that.getAccession());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getDatabase(), getAccession());
+    }
 }
