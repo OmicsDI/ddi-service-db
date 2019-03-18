@@ -5,10 +5,9 @@ import org.springframework.stereotype.Service;
 import uk.ac.ebi.ddi.service.db.model.database.DatabaseDetail;
 import uk.ac.ebi.ddi.service.db.repo.database.DatabaseDetailRepository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by root on 16.05.17.
@@ -18,35 +17,32 @@ public class DatabaseDetailService {
 
     DatabaseDetailRepository databaseDetailRepository;
 
-    Map<String,String> nameToSource;
-    Map<String,String> sourceToName;
+    private Map<String, String> nameToSource = new ConcurrentHashMap<>();
+    private Map<String, String> sourceToName = new ConcurrentHashMap<>();
 
     @Autowired
     public DatabaseDetailService(DatabaseDetailRepository databaseDetailRepository) {
         this.databaseDetailRepository = databaseDetailRepository;
-
         this.getDatabaseList();
     }
+
     public List<DatabaseDetail> getDatabaseList() {
-        List<DatabaseDetail> databaseDetailList = new ArrayList<>();
-        Iterable<DatabaseDetail> iterable = databaseDetailRepository.findAll();
-        for(DatabaseDetail databaseDetail : iterable){
-            databaseDetail.setImage(null);
-            databaseDetailList.add(databaseDetail);
-        }
-        computeResolvers(databaseDetailList);
-        return databaseDetailList;
+        List<DatabaseDetail> iterable = databaseDetailRepository.findAllShort();
+        computeResolvers(iterable);
+        return iterable;
     }
 
     private void  computeResolvers(List<DatabaseDetail> databaseDetails){
-        Map<String,String> nameToSource1 = new HashMap<String,String>();
-        Map<String,String> sourceToName1 = new HashMap<String,String>();
         for (DatabaseDetail databaseDetail : databaseDetails) {
-            nameToSource1.put(databaseDetail.getDatabaseName(), databaseDetail.getSource());
-            sourceToName1.put(databaseDetail.getSource(),databaseDetail.getDatabaseName());
+            String dbName = nameToSource.get(databaseDetail.getDatabaseName());
+            if (dbName == null || !dbName.equals(databaseDetail.getSource())) {
+                nameToSource.put(databaseDetail.getDatabaseName(), databaseDetail.getSource());
+            }
+            String source = sourceToName.get(databaseDetail.getSource());
+            if (source == null || !source.equals(databaseDetail.getDatabaseName())) {
+                sourceToName.put(databaseDetail.getSource(), databaseDetail.getDatabaseName());
+            }
         }
-        nameToSource = nameToSource1;
-        sourceToName = sourceToName1;
     }
 
     public DatabaseDetail findDatabaseByName(String databaseName) {
@@ -59,7 +55,6 @@ public class DatabaseDetailService {
         databaseDetailRepository.save(databaseDetail);
     }
 
-
     //** source -> name
     public String retriveAnchorName(String value){
         return sourceToName.get(value);
@@ -69,6 +64,4 @@ public class DatabaseDetailService {
     public String retriveSolrName(String value){
         return nameToSource.get(value);
     }
-
-
 }
