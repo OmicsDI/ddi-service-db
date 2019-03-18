@@ -108,6 +108,13 @@ public class DatasetService implements IDatasetService {
             )));
         }
         query.addCriteria(criteria.orOperator(orOperators.toArray(new Criteria[0])));
+        query.fields()
+                .exclude("additional.sample_protocol")
+                .exclude("additional.data_protocol")
+                .exclude("additional.name_synonyms")
+                .exclude("additional.description_synonyms")
+                .exclude("additional.sample_synonyms")
+                .exclude("additional.data_synonyms");
         return mongoTemplate.find(query, Dataset.class);
     }
 
