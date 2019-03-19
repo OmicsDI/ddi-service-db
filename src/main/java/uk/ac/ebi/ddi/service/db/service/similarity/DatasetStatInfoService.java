@@ -6,24 +6,23 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import uk.ac.ebi.ddi.service.db.exception.DBWriteException;
+import uk.ac.ebi.ddi.service.db.model.dataset.DatasetShort;
 import uk.ac.ebi.ddi.service.db.model.dataset.DatasetSimilars;
-import uk.ac.ebi.ddi.service.db.model.dataset.MostAccessedDatasets;
 import uk.ac.ebi.ddi.service.db.model.similarity.DatasetStatInfo;
 import uk.ac.ebi.ddi.service.db.model.similarity.ReanalysisData;
 import uk.ac.ebi.ddi.service.db.repo.similarity.IDatasetStatInfoRepo;
-import uk.ac.ebi.ddi.service.db.service.dataset.DatasetSimilarsService;
 import uk.ac.ebi.ddi.service.db.utils.Constants;
 
-
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
 import static org.springframework.data.mongodb.core.aggregation.Fields.fields;
@@ -41,6 +40,9 @@ public class DatasetStatInfoService implements IDatasetStatInfoService {
 
     @Autowired
     private MongoOperations mongoOperation;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @Override
     public DatasetStatInfo insert(DatasetStatInfo datasetStatInfo) {
@@ -115,6 +117,21 @@ public class DatasetStatInfoService implements IDatasetStatInfoService {
     @Override
     public List<DatasetStatInfo> readAll(){
         return accessRepo.findAll();
+    }
+
+    @Override
+    public List<DatasetStatInfo> findMultiple(List<DatasetShort> datasetShorts) {
+        Query query = new Query();
+        Criteria criteria = new Criteria();
+        List<Criteria> orOperators = new ArrayList<>();
+        for (DatasetShort datasetShort : datasetShorts) {
+            orOperators.add(new Criteria().andOperator(
+                    Criteria.where("accession").is(datasetShort.getAccession()),
+                    Criteria.where("database").is(datasetShort.getDatabase()
+            )));
+        }
+        query.addCriteria(criteria.orOperator(orOperators.toArray(new Criteria[0])));
+        return mongoTemplate.find(query, DatasetStatInfo.class);
     }
 
     @Override
