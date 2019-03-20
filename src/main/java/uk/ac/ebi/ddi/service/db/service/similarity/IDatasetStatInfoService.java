@@ -6,6 +6,7 @@ import uk.ac.ebi.ddi.service.db.model.dataset.DatasetShort;
 import uk.ac.ebi.ddi.service.db.model.similarity.DatasetStatInfo;
 import uk.ac.ebi.ddi.service.db.model.similarity.ReanalysisData;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -64,7 +65,7 @@ public interface IDatasetStatInfoService {
 
     List<DatasetStatInfo> readAll();
 
-    List<DatasetStatInfo> findMultiple(List<DatasetShort> datasetShorts);
+    List<DatasetStatInfo> findMultiple(Collection<DatasetShort> datasetShorts);
 
     List<ReanalysisData> reanalysisCount();
 }

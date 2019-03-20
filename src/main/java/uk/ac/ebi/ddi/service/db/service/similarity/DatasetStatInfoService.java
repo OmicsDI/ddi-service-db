@@ -22,6 +22,7 @@ import uk.ac.ebi.ddi.service.db.utils.Constants;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
@@ -120,7 +121,7 @@ public class DatasetStatInfoService implements IDatasetStatInfoService {
     }
 
     @Override
-    public List<DatasetStatInfo> findMultiple(List<DatasetShort> datasetShorts) {
+    public List<DatasetStatInfo> findMultiple(Collection<DatasetShort> datasetShorts) {
         Query query = new Query();
         Criteria criteria = new Criteria();
         List<Criteria> orOperators = new ArrayList<>();
