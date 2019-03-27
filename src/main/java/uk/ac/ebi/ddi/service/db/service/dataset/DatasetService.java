@@ -98,6 +98,9 @@ public class DatasetService implements IDatasetService {
 
     @Override
     public List<Dataset> findMultipleDatasets(Collection<DatasetShort> datasetShorts) {
+        if (datasetShorts.isEmpty()) {
+            return Collections.emptyList();
+        }
         Query query = new Query();
         Criteria criteria = new Criteria();
         List<Criteria> orOperators = new ArrayList<>();
