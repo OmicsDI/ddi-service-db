@@ -6,14 +6,12 @@ import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import uk.ac.ebi.ddi.service.db.utils.Constants;
 import uk.ac.ebi.ddi.service.db.utils.DatasetCategory;
 
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Yasset Perez-Riverol (ypriverol@gmail.com)
@@ -48,6 +46,8 @@ public class Dataset implements Serializable, IDataset{
     private Map<String, Set<String>> additional;
     //Cross References
     private Map<String, Set<String>> crossReferences;
+
+    private Map<String, Set<String>> files;
 
     private String filePath;
 
@@ -110,6 +110,28 @@ public class Dataset implements Serializable, IDataset{
         this.crossReferences = crossReferences;
         this.currentStatus = category.getType();
         this.initHashCode = initHashCode();
+    }
+
+    public Map<String, Set<String>> getFiles() {
+        if (files == null) {
+            files = new HashMap<>();
+        }
+        return files;
+    }
+
+    public void setFiles(Map<String, Set<String>> files) {
+        this.files = files;
+    }
+
+    public Set<String> getAllSecondaryAccessions() {
+        Set<String> result = new HashSet<>();
+        if (additional.get(Constants.SECONDARY_ACCESSION) != null) {
+            result.addAll(additional.get(Constants.SECONDARY_ACCESSION));
+        }
+        if (additional.get(Constants.SECONDARY_ACCESSION_ADDITIONAL) != null) {
+            result.addAll(additional.get(Constants.SECONDARY_ACCESSION_ADDITIONAL));
+        }
+        return result;
     }
 
     public String getName() {
