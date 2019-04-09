@@ -5,7 +5,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import uk.ac.ebi.ddi.service.db.utils.DatasetCategory;
 
-import javax.xml.crypto.Data;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -95,7 +94,7 @@ public class MergedDataset implements Serializable {
             this.additional = dataset.getAdditional();
             this.crossReferences = dataset.getCrossReferences();
             this.currentStatus = dataset.getCurrentStatus();
-            this.initHashCode = dataset.initHashCode();
+            this.initHashCode = dataset.getInitHashCode();
         }
 
         public String getName() {

@@ -79,7 +79,8 @@ public class DatasetService implements IDatasetService {
             existingDataset.setDates(dataset.getDates());
             existingDataset.setName(dataset.getName());
             existingDataset.setFilePath(dataset.getFilePath());
-            existingDataset.setInitHashCode(dataset.getInitHashCode());
+//            We set the InitHashCode only during the processing of creation
+//            existingDataset.setInitHashCode(dataset.getInitHashCode());
             existingDataset.setScores(dataset.getScores());
 //            This line will override the files fetched from another pipeline
 //            existingDataset.setFiles(dataset.getFiles());

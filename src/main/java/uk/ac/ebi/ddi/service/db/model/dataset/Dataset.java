@@ -218,7 +218,7 @@ public class Dataset implements Serializable, IDataset{
         return initHashCode;
     }
 
-    public void setInitHashCode(int initHashCode) {
+    private void setInitHashCode(int initHashCode) {
         this.initHashCode = initHashCode;
     }
 
@@ -250,7 +250,7 @@ public class Dataset implements Serializable, IDataset{
         return Objects.hash(accession, database, name, description);
     }
 
-    public int initHashCode(){
+    private int initHashCode(){
         int hashCode = 31;
         hashCode  = (accession != null )? 31 * hashCode + accession.hashCode():hashCode;
         hashCode  = (database != null) ?  31 * hashCode + database.hashCode():hashCode;
