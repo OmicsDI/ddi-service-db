@@ -29,7 +29,7 @@ public class Constants {
     public static String DOWNLOAD_COUNT = "download_count";
     public static String DOWNLOAD_LAST_UPDATED = "download_last_updated";
     public static String SECONDARY_ACCESSION_ADDITIONAL = "additional_accession";
-
+    public static String IGNORE_DATASET_FILE_RETRIEVER = "ignore_dataset_file_retriever";
 
 
     @Deprecated
