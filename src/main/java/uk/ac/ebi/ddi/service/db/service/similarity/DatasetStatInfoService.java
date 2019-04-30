@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
+import uk.ac.ebi.ddi.ddidomaindb.dataset.DSField;
 import uk.ac.ebi.ddi.service.db.exception.DBWriteException;
 import uk.ac.ebi.ddi.service.db.model.dataset.DatasetShort;
 import uk.ac.ebi.ddi.service.db.model.dataset.DatasetSimilars;
@@ -144,19 +145,15 @@ public class DatasetStatInfoService implements IDatasetStatInfoService {
         Aggregation agg = Aggregation.newAggregation(
                 unwind(Constants.SIMILARS_FIELD),
                 match(new Criteria(Constants.SIMILARS_RELATIONTYPE).is(Constants.REANALYZED_TYPE)),
-                group(fields().and(Constants.DATABASE_FIELD,Constants.DATABASE_FIELD)
-                        .and(Constants.ACCESSION_FIELD,Constants.ACCESSION_FIELD)).count().as(Constants.TOTAL_FIELD),
+                group(fields().and(DSField.DATABASE.key(), DSField.DATABASE.key())
+                        .and(DSField.ACCESSION.key(), DSField.ACCESSION.key())).count().as(Constants.TOTAL_FIELD),
                 sort(Sort.Direction.DESC, Constants.TOTAL_FIELD),
-                project(Constants.TOTAL_FIELD).and(Constants.ACCESSION_FIELD).as(Constants.ACCESSION_FIELD).and(Constants.DATABASE_FIELD)
-                        .as(Constants.DATABASE_FIELD));
+                project(Constants.TOTAL_FIELD).and(DSField.ACCESSION.key()).as(DSField.ACCESSION.key()).and(DSField.DATABASE.key())
+                        .as(DSField.DATABASE.key()));
 
         AggregationResults<ReanalysisData> groupResults
                 = mongoOperation.aggregate(agg, DatasetSimilars.class, ReanalysisData.class);
 
-        List<ReanalysisData> result = groupResults.getMappedResults();
-
-        //List<ReanalysisData> filtered = result.stream().filter(it -> "PXD000561".equals(it.getAccession())).collect(Collectors.toList());
-
-        return result;
+        return groupResults.getMappedResults();
     }
 }

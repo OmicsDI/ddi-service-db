@@ -6,9 +6,8 @@ import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import uk.ac.ebi.ddi.service.db.utils.Constants;
+import uk.ac.ebi.ddi.ddidomaindb.dataset.DSField;
 import uk.ac.ebi.ddi.service.db.utils.DatasetCategory;
-
 
 import java.io.Serializable;
 import java.util.*;
@@ -127,11 +126,11 @@ public class Dataset implements Serializable, IDataset{
 
     public Set<String> getAllSecondaryAccessions() {
         Set<String> result = new HashSet<>();
-        if (additional.get(Constants.SECONDARY_ACCESSION) != null) {
-            result.addAll(additional.get(Constants.SECONDARY_ACCESSION));
+        if (additional.get(DSField.Additional.SECONDARY_ACCESSION.key()) != null) {
+            result.addAll(additional.get(DSField.Additional.SECONDARY_ACCESSION.key()));
         }
-        if (additional.get(Constants.SECONDARY_ACCESSION_ADDITIONAL) != null) {
-            result.addAll(additional.get(Constants.SECONDARY_ACCESSION_ADDITIONAL));
+        if (additional.get(DSField.Additional.ADDITIONAL_ACCESSION.key()) != null) {
+            result.addAll(additional.get(DSField.Additional.ADDITIONAL_ACCESSION.key()));
         }
         return result;
     }

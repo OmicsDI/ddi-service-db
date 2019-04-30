@@ -1,17 +1,17 @@
 package uk.ac.ebi.ddi.service.db.service.logger;
 
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.aggregation.*;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationOptions;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.stereotype.Component;
+import uk.ac.ebi.ddi.ddidomaindb.dataset.DSField;
 import uk.ac.ebi.ddi.service.db.exception.DBWriteException;
 import uk.ac.ebi.ddi.service.db.model.dataset.Dataset;
 import uk.ac.ebi.ddi.service.db.model.dataset.MostAccessedDatasets;
@@ -34,7 +34,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
-import static org.springframework.data.mongodb.core.aggregation.Fields.fields;
 
 
 /**
@@ -179,7 +178,7 @@ public class HttpEventService implements IHttpEventService {
                         }
                         HashSet<String> count = new HashSet<String>();
                         count.add(String.valueOf(visit.getTotal()));
-                        datasetOut.getAdditional().put(Constants.VIEWCOUNT_FIELD,count);
+                        datasetOut.getAdditional().put(DSField.Additional.VIEW_COUNT.key(), count);
                         datasetService.update(datasetOut.getId(),datasetOut);
                         MostAccessedDatasets dataset = new MostAccessedDatasets(datasetOut, visit.getTotal());
                         mostAccessedDatasetService.save(dataset);

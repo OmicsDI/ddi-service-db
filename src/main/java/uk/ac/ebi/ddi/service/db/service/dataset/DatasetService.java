@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
+import uk.ac.ebi.ddi.ddidomaindb.dataset.DSField;
 import uk.ac.ebi.ddi.service.db.model.aggregate.BaseAggregate;
 import uk.ac.ebi.ddi.service.db.model.dataset.*;
 import uk.ac.ebi.ddi.service.db.repo.dataset.IDatasetRepo;
@@ -157,13 +158,13 @@ public class DatasetService implements IDatasetService {
 
     public void updateDatasetClaim(String[] databases){
         Query searchQuery = new Query();
-        searchQuery.addCriteria(new Criteria(Constants.DATABASE_FIELD).in(databases));
+        searchQuery.addCriteria(new Criteria(DSField.DATABASE.key()).in(databases));
 
         HashSet<String> claimableStatus = new HashSet<String>();
         claimableStatus.add("true");
 
         Update updateClaim = new Update();
-        updateClaim.set(Constants.ISCLAIMED_FIELD,true).set(Constants.ADDITIONAL_CLAIMABLE,claimableStatus);
+        updateClaim.set(DSField.IS_CLAIMABLE.key(), true).set(Constants.ADDITIONAL_CLAIMABLE, claimableStatus);
 
         mongoTemplate.updateMulti(searchQuery,updateClaim,Constants.DATASET_COLLECTION);
 
@@ -312,7 +313,7 @@ public class DatasetService implements IDatasetService {
              ) {
             Dataset dataset = datasetAccessRepo.findByAccessionDatabaseQuery(dt.getAccession(), dt.getDatabase());
             if (dataset != null) {
-                dataset = Utilities.addAdditionalField(dataset, Constants.OMICS_TYPE, Constants.MULTIOMICS_TYPE);
+                Utilities.addAdditionalField(dataset, DSField.Additional.OMICS.key(), Constants.MULTIOMICS_TYPE);
                 save(dataset);
                 datasetSimilarsService.addDatasetSim(dataset, mergeCandidate.getSimilars(),
                         DatasetSimilarsType.OTHER_OMICS_DATA.getType());
@@ -332,7 +333,7 @@ public class DatasetService implements IDatasetService {
                 return obj;
             }
         };
-        Query query  = new Query(Criteria.where(Constants.DATABASE_FIELD).is(database).
+        Query query  = new Query(Criteria.where(DSField.DATABASE.key()).is(database).
                 and("$where").is("this.accession == this.name"));
 
         Update update = new Update();

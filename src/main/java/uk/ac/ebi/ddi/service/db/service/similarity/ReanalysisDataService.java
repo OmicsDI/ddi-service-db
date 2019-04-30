@@ -3,14 +3,12 @@ package uk.ac.ebi.ddi.service.db.service.similarity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import uk.ac.ebi.ddi.ddidomaindb.dataset.DSField;
 import uk.ac.ebi.ddi.service.db.model.dataset.Dataset;
 import uk.ac.ebi.ddi.service.db.model.dataset.Scores;
-import uk.ac.ebi.ddi.service.db.model.similarity.Citations;
 import uk.ac.ebi.ddi.service.db.model.similarity.ReanalysisData;
-import uk.ac.ebi.ddi.service.db.repo.similarity.ICitationRepo;
 import uk.ac.ebi.ddi.service.db.repo.similarity.IReanalysisRepo;
 import uk.ac.ebi.ddi.service.db.service.dataset.DatasetService;
-import uk.ac.ebi.ddi.service.db.utils.Constants;
 
 import java.util.HashSet;
 import java.util.List;
@@ -47,7 +45,7 @@ public class ReanalysisDataService implements IReanalysisDataService {
             }
             HashSet<String> count = new HashSet<String>();
             count.add(reanalysisData.getTotal().toString());
-            dataset.getAdditional().put(Constants.REANALYSIS_FIELD,count);
+            dataset.getAdditional().put(DSField.Additional.REANALYSIS_COUNT.key(), count);
             datasetService.update(dataset.getId(),dataset);
         }
         //reanalysisRepo.save(reanalysisData);
@@ -65,15 +63,15 @@ public class ReanalysisDataService implements IReanalysisDataService {
             if(dataset != null) {
                 String keyword = getReanalysisKeyword(dataset.getDatabase());
                 if (!StringUtils.isEmpty(keyword)) {
-                    if (dataset.getAdditional().containsKey(Constants.SUBMITTER_KEYWORDS_FIELD)) {
-                        Set<String> keywords = dataset.getAdditional().get(Constants.SUBMITTER_KEYWORDS_FIELD);
+                    if (dataset.getAdditional().containsKey(DSField.Additional.SUBMITTER_KEYWORDS.key())) {
+                        Set<String> keywords = dataset.getAdditional().get(DSField.Additional.SUBMITTER_KEYWORDS.key());
                         keywords.add(keyword);
-                        dataset.getAdditional().put(Constants.SUBMITTER_KEYWORDS_FIELD, keywords);
+                        dataset.getAdditional().put(DSField.Additional.SUBMITTER_KEYWORDS.key(), keywords);
                         datasetService.save(dataset);
                     } else {
                         Set<String> keywords = new HashSet<String>();
                         keywords.add(keyword);
-                        dataset.getAdditional().put(Constants.SUBMITTER_KEYWORDS_FIELD, keywords);
+                        dataset.getAdditional().put(DSField.Additional.SUBMITTER_KEYWORDS.key(), keywords);
                         datasetService.save(dataset);
                     }
                 }
