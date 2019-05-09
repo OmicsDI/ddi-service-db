@@ -219,7 +219,7 @@ public class Dataset implements Serializable, IDataset{
         return initHashCode;
     }
 
-    private void setInitHashCode(int initHashCode) {
+    public void setInitHashCode(int initHashCode) {
         this.initHashCode = initHashCode;
     }
 
