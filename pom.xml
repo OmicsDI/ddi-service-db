@@ -6,19 +6,19 @@
     <parent>
         <groupId>uk.ac.ebi.ddi.maven</groupId>
         <artifactId>ddi-base-master</artifactId>
-        <version>1.2</version>
+        <version>1.5</version>
     </parent>
 
     <groupId>uk.ac.ebi.ddi</groupId>
     <artifactId>ddi-service-db</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <packaging>jar</packaging>
 
     <scm>
         <connection>scm:git:github.com/OmicsDI/ddi-service-db.git</connection>
         <developerConnection>scm:git:git@github.com:OmicsDI/ddi-service-db.git</developerConnection>
         <url>https://github.com/OmicsDI/ddi-service-db.git</url>
-        <tag>ddi-service-db</tag>
+        <tag>ddi-service-db-1.1</tag>
     </scm>
 
     <properties>
@@ -44,23 +44,19 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
         <!-- Spring Core -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <type>jar</type>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <type>jar</type>
+            <version>${spring.version}</version>
         </dependency>
 
         <!-- web components to create some of the structures -->
@@ -77,6 +73,7 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-mongodb</artifactId>
+            <version>${spring.data.mongo.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework</groupId>
@@ -101,6 +98,7 @@
         </dependency>
 
     </dependencies>
+
     <build>
         <finalName>dd-service-db</finalName>
         <plugins>
@@ -121,10 +119,10 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.5.1</version>
-<!--                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>-->
+                <!--                <configuration>
+                                    <source>1.8</source>
+                                    <target>1.8</target>
+                                </configuration>-->
             </plugin>
         </plugins>
     </build>
