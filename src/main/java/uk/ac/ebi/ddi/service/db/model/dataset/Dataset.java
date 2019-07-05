@@ -241,6 +241,47 @@ public class Dataset implements Serializable, IDataset{
         return configurations;
     }
 
+    public void addCrossReferenceValue(String key, String value) {
+        Map<String, Set<String>> fields = getCrossReferences();
+        if (fields == null) {
+            fields = new HashMap<>();
+        }
+        if (key != null && value != null) {
+            Set<String> values = new HashSet<>();
+            if (fields.containsKey(key)) {
+                values = fields.get(key);
+            }
+            values.add(value);
+            fields.put(key, values);
+            setCrossReferences(fields);
+        }
+    }
+
+    public Set<String> getCrossReference(String nameKey) {
+        if (getCrossReferences() != null && !getCrossReferences().isEmpty()) {
+            if (getCrossReferences().containsKey(nameKey)) {
+                return getCrossReferences().get(nameKey);
+            }
+        }
+        return Collections.emptySet();
+    }
+
+    public void addAdditionalField(String key, String value) {
+        Map<String, Set<String>> additional = getAdditional();
+        if (additional == null) {
+            additional = new HashMap<>();
+        }
+        if (key != null && value != null) {
+            Set<String> values = new HashSet<>();
+            if (additional.containsKey(key)) {
+                values = additional.get(key);
+            }
+            values.add(value);
+            additional.put(key, values);
+            setAdditional(additional);
+        }
+    }
+
     public void setConfigurations(Map<String, String> configurations) {
         this.configurations = configurations;
     }
