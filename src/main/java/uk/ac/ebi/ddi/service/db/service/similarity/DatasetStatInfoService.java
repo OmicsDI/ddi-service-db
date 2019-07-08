@@ -22,10 +22,7 @@ import uk.ac.ebi.ddi.service.db.repo.similarity.IDatasetStatInfoRepo;
 import uk.ac.ebi.ddi.service.db.utils.Constants;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
 import static org.springframework.data.mongodb.core.aggregation.Fields.fields;
@@ -64,7 +61,8 @@ public class DatasetStatInfoService implements IDatasetStatInfoService {
 
     @Override
     public DatasetStatInfo read(ObjectId id) {
-        return accessRepo.findOne(id);
+        Optional<DatasetStatInfo> datasetStatInfo = accessRepo.findById(id);
+        return datasetStatInfo.orElse(null);
     }
 
     @Override
@@ -89,8 +87,8 @@ public class DatasetStatInfoService implements IDatasetStatInfoService {
 
     @Override
     public DatasetStatInfo delete(ObjectId id) {
-        accessRepo.delete(id);
-        return accessRepo.findOne(id);
+        accessRepo.deleteById(id);
+        return read(id);
     }
 
     @Override

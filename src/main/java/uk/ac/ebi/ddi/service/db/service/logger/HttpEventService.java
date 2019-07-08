@@ -28,10 +28,7 @@ import uk.ac.ebi.ddi.service.db.service.dataset.MostAccessedDatasetService;
 import uk.ac.ebi.ddi.service.db.utils.Constants;
 import uk.ac.ebi.ddi.service.db.utils.Tuple;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
 
@@ -80,7 +77,8 @@ public class HttpEventService implements IHttpEventService {
 
     @Override
     public HttpEvent read(ObjectId id) {
-        return accessRepo.findOne(id);
+        Optional<HttpEvent> httpEvent = accessRepo.findById(id);
+        return httpEvent.orElse(null);
     }
 
     @Override
@@ -91,7 +89,11 @@ public class HttpEventService implements IHttpEventService {
     @Override
     public HttpEvent update(HttpEvent httpEvent) {
 
-        HttpEvent existingHttpEvent = accessRepo.findOne(httpEvent.getId());
+        HttpEvent existingHttpEvent = read(httpEvent.getId());
+
+        if (existingHttpEvent == null) {
+            throw new RuntimeException("Event not exists " + httpEvent.getId());
+        }
 
         existingHttpEvent.setAccessDate(httpEvent.getAccessDate());
         existingHttpEvent.setHost(httpEvent.getHost());
@@ -111,8 +113,9 @@ public class HttpEventService implements IHttpEventService {
 
     @Override
     public HttpEvent delete(ObjectId id) {
-        accessRepo.delete(id);
-        return accessRepo.findOne(id);
+        accessRepo.deleteById(id);
+        Optional<HttpEvent> httpEvent = accessRepo.findById(id);
+        return httpEvent.orElse(null);
     }
 
     public long getLongEventService( String acccesion, String database){

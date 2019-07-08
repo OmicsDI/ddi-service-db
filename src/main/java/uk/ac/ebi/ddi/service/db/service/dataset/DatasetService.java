@@ -1,7 +1,5 @@
 package uk.ac.ebi.ddi.service.db.service.dataset;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -57,7 +55,8 @@ public class DatasetService implements IDatasetService {
 
     @Override
     public Dataset read(ObjectId id) {
-        return datasetAccessRepo.findOne(id);
+        Optional<Dataset> dataset = datasetAccessRepo.findById(id);
+        return dataset.orElse(null);
     }
 
     @Override
@@ -68,31 +67,32 @@ public class DatasetService implements IDatasetService {
     @Override
     public Dataset update(ObjectId id, Dataset dataset) {
 
-        Dataset existingDataset = datasetAccessRepo.findOne(id);
+        Optional<Dataset> existingDataset = datasetAccessRepo.findById(id);
 
-        if(existingDataset != null){
-            existingDataset.setCrossReferences(dataset.getCrossReferences());
-            existingDataset.setDescription(dataset.getDescription());
-            existingDataset.setCurrentStatus(dataset.getCurrentStatus());
-            existingDataset.setAdditional(dataset.getAdditional());
-            existingDataset.setAccession(dataset.getAccession());
-            existingDataset.setDatabase(dataset.getDatabase());
-            existingDataset.setDates(dataset.getDates());
-            existingDataset.setName(dataset.getName());
-            existingDataset.setFilePath(dataset.getFilePath());
+        if (existingDataset.isPresent()) {
+            existingDataset.get().setCrossReferences(dataset.getCrossReferences());
+            existingDataset.get().setDescription(dataset.getDescription());
+            existingDataset.get().setCurrentStatus(dataset.getCurrentStatus());
+            existingDataset.get().setAdditional(dataset.getAdditional());
+            existingDataset.get().setAccession(dataset.getAccession());
+            existingDataset.get().setDatabase(dataset.getDatabase());
+            existingDataset.get().setDates(dataset.getDates());
+            existingDataset.get().setName(dataset.getName());
+            existingDataset.get().setFilePath(dataset.getFilePath());
 //            We set the InitHashCode only during the processing of creation
 //            existingDataset.setInitHashCode(dataset.getInitHashCode());
-            existingDataset.setScores(dataset.getScores());
+            existingDataset.get().setScores(dataset.getScores());
 //            This line will override the files fetched from another pipeline
 //            existingDataset.setFiles(dataset.getFiles());
-            return datasetAccessRepo.save(existingDataset);
+            return datasetAccessRepo.save(existingDataset.get());
         }
-        return existingDataset;
+
+        return null;
     }
 
     @Override
     public void delete(ObjectId id) {
-        datasetAccessRepo.delete(id);
+        datasetAccessRepo.deleteById(id);
     }
 
     @Override
@@ -133,7 +133,7 @@ public class DatasetService implements IDatasetService {
     @Override
     public Dataset updateCategory(Dataset dataset) {
 
-        Dataset existingDataset = datasetAccessRepo.findOne(dataset.getId());
+        Dataset existingDataset = read(dataset.getId());
         existingDataset.setAccession(dataset.getCurrentStatus());
         return datasetAccessRepo.save(existingDataset);
     }
@@ -323,16 +323,6 @@ public class DatasetService implements IDatasetService {
     }
 
     public void updatePrivateDatasets(String database){
-
-
-        Criteria criteria = new Criteria() {
-            @Override
-            public DBObject getCriteriaObject() {
-                DBObject obj = new BasicDBObject();
-                obj.put("$where", "this.accession == this.name");
-                return obj;
-            }
-        };
         Query query  = new Query(Criteria.where(DSField.DATABASE.key()).is(database).
                 and("$where").is("this.accession == this.name"));
 

@@ -266,6 +266,13 @@ public class Dataset implements Serializable, IDataset{
         return Collections.emptySet();
     }
 
+    public Set<String> getAdditionalField(String key) {
+        if (getAdditional() != null && getAdditional().containsKey(key)) {
+            return getAdditional().get(key);
+        }
+        return Collections.emptySet();
+    }
+
     public void addAdditionalField(String key, String value) {
         Map<String, Set<String>> additional = getAdditional();
         if (additional == null) {

@@ -9,6 +9,7 @@ import uk.ac.ebi.ddi.service.db.model.publication.PublicationDataset;
 import uk.ac.ebi.ddi.service.db.repo.publication.IPublicationDatasetRepo;
 
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -29,7 +30,8 @@ public class PublicationDatasetService implements IPublicationDatasetService {
 
     @Override
     public PublicationDataset read(ObjectId id) {
-        return datasetAccessRepo.findOne(id);
+        Optional<PublicationDataset> publicationDataset = datasetAccessRepo.findById(id);
+        return publicationDataset.orElse(null);
     }
 
     @Override
@@ -40,7 +42,7 @@ public class PublicationDatasetService implements IPublicationDatasetService {
     @Override
     public PublicationDataset update(PublicationDataset dataset) {
 
-        PublicationDataset existingDataset = datasetAccessRepo.findOne(dataset.getId());
+        PublicationDataset existingDataset = read(dataset.getId());
 
         existingDataset.setDatasetID(dataset.getDatasetID());
         existingDataset.setDatabaseID(dataset.getDatabase());
@@ -50,8 +52,8 @@ public class PublicationDatasetService implements IPublicationDatasetService {
 
     @Override
     public PublicationDataset delete(ObjectId id) {
-        datasetAccessRepo.delete(id);
-        return datasetAccessRepo.findOne(id);
+        datasetAccessRepo.deleteById(id);
+        return read(id);
     }
 
 

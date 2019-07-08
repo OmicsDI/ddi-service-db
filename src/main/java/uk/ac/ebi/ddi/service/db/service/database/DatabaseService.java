@@ -8,6 +8,7 @@ import uk.ac.ebi.ddi.service.db.repo.dataset.IDatabaseRepo;
 import uk.ac.ebi.ddi.service.db.service.dataset.IDatabaseService;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by yperez on 26/05/2016.
@@ -25,20 +26,22 @@ public class DatabaseService implements IDatabaseService {
 
     @Override
     public Database read(ObjectId id) {
-        return databaseRepo.findOne(id);
+        Optional<Database> database = databaseRepo.findById(id);
+        return database.orElse(null);
     }
 
     @Override
     public Database update(ObjectId id, Database database) {
         Database updateDatabase = read(id);
-        if(updateDatabase != null)
+        if (updateDatabase != null) {
             database.set_id(id);
+        }
         return databaseRepo.save(database);
     }
 
     @Override
     public void delete(ObjectId id) {
-        databaseRepo.delete(id);
+        databaseRepo.deleteById(id);
     }
 
     @Override

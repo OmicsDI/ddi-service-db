@@ -9,12 +9,11 @@ import uk.ac.ebi.ddi.service.db.model.dataset.Dataset;
 import uk.ac.ebi.ddi.service.db.model.dataset.DatasetShort;
 import uk.ac.ebi.ddi.service.db.model.dataset.DatasetSimilars;
 import uk.ac.ebi.ddi.service.db.model.dataset.SimilarDataset;
-import uk.ac.ebi.ddi.service.db.model.publication.PublicationDataset;
 import uk.ac.ebi.ddi.service.db.repo.dataset.IDatasetSimilarsRepo;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -36,7 +35,8 @@ public class DatasetSimilarsService implements IDatasetSimilarsService{
     private IDatasetService datasetService;
     @Override
     public DatasetSimilars read(ObjectId id) {
-        return datasetRepo.findOne(id);
+        Optional<DatasetSimilars> datasetSimilars = datasetRepo.findById(id);
+        return datasetSimilars.orElse(null);
     }
 
     @Override
@@ -46,9 +46,9 @@ public class DatasetSimilarsService implements IDatasetSimilarsService{
 
     @Override
     public DatasetSimilars update(ObjectId id, DatasetSimilars dataset) {
-        DatasetSimilars existingDataset = datasetRepo.findOne(id);
+        DatasetSimilars existingDataset = read(id);
 
-        if(existingDataset != null){
+        if (existingDataset != null) {
             existingDataset.setSimilars(dataset.getSimilars());
         }
         return existingDataset;

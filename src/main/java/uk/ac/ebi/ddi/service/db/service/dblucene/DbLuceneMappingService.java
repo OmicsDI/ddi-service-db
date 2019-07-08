@@ -4,10 +4,10 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uk.ac.ebi.ddi.service.db.model.dblucene.DbLuceneMapping;
-import uk.ac.ebi.ddi.service.db.model.feedback.Feedback;
 import uk.ac.ebi.ddi.service.db.repo.dblucene.IDbLuceneMappingRepo;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by gaur on 29/3/17.
@@ -25,7 +25,8 @@ public class DbLuceneMappingService implements IDbLuceneMappingService {
 
     @Override
     public DbLuceneMapping read(ObjectId id) {
-        return dbLuceneMappingRepo.findOne(id);
+        Optional<DbLuceneMapping> dbLuceneMapping = dbLuceneMappingRepo.findById(id);
+        return dbLuceneMapping.orElse(null);
     }
 
     @Override
@@ -38,7 +39,7 @@ public class DbLuceneMappingService implements IDbLuceneMappingService {
 
     @Override
     public void delete(ObjectId id) {
-        dbLuceneMappingRepo.delete(id);
+        dbLuceneMappingRepo.deleteById(id);
     }
 
     @Override
