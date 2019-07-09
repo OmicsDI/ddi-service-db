@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  * Created by yperez on 13/06/2016.
  */
 @Service
-public class DatasetSimilarsService implements IDatasetSimilarsService{
+public class DatasetSimilarsService implements IDatasetSimilarsService {
 
     @Autowired
     private IDatasetSimilarsRepo datasetRepo;
@@ -33,6 +33,7 @@ public class DatasetSimilarsService implements IDatasetSimilarsService{
 
     @Autowired
     private IDatasetService datasetService;
+
     @Override
     public DatasetSimilars read(ObjectId id) {
         Optional<DatasetSimilars> datasetSimilars = datasetRepo.findById(id);
@@ -57,7 +58,7 @@ public class DatasetSimilarsService implements IDatasetSimilarsService{
     @Override
     public void delete(DatasetSimilars dataset) {
         DatasetSimilars datasetExisting = datasetRepo.findByAccessionDatabaseQuery(dataset.getAccession(), dataset.getDatabase());
-        if(datasetExisting != null){
+        if (datasetExisting != null) {
             datasetRepo.delete(datasetExisting);
         }
     }
@@ -68,33 +69,32 @@ public class DatasetSimilarsService implements IDatasetSimilarsService{
     }
 
     /****** AZ: removed, why we need to query by accession, w/o database?
-    @Override
-    public List<DatasetSimilars> findByAccession(String accession) {
-        return datasetRepo.findByAccession(accession);
-    }
-    *******/
+     @Override public List<DatasetSimilars> findByAccession(String accession) {
+     return datasetRepo.findByAccession(accession);
+     }
+     *******/
 
     @Override
-    public List<DatasetSimilars> readAll(){
+    public List<DatasetSimilars> readAll() {
         return datasetRepo.findAll();
     }
 
-    public void addDatasetSimilars(Dataset dataset, List<DatasetShort> similars, String relationtype){
+    public void addDatasetSimilars(Dataset dataset, List<DatasetShort> similars, String relationtype) {
         DatasetSimilars datasetExisting = datasetRepo.findByAccessionDatabaseQuery(dataset.getAccession(), dataset.getDatabase());
         Set<SimilarDataset> similarDatasets = new HashSet<>();
-        for(DatasetShort publicationDataset: similars){
-            if(!publicationDataset.getAccession().equalsIgnoreCase(dataset.getAccession()) && !publicationDataset.getDatabase().equalsIgnoreCase(dataset.getDatabase())){
+        for (DatasetShort publicationDataset : similars) {
+            if (!publicationDataset.getAccession().equalsIgnoreCase(dataset.getAccession()) && !publicationDataset.getDatabase().equalsIgnoreCase(dataset.getDatabase())) {
                 Dataset datasetRelated = datasetService.read(dataset.getAccession(), dataset.getDatabase());
-                if(datasetRelated != null){
+                if (datasetRelated != null) {
                     SimilarDataset similar = new SimilarDataset(datasetRelated, relationtype);
                     similarDatasets.add(similar);
                 }
             }
         }
-        if(datasetExisting == null){
+        if (datasetExisting == null) {
             datasetExisting = new DatasetSimilars(dataset.getAccession(), dataset.getDatabase(), similarDatasets);
             datasetRepo.save(datasetExisting);
-        }else{
+        } else {
             Set<SimilarDataset> similarsData = datasetExisting.getSimilars();
             similarDatasets.addAll(similarsData);
             datasetExisting.setSimilars(similarDatasets);
@@ -102,17 +102,17 @@ public class DatasetSimilarsService implements IDatasetSimilarsService{
         }
     }
 
-    public void addDatasetSim(Dataset dataset, List<DatasetShort> similars, String relationtype){
+    public void addDatasetSim(Dataset dataset, List<DatasetShort> similars, String relationtype) {
         DatasetSimilars datasetExis = datasetRepo.findByAccessionDatabaseQuery(dataset.getAccession(), dataset.getDatabase());
         Set<SimilarDataset> similarDatasets = new HashSet<>();
         similarDatasets = similars.stream().filter(ds -> !ds.getAccession().equals(dataset.getAccession()))
                 .map(dt -> new SimilarDataset(datasetService.read(dt.getAccession(), dt.getDatabase()), relationtype))
                 .collect(Collectors.toSet());
 
-        if(datasetExis == null){
+        if (datasetExis == null) {
             datasetExis = new DatasetSimilars(dataset.getAccession(), dataset.getDatabase(), similarDatasets);
             datasetRepo.save(datasetExis);
-        }else{
+        } else {
             Set<SimilarDataset> similarsData = datasetExis.getSimilars();
             similarDatasets.addAll(similarsData);
             datasetExis.setSimilars(similarDatasets);

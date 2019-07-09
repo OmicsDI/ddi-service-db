@@ -16,4 +16,8 @@ public class Constants {
     public static String ADDITIONAL_CLAIMABLE = "additional.isClaimable";
     public static String TRUE_VALUE = "true";
     public static String MULTIOMICS_TYPE ="Multiomics";
+
+    // For Dataset's file urls
+    public static String FROM_DATASET_IMPORT = "from_dataset_import";
+    public static String FROM_FILE_RETRIEVER = "from_file_retriever";
 }
