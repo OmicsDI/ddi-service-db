@@ -19,7 +19,7 @@ import java.util.*;
 
 @Document(collection = "datasets.dataset")
 @CompoundIndexes({
-        @CompoundIndex(name = "accession_database", def = "{'accession' : 1, 'database': 1}", unique = true)
+        @CompoundIndex(name = "accession_database", def = "{'accession' : 1, 'database': 1}")
 })
 public class Dataset implements Serializable, IDataset{
 
@@ -39,16 +39,16 @@ public class Dataset implements Serializable, IDataset{
     // Description
     String description;
 
-    private Map<String, Set<String>> dates;
+    private Map<String, Set<String>> dates = new HashMap<>();
 
     // Additional fields
-    private Map<String, Set<String>> additional;
+    private Map<String, Set<String>> additional = new HashMap<>();
     //Cross References
-    private Map<String, Set<String>> crossReferences;
+    private Map<String, Set<String>> crossReferences = new HashMap<>();
 
-    private Map<String, Set<String>> files;
+    private Map<String, Set<String>> files = new HashMap<>();
 
-    private Map<String, String> configurations;
+    private Map<String, String> configurations = new HashMap<>();
 
     private String filePath;
 
@@ -113,13 +113,12 @@ public class Dataset implements Serializable, IDataset{
         this.initHashCode = initHashCode();
     }
 
+    @Deprecated
     public Map<String, Set<String>> getFiles() {
-        if (files == null) {
-            files = new HashMap<>();
-        }
         return files;
     }
 
+    @Deprecated
     public void setFiles(Map<String, Set<String>> files) {
         this.files = files;
     }
@@ -224,21 +223,56 @@ public class Dataset implements Serializable, IDataset{
     }
 
     public void addAdditional(String key, Set<String> values){
-        if(additional == null)
-            additional = new HashMap<>();
         additional.put(key, values);
     }
     public void addCrossReferences(String key, Set<String> values){
-        if(crossReferences == null)
-            crossReferences = new HashMap<>();
         crossReferences.put(key, values);
     }
 
     public Map<String, String> getConfigurations() {
-        if (configurations == null) {
-            configurations =  new HashMap<>();
-        }
         return configurations;
+    }
+
+    public void addCrossReferenceValue(String key, String value) {
+        Map<String, Set<String>> fields = getCrossReferences();
+        if (key != null && value != null) {
+            Set<String> values = new HashSet<>();
+            if (fields.containsKey(key)) {
+                values = fields.get(key);
+            }
+            values.add(value);
+            fields.put(key, values);
+            setCrossReferences(fields);
+        }
+    }
+
+    public Set<String> getCrossReference(String nameKey) {
+        if (!getCrossReferences().isEmpty()) {
+            if (getCrossReferences().containsKey(nameKey)) {
+                return getCrossReferences().get(nameKey);
+            }
+        }
+        return Collections.emptySet();
+    }
+
+    public Set<String> getAdditionalField(String key) {
+        if (getAdditional().containsKey(key)) {
+            return getAdditional().get(key);
+        }
+        return Collections.emptySet();
+    }
+
+    public void addAdditionalField(String key, String value) {
+        Map<String, Set<String>> additional = getAdditional();
+        if (key != null && value != null) {
+            Set<String> values = new HashSet<>();
+            if (additional.containsKey(key)) {
+                values = additional.get(key);
+            }
+            values.add(value);
+            additional.put(key, values);
+            setAdditional(additional);
+        }
     }
 
     public void setConfigurations(Map<String, String> configurations) {
@@ -258,7 +292,6 @@ public class Dataset implements Serializable, IDataset{
 
     @Override
     public int hashCode() {
-
         return Objects.hash(accession, database, name, description);
     }
 

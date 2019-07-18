@@ -14,6 +14,7 @@ import uk.ac.ebi.ddi.service.db.repo.enrichment.IIdentifierRepo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by mingze on 30/07/15.
@@ -55,7 +56,8 @@ public class EnrichmentInfoService implements IEnrichmentInfoService {
 
     @Override
     public DatasetEnrichmentInfo read(ObjectId id) {
-        return accessRepo.findOne(id);
+        Optional<DatasetEnrichmentInfo> datasetEnrichmentInfo = accessRepo.findById(id);
+        return datasetEnrichmentInfo.orElse(null);
     }
 
     @Override
@@ -70,8 +72,8 @@ public class EnrichmentInfoService implements IEnrichmentInfoService {
 
     @Override
     public DatasetEnrichmentInfo delete(ObjectId id) {
-        accessRepo.delete(id);
-        return accessRepo.findOne(id);
+        accessRepo.deleteById(id);
+        return read(id);
     }
 
     @Override
@@ -106,7 +108,7 @@ public class EnrichmentInfoService implements IEnrichmentInfoService {
     @Override
     public void updateIdentifiers(Iterable<Identifier> identifiers){
         identifierRepo.deleteAll();
-        identifierRepo.save(identifiers);
+        identifierRepo.saveAll(identifiers);
     }
 
     @Override

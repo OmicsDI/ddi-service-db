@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import uk.ac.ebi.ddi.service.db.exception.DBWriteException;
 import uk.ac.ebi.ddi.service.db.model.similarity.TermInDB;
@@ -13,6 +12,7 @@ import uk.ac.ebi.ddi.service.db.repo.similarity.ITermInDBRepo;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by mingze on 30/07/15.
@@ -44,7 +44,8 @@ public class TermInDBService implements ITermInDBService {
 
     @Override
     public TermInDB read(ObjectId id) {
-        return accessRepo.findOne(id);
+        Optional<TermInDB> termInDB = accessRepo.findById(id);
+        return termInDB.orElse(null);
     }
 
     @Override
@@ -60,8 +61,8 @@ public class TermInDBService implements ITermInDBService {
 
     @Override
     public TermInDB delete(ObjectId id) {
-        accessRepo.delete(id);
-        return accessRepo.findOne(id);
+        accessRepo.deleteById(id);
+        return read(id);
     }
 
     @Override

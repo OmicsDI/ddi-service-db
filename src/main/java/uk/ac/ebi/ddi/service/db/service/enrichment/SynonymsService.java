@@ -1,10 +1,8 @@
 package uk.ac.ebi.ddi.service.db.service.enrichment;
 
 import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-
 import org.springframework.stereotype.Service;
 import uk.ac.ebi.ddi.service.db.exception.DBWriteException;
 import uk.ac.ebi.ddi.service.db.model.enrichment.Synonym;
@@ -12,6 +10,7 @@ import uk.ac.ebi.ddi.service.db.repo.enrichment.ISynonymsRepo;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by mingze on 30/07/15.
@@ -81,7 +80,8 @@ public class SynonymsService implements ISynonymsService {
      */
     @Override
     public Synonym read(ObjectId id) {
-        return accessRepo.findOne(id);
+        Optional<Synonym> synonym = accessRepo.findById(id);
+        return synonym.orElse(null);
     }
 
     /**
@@ -120,8 +120,8 @@ public class SynonymsService implements ISynonymsService {
      */
     @Override
     public Synonym delete(ObjectId id) {
-        accessRepo.delete(id);
-        return accessRepo.findOne(id);
+        accessRepo.deleteById(id);
+        return read(id);
     }
 
     /**

@@ -7,6 +7,7 @@ import uk.ac.ebi.ddi.service.db.model.feedback.Feedback;
 import uk.ac.ebi.ddi.service.db.repo.feedback.IFeedbackRepo;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by gaur on 22/2/17.
@@ -24,7 +25,8 @@ public class FeedbackService implements IFeedbackService{
 
     @Override
     public Feedback read(ObjectId id) {
-        return feedbackRepo.findOne(id);
+        Optional<Feedback> feedback = feedbackRepo.findById(id);
+        return feedback.orElse(null);
     }
 
     @Override
@@ -37,7 +39,7 @@ public class FeedbackService implements IFeedbackService{
 
     @Override
     public void delete(ObjectId id) {
-        feedbackRepo.delete(id);
+        feedbackRepo.deleteById(id);
     }
 
     @Override

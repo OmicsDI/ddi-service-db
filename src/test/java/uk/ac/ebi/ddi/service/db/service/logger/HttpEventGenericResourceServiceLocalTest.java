@@ -2,7 +2,6 @@ package uk.ac.ebi.ddi.service.db.service.logger;
 
 
 import junit.framework.Assert;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import uk.ac.ebi.ddi.service.db.model.logger.HttpEvent;
 import uk.ac.ebi.ddi.service.db.model.logger.DatasetResource;
+import uk.ac.ebi.ddi.service.db.model.logger.HttpEvent;
 import uk.ac.ebi.ddi.service.db.utils.Tuple;
 
 import java.util.Date;
@@ -230,11 +228,6 @@ public class HttpEventGenericResourceServiceLocalTest {
     @Test
     public void testDeleteUser() throws Exception {
 
-    }
-
-    @After
-    public void close(){
-        mongoTemplate.getDb().dropDatabase();
     }
 
 }

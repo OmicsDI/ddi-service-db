@@ -9,6 +9,8 @@ import uk.ac.ebi.ddi.service.db.model.logger.HttpEvent;
 import uk.ac.ebi.ddi.service.db.model.logger.DatasetResource;
 import uk.ac.ebi.ddi.service.db.repo.logger.IDatasetResourceRepo;
 
+import java.util.Optional;
+
 
 /**
  * The DatasetAccess reader that implements all the methods to retrieve a dataset, remove it. or find them.
@@ -28,7 +30,8 @@ public class DatasetResourceService implements IDatasetResourceService {
 
     @Override
     public DatasetResource read(ObjectId id) {
-        return datasetAccessRepo.findOne(id);
+        Optional<DatasetResource> datasetResource = datasetAccessRepo.findById(id);
+        return datasetResource.orElse(null);
     }
 
     @Override
@@ -39,7 +42,7 @@ public class DatasetResourceService implements IDatasetResourceService {
     @Override
     public DatasetResource update(DatasetResource datasetResource) {
 
-        DatasetResource existingDatasetResource = datasetAccessRepo.findOne(datasetResource.getId());
+        DatasetResource existingDatasetResource = read(datasetResource.getId());
 
         existingDatasetResource.setAccession(datasetResource.getAccession());
         existingDatasetResource.setDatabase(datasetResource.getDatabase());
@@ -49,8 +52,8 @@ public class DatasetResourceService implements IDatasetResourceService {
 
     @Override
     public DatasetResource delete(ObjectId id) {
-        datasetAccessRepo.delete(id);
-        return datasetAccessRepo.findOne(id);
+        datasetAccessRepo.deleteById(id);
+        return read(id);
     }
 
     @Override
