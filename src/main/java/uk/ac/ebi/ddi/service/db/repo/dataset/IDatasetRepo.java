@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 @Repository
 public interface IDatasetRepo extends MongoRepository<Dataset,ObjectId>, IDatasetRepoExtension{
 
-    @Query("{'$and':[{accession : ?0}, {database : ?1},{'additional.isPrivateg':{'$ne':true}}]}")
+    @Query("{'$and':[{accession : ?0}, {database : ?1},{'additional.isPrivate':{'$ne':true}}]}")
     Dataset findByAccessionDatabaseQuery(String acc, String database);
 
     @Query(value="{ database : ?0 }")
