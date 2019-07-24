@@ -164,5 +164,7 @@ public interface IDatasetService {
     * */
     Stream<Dataset> getAllData();
 
+    List<Dataset> readDatasetsByDatabase(String database);
+
 
 }

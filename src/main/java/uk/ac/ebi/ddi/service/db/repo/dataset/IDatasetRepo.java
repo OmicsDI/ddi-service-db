@@ -26,6 +26,9 @@ public interface IDatasetRepo extends MongoRepository<Dataset,ObjectId>, IDatase
     @Query(value="{ database : ?0 }")
     List<Dataset> findByDatabase(String name);
 
+    @Query(value="{ database : ?0 }", fields ="{database : 1, accession : 1, hashCode: 1, currentStatus: 1}")
+    List<Dataset> findByDatabaseHashCode(String name);
+
     @Query("{_id: ?0}")
     Dataset findByIdDatabaseQuery(ObjectId _id);
 

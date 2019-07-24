@@ -127,6 +127,11 @@ public class DatasetService implements IDatasetService {
 
     @Override
     public List<Dataset> readDatasetHashCode(String database) {
+        return datasetAccessRepo.findByDatabaseHashCode(database);
+    }
+
+    @Override
+    public List<Dataset> readDatasetsByDatabase(String database){
         return datasetAccessRepo.findByDatabase(database);
     }
 
