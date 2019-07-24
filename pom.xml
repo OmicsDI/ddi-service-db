@@ -6,7 +6,7 @@
     <parent>
         <groupId>uk.ac.ebi.ddi.maven</groupId>
         <artifactId>ddi-base-master</artifactId>
-        <version>1.5</version>
+        <version>1.7</version>
     </parent>
 
     <groupId>uk.ac.ebi.ddi</groupId>
@@ -33,12 +33,7 @@
         <dependency>
             <groupId>uk.ac.ebi.ddi</groupId>
             <artifactId>ddi-domain-db</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-        <groupId>uk.ac.ebi.ddi</groupId>
-        <artifactId>ddi-ebi-logs</artifactId>
-        <version>1.0</version>
+            <version>1.1</version>
         </dependency>
         <!-- Spring test -->
         <dependency>
@@ -46,17 +41,6 @@
             <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
             <scope>test</scope>
-        </dependency>
-        <!-- Spring Core -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-            <version>${spring.version}</version>
         </dependency>
 
         <!-- web components to create some of the structures -->
