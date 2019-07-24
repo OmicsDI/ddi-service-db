@@ -19,7 +19,7 @@ import java.util.*;
 
 @Document(collection = "datasets.dataset")
 @CompoundIndexes({
-        @CompoundIndex(name = "accession_database", def = "{'accession' : 1, 'database': 1}")
+        @CompoundIndex(name = "accession_database", def = "{'accession' : 1, 'database': 1}", unique = true)
 })
 public class Dataset implements Serializable, IDataset{
 
