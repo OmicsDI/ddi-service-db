@@ -23,7 +23,7 @@ public interface IDatasetRepo extends MongoRepository<Dataset,ObjectId>, IDatase
     @Query("{'$and':[{accession : ?0}, {database : ?1},{'additional.isPrivateg':{'$ne':true}}]}")
     Dataset findByAccessionDatabaseQuery(String acc, String database);
 
-    @Query(value="{ database : ?0 }", fields ="{database : 1, accession : 1, hashCode: 1, currentStatus: 1}")
+    @Query(value="{ database : ?0 }")
     List<Dataset> findByDatabase(String name);
 
     @Query("{_id: ?0}")
