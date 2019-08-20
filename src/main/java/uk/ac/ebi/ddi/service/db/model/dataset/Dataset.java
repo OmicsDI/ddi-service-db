@@ -309,14 +309,12 @@ public class Dataset implements Serializable, IDataset{
 
     @Override
     public String toString() {
-        return "INSERTED{" +
+        return "Dataset{" +
                 "accession='" + accession + '\'' +
                 ", database='" + database + '\'' +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", dates=" + dates +
-                ", additional=" + additional +
-                ", crossReferences=" + crossReferences +
+                ", initHashCode=" + initHashCode +
+                ", currentStatus='" + currentStatus + '\'' +
+                ", isClaimable=" + isClaimable +
                 '}';
     }
 }
