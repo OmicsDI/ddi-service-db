@@ -12,17 +12,21 @@ import java.util.Objects;
 @Document(collection = "datasets.files")
 @CompoundIndexes({
         @CompoundIndex(name = "accession_database", def = "{'accession' : 1, 'database': 1}"),
+        @CompoundIndex(name = "accession_database", def = "{'accession' : 1, 'database': 1, 'secondary_accession': 1}"),
         @CompoundIndex(name = "accession_database_from", def = "{'accession' : 1, 'database': 1, 'from': 1}"),
 })
 public class DatasetFile {
+
+    @Id
+    private ObjectId _id;
 
     @Indexed
     private String accession;
     @Indexed
     private String database;
 
-    @Id
-    private ObjectId _id;
+    private String secondaryAccession;
+
 
     private String fileUrl;
 
@@ -32,6 +36,15 @@ public class DatasetFile {
     public DatasetFile(String accession, String database, String fileUrl, String from) {
         this.accession = accession;
         this.database = database;
+        this.fileUrl = fileUrl;
+        this.secondaryAccession = accession;
+        this.from = from;
+    }
+
+    public DatasetFile(String accession, String database, String secondaryAccession, String fileUrl, String from) {
+        this.accession = accession;
+        this.database = database;
+        this.secondaryAccession = secondaryAccession;
         this.fileUrl = fileUrl;
         this.from = from;
     }
@@ -55,12 +68,8 @@ public class DatasetFile {
         this.database = database;
     }
 
-    public ObjectId get_id() {
+    public ObjectId getId() {
         return _id;
-    }
-
-    public void set_id(ObjectId _id) {
-        this._id = _id;
     }
 
     public String getFileUrl() {
@@ -79,24 +88,28 @@ public class DatasetFile {
         this.from = from;
     }
 
+    public String getSecondaryAccession() {
+        return secondaryAccession;
+    }
+
+    public void setSecondaryAccession(String secondaryAccession) {
+        this.secondaryAccession = secondaryAccession;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         DatasetFile that = (DatasetFile) o;
-        return Objects.equals(accession, that.accession) &&
-                Objects.equals(database, that.database) &&
-                Objects.equals(_id, that._id) &&
-                Objects.equals(fileUrl, that.fileUrl) &&
-                Objects.equals(from, that.from);
+        return Objects.equals(getAccession(), that.getAccession()) &&
+                Objects.equals(getDatabase(), that.getDatabase()) &&
+                Objects.equals(getSecondaryAccession(), that.getSecondaryAccession()) &&
+                Objects.equals(getFileUrl(), that.getFileUrl()) &&
+                Objects.equals(getFrom(), that.getFrom());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(accession, database, _id, fileUrl, from);
+        return Objects.hash(getAccession(), getDatabase(), getSecondaryAccession(), getFileUrl(), getFrom());
     }
 }
