@@ -5,7 +5,7 @@ import uk.ac.ebi.ddi.service.db.model.dataset.DatasetFile;
 import uk.ac.ebi.ddi.service.db.repo.dataset.IDatasetFilesRepo;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,6 +27,20 @@ public class DatasetFileService {
                 .stream()
                 .map(DatasetFile::getFileUrl)
                 .collect(Collectors.toList());
+    }
+
+    public Map<String, List<String>> getFilesMap(String accession, String database) {
+        List<DatasetFile> files = datasetFilesRepo.findByAccessionAndDatabase(accession, database);
+        Map<String, List<String>> result = new HashMap<>();
+        for (DatasetFile file : files) {
+            if (result.containsKey(file.getSecondaryAccession())) {
+                result.get(file.getSecondaryAccession()).add(file.getFileUrl());
+            } else {
+                List<String> links = Collections.singletonList(file.getFileUrl());
+                result.put(file.getSecondaryAccession(), new ArrayList<>(links));
+            }
+        }
+        return result;
     }
 
     public List<String> getFiles(String accession, String database, String from) {

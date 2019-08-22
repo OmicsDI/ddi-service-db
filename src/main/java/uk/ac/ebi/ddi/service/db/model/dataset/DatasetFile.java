@@ -12,7 +12,8 @@ import java.util.Objects;
 @Document(collection = "datasets.files")
 @CompoundIndexes({
         @CompoundIndex(name = "accession_database", def = "{'accession' : 1, 'database': 1}"),
-        @CompoundIndex(name = "accession_database", def = "{'accession' : 1, 'database': 1, 'secondary_accession': 1}"),
+        @CompoundIndex(name = "accession_database_secondary",
+                def = "{'accession' : 1, 'database': 1, 'secondary_accession': 1}"),
         @CompoundIndex(name = "accession_database_from", def = "{'accession' : 1, 'database': 1, 'from': 1}"),
 })
 public class DatasetFile {
