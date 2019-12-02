@@ -8,6 +8,8 @@ public enum DatasetCategory {
 
     INSERTED("Inserted"),
     ENRICHED("Enriched"),
+    ANNOTATED("Annotated"),
+    FILES_FETCHED("FilesFetched"),
     DELETED("Deleted"),
     UPDATED("Updated");
 
