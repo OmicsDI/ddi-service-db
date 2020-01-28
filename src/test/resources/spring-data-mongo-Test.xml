@@ -41,7 +41,7 @@
 	</mongo:mongo-client>
 
 
-	<mongo:db-factory dbname="${ddi.common.mongo.app.db}" port="${ddi.common.mongo.app.port}" mongo-ref="mongoClient"/>
+	<mongo:db-factory dbname="${ddi.common.mongo.app.db}" mongo-ref="mongoClient"/>
 
 
     <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
