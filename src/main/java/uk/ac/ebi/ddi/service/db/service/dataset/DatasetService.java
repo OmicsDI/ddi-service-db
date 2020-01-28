@@ -131,8 +131,8 @@ public class DatasetService implements IDatasetService {
     }
 
     @Override
-    public List<Dataset> readDatasetsByDatabase(String database){
-        return datasetAccessRepo.findByDatabase(database);
+    public Page<Dataset> readDatasetsByDatabase(String database, int pageStart, int size){
+        return datasetAccessRepo.findByDatabase(database,new PageRequest(pageStart, size));
     }
 
     @Override
@@ -299,21 +299,6 @@ public class DatasetService implements IDatasetService {
     }
 
     public void addMultiomics(MergeCandidate mergeCandidate){
-/*        for(DatasetShort d : mergeCandidate.getSimilars()) {
-            Dataset dataset = datasetAccessRepo.findByAccessionDatabaseQuery(d.getAccession(),d.getDatabase());
-
-        }*/
-/*        mergeCandidate.getSimilars().stream().forEach(dt -> {
-            Dataset dataset = datasetAccessRepo.findByAccessionDatabaseQuery(dt.getAccession(), dt.getDatabase());
-            if (dataset != null) {
-                dataset = Utilities.addAdditionalField(dataset, Constants.OMICS_TYPE, Constants.MULTIOMICS_TYPE);
-                save(dataset);
-                datasetSimilarsService.addDatasetSimilars(dataset, mergeCandidate.getSimilars(),
-                        DatasetSimilarsType.OTHER_OMICS_DATA.getType());
-            }
-        }
-        );*/
-
         for (DatasetShort dt:mergeCandidate.getSimilars()
              ) {
             Dataset dataset = datasetAccessRepo.findByAccessionDatabaseQuery(dt.getAccession(), dt.getDatabase());

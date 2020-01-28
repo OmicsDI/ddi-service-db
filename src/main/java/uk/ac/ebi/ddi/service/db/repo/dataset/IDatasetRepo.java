@@ -24,7 +24,7 @@ public interface IDatasetRepo extends MongoRepository<Dataset,ObjectId>, IDatase
     Dataset findByAccessionDatabaseQuery(String acc, String database);
 
     @Query(value="{ database : ?0 }")
-    List<Dataset> findByDatabase(String name);
+    Page<Dataset> findByDatabase(String name,Pageable pageable);
 
     @Query(value="{ database : ?0 }", fields ="{database : 1, accession : 1, hashCode: 1, currentStatus: 1}")
     List<Dataset> findByDatabaseHashCode(String name);
@@ -41,7 +41,7 @@ public interface IDatasetRepo extends MongoRepository<Dataset,ObjectId>, IDatase
     @Query("{'$and':[{database : ?0}, {crossReferences.biomodels__db:{'$exists':true}}]}")
     List<Dataset> findByDatabaseBioModels(String database);
 
-    @Query("{additional.full_dataset_link:?0}")
+    @Query("{'additional.full_dataset_link':?0}")
     Dataset findByFullDatasetLink(String url);
 
     @Query("{$or: [{additional.additional_accession: {$regex:?0}}, {additional.secondary_accession: {$regex:?0}}]}")
