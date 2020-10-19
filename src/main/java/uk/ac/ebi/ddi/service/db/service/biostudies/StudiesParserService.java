@@ -8,13 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.stereotype.Service;
 import uk.ac.ebi.ddi.service.db.model.biostudies.Attributes;
+import uk.ac.ebi.ddi.service.db.model.biostudies.Links;
 import uk.ac.ebi.ddi.service.db.model.biostudies.Submissions;
 import uk.ac.ebi.ddi.service.db.model.dataset.Dataset;
 import uk.ac.ebi.ddi.service.db.service.dataset.DatasetService;
-import uk.ac.ebi.ddi.service.db.service.dataset.IDatasetService;
 import uk.ac.ebi.ddi.service.db.utils.DatasetCategory;
-import uk.ac.ebi.ddi.service.db.model.biostudies.Links;
-
+import uk.ac.ebi.ddi.ddidomaindb.dataset.DSField;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -33,6 +32,10 @@ public class StudiesParserService implements IBioStudiesParserService{
     public static final String EXPERIMENTTYPE = "Experiment type";
     public static final String ORGANISM = "Organism";
     public static final String PUBLICATION = "ReleaseDate";
+    public static final String BIOSTUDIES_DATABASE = "BioStudies";
+    public static final String BIOSTUDIES_DATASET_URL = "https://www.ebi.ac.uk/biostudies/studies/";
+
+
     //public static final String
 
     @Autowired
@@ -75,14 +78,15 @@ public class StudiesParserService implements IBioStudiesParserService{
                             if (!dataset.getAdditional().containsKey("additional_accession")) {
                                 datasetService.save(dataset);
                             } else {
-                                String accession = dataset.getAdditional().get("additional_accession")
+                                String accession = dataset.getAdditional()
+                                        .get(DSField.Additional.ADDITIONAL_ACCESSION.key())
                                         .iterator().next();
                                 System.out.println("updating secondary accession of " + accession);
                                 List<Dataset> datasetList = datasetService.findByAccession(accession);
                                 if (datasetList.size() > 0) {
                                     Dataset dataset1 =  datasetList.get(0);
-                                    if (dataset1.getAdditional().containsKey("additional_accession")) {
-                                        dataset1.getAdditional().get("additional_accession")
+                                    if (dataset1.getAdditional().containsKey(DSField.Additional.ADDITIONAL_ACCESSION.key())) {
+                                        dataset1.getAdditional().get(DSField.Additional.ADDITIONAL_ACCESSION.key())
                                                 .add(dataset.getAccession());
                                         datasetService.save(dataset1);
                                     }
@@ -124,14 +128,14 @@ public class StudiesParserService implements IBioStudiesParserService{
     public Dataset transformSubmissionDataset(Submissions submissions) {
         HashSet<String> datasetLink = new HashSet<String>();
         Map<String, String> subsections = null;
-        datasetLink.add("https://www.ebi.ac.uk/biostudies/studies/" + submissions.getAccno());
+        datasetLink.add(BIOSTUDIES_DATASET_URL + submissions.getAccno());
         HashSet<String> authors = new HashSet<String>();
         Dataset dataset = new Dataset();
         dataset.setAccession(submissions.getAccno());
-        dataset.setDatabase("BioStudies");
+        dataset.setDatabase(BIOSTUDIES_DATABASE);
         dataset.setCurrentStatus(DatasetCategory.INSERTED.getType());
-        dataset.addAdditional("omics_type", omicsType);
-        dataset.addAdditional("full_dataset_link",datasetLink);
+        dataset.addAdditional(DSField.Additional.OMICS.key(), omicsType);
+        dataset.addAdditional(DSField.Additional.LINK.key(),datasetLink);
         Map<String, String> sectionMap = submissions.getSection().getAttributes().stream()
                 .collect(Collectors.toMap(Attributes::getName, Attributes::getValue, (a1, a2) -> a1));
         Map<String, String> attributesMap = submissions.getAttributes().stream()
@@ -144,7 +148,7 @@ public class StudiesParserService implements IBioStudiesParserService{
                     .flatMap(x -> x.stream()).collect(Collectors.toMap(Attributes::getName,
                             Attributes::getValue, (a1, a2) -> a1));
             authors.add(subsections.get("Name"));
-            dataset.addAdditional("submitter", authors);
+            dataset.addAdditional(DSField.Additional.SUBMITTER.key(), authors);
         }
 
         if (linksList != null && linksList.size() > 0 && linksList.get(0).getAttributes() != null) {
@@ -160,7 +164,7 @@ public class StudiesParserService implements IBioStudiesParserService{
             String accession = linksList.get(0).getUrl();
             HashSet<String> setSecAcc = new HashSet<String>();
             setSecAcc.add(accession);
-            dataset.addAdditional("additional_accession", setSecAcc);
+            dataset.addAdditional(DSField.Additional.ADDITIONAL_ACCESSION.key(), setSecAcc);
         }
 
         dataset.setDescription(sectionMap.get(ABSTRACT.toString()));
@@ -170,11 +174,11 @@ public class StudiesParserService implements IBioStudiesParserService{
         HashSet<String> setOrganisms = new HashSet<String>();
         setData.add(attributesMap.get(PUBLICATION));
         //dates.put()
-        dates.put("publication", setData);
+        dates.put(DSField.Date.PUBLICATION.key(), setData);
 
         HashSet<String> repository = new HashSet<String>();
         repository.add("biostudies");
-        dataset.addAdditional("repository", repository);
+        dataset.addAdditional(DSField.Additional.REPOSITORY.key(), repository);
 
 
 
@@ -182,7 +186,7 @@ public class StudiesParserService implements IBioStudiesParserService{
         //setData.clear();
         if (sectionMap.containsKey(ORGANISM.toString())) {
             setOrganisms.add(sectionMap.get(ORGANISM.toString()));
-            dataset.getAdditional().put("species", setOrganisms);
+            dataset.getAdditional().put(DSField.Additional.SPECIE_FIELD.key(), setOrganisms);
         }
 
         //if(submissions.getSection().getLinks().)
