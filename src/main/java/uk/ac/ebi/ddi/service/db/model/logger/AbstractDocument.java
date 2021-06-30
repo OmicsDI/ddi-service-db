@@ -5,6 +5,7 @@ import java.util.Date;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.*;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 /**
  * This class allow to define a common identifier for all the objects in the
@@ -23,16 +24,16 @@ public abstract class AbstractDocument implements Serializable, IDocument{
     @Id
     protected ObjectId _id;
 
-    @CreatedDate
+    @Field(value="CreatedDate")//@CreatedDate
     private Date cd;
 
-    @LastModifiedDate
+    @Field(value="LastModifiedDate")//@LastModifiedDate
     private Date lmd;
 
-    @CreatedBy
+    @Field(value="CreatedBy")//@CreatedBy
     private String cb;
 
-    @LastModifiedBy
+    @Field(value="LastModifiedBy")//@LastModifiedBy
     private String lmb;
 
     String category;

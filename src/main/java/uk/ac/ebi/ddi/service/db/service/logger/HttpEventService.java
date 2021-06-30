@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationOptions;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import uk.ac.ebi.ddi.ddidomaindb.dataset.DSField;
 import uk.ac.ebi.ddi.service.db.exception.DBWriteException;
 import uk.ac.ebi.ddi.service.db.model.dataset.Dataset;
@@ -38,7 +39,7 @@ import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
  * @date 29/04/2015
  */
 
-@Component
+@Service
 public class HttpEventService implements IHttpEventService {
 
     @Autowired

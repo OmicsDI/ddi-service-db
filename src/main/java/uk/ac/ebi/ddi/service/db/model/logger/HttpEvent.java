@@ -1,5 +1,7 @@
 package uk.ac.ebi.ddi.service.db.model.logger;
 
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 import uk.ac.ebi.ddi.service.db.utils.CategoryType;
@@ -69,6 +71,7 @@ public class HttpEvent extends AbstractEvent implements Serializable{
         this.userAgent = userAgent;
         this.category = CategoryType.HTTP_EVENT.getCategory();
     }
+
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
