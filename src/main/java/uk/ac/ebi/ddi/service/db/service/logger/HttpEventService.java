@@ -1,6 +1,9 @@
 package uk.ac.ebi.ddi.service.db.service.logger;
 
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.Cursor;
+import com.mongodb.DBObject;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -148,7 +151,8 @@ public class HttpEventService implements IHttpEventService {
 
     public void moreAccessedDataset(int size){
         try{
-        AggregationOptions options = Aggregation.newAggregationOptions().allowDiskUse(true).build();
+            DBObject cursor = new BasicDBObject("batchSize",100);
+        AggregationOptions options = Aggregation.newAggregationOptions().allowDiskUse(true).cursor(cursor).build();
 
         Aggregation agg = Aggregation.newAggregation(
                 group("abstractResource._id").count().as("total")
@@ -164,6 +168,7 @@ public class HttpEventService implements IHttpEventService {
         //Convert the aggregation result into a List
         AggregationResults<MostAccessedDatasets> groupResults
                 = mongoTemplate.aggregate(agg, Constants.LOGGER_COLLECTION, MostAccessedDatasets.class);
+
         List<MostAccessedDatasets> currentMostAccessed = groupResults.getMappedResults();
         mostAccessedDatasetService.deleteAll();
 

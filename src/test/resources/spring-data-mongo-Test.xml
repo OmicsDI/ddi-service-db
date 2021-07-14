@@ -14,58 +14,29 @@
 
 	<context:property-placeholder location="classpath*:commontest.properties" />
 
-	<mongo:repositories
-		base-package="uk.ac.ebi.ddi.service.db.repo" />
-
-
-<!--	<mongo:mongo-client credentials="ad:ad@ddi_db" id="mongoClient" replica-set="localhost:27017,localhost:27017,localhost:27017">
-		<mongo:client-options connections-per-host="5"
-							  threads-allowed-to-block-for-connection-multiplier="10"
-							  connect-timeout="100000"
-							  max-wait-time="30000"
-							  socket-keep-alive="true"
-							  socket-timeout="1000000"
-							  write-concern="NORMAL"
-							  read-preference="PRIMARY_PREFERRED"/>
-	</mongo:mongo-client>-->
-
-	<mongo:mongo-client credentials="${ddi.common.mongo.app.user}:${ddi.common.mongo.app.password}@${ddi.common.mongo.app.authenticationDatabase}" id="mongoClient" replica-set="${ddi.common.mongo.app.machine.one}:${ddi.common.mongo.app.port},${ddi.common.mongo.app.machine.two}:${ddi.common.mongo.app.port},${ddi.common.mongo.app.machine.three}:${ddi.common.mongo.app.port}">
-		<mongo:client-options connections-per-host="10"
-							  threads-allowed-to-block-for-connection-multiplier="10"
-							  connect-timeout="1000000"
-							  max-wait-time="120000"
-							  socket-keep-alive="true"
-							  socket-timeout="1000000"
-							  write-concern="NORMAL"
-							  read-preference="SECONDARY"/>
-	</mongo:mongo-client>
-
-
-	<mongo:db-factory dbname="${ddi.common.mongo.app.db}" mongo-ref="mongoClient"/>
-
-
-    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
-		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+	<!--<bean id="mongoclienturi" class="com.mongodb.MongoClientURI">
+		<constructor-arg name="uri" value="mongodb://${ddi.common.mongo.app.user}:${ddi.common.mongo.app.password}@${ddi.common.mongo.app.machine.one}:${ddi.common.mongo.app.port},${ddi.common.mongo.app.machine.three}:${ddi.common.mongo.app.port},${ddi.common.mongo.app.machine.two}:${ddi.common.mongo.app.port}/${ddi.common.mongo.app.db}?authSource=${ddi.common.mongo.app.authenticationDatabase}&amp;replicaSet=${ddi.common.mongo.app.replicaset}" />
+	</bean>
+	&lt;!&ndash; MongoDbFactory &ndash;&gt;
+	<bean id="simpleMongoDbFactoryID" class="org.springframework.data.mongodb.core.SimpleMongoDbFactory">
+		<constructor-arg ref="mongoclienturi" />
 	</bean>
 
+	&lt;!&ndash; MongoTemplate &ndash;&gt;
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg ref="simpleMongoDbFactoryID" />
+	</bean>
 
-<!--    <mongo:mongo id="replicaSetMongo" replica-set="localhost" />
-    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
-        &lt;!&ndash; <constructor-arg name="mongoDbFactory" ref="mongoDbFactory" /> &ndash;&gt;
-        <constructor-arg ref="replicaSetMongo" />
-        <constructor-arg name="databaseName" value="ddi_db" />
-        <constructor-arg name="userCredentials" ref="mongoCredentials" />
-    </bean>
-    <bean id="mongoCredentials" class="org.springframework.data.authentication.UserCredentials">
-        <constructor-arg name="username" value="${mongo.username}" />
-        <constructor-arg name="password" value="${mongo.password}" />
-    </bean>-->
-
-	<!--<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
-		<constructor-arg ref="mongoDbFactory" />
+	<bean id="mongoConverter" class="org.springframework.data.mongodb.core.convert.MappingMongoConverter">
+		<constructor-arg index="0" ref="simpleMongoDbFactoryID"/>
+		<constructor-arg index="1">
+			<bean class="org.springframework.data.mongodb.core.mapping.MongoMappingContext"/>
+		</constructor-arg>
+		<property name="mapKeyDotReplacement" value="__"/>
 	</bean>-->
 
-    <bean id="service" class="uk.ac.ebi.ddi.service.db.service.logger.DatasetResourceService"/>
+
+    <!--<bean id="service" class="uk.ac.ebi.ddi.service.db.service.logger.DatasetResourceService"/>-->
     <bean id="accessService" class="uk.ac.ebi.ddi.service.db.service.logger.HttpEventService"/>
 	<bean id="wordService" class="uk.ac.ebi.ddi.service.db.service.enrichment.SynonymsService"/>
 	<bean id="termService" class="uk.ac.ebi.ddi.service.db.service.similarity.TermInDBService"/>
