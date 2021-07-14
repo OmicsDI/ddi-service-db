@@ -44,8 +44,8 @@ public class TermInDBService implements ITermInDBService {
 
     @Override
     public TermInDB read(ObjectId id) {
-        Optional<TermInDB> termInDB = accessRepo.findById(id);
-        return termInDB.orElse(null);
+        TermInDB termInDB = accessRepo.findOne(id);
+        return termInDB;
     }
 
     @Override
@@ -61,7 +61,7 @@ public class TermInDBService implements ITermInDBService {
 
     @Override
     public TermInDB delete(ObjectId id) {
-        accessRepo.deleteById(id);
+        accessRepo.delete(id);
         return read(id);
     }
 

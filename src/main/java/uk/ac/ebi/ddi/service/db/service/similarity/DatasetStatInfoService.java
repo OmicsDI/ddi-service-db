@@ -61,8 +61,8 @@ public class DatasetStatInfoService implements IDatasetStatInfoService {
 
     @Override
     public DatasetStatInfo read(ObjectId id) {
-        Optional<DatasetStatInfo> datasetStatInfo = accessRepo.findById(id);
-        return datasetStatInfo.orElse(null);
+        DatasetStatInfo datasetStatInfo = accessRepo.findOne(id);
+        return datasetStatInfo;
     }
 
     @Override
@@ -87,7 +87,7 @@ public class DatasetStatInfoService implements IDatasetStatInfoService {
 
     @Override
     public DatasetStatInfo delete(ObjectId id) {
-        accessRepo.deleteById(id);
+        accessRepo.delete(id);
         return read(id);
     }
 

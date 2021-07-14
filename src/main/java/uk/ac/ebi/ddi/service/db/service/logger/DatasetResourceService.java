@@ -31,8 +31,8 @@ public class DatasetResourceService implements IDatasetResourceService {
 
     @Override
     public DatasetResource read(ObjectId id) {
-        Optional<DatasetResource> datasetResource = datasetAccessRepo.findById(id);
-        return datasetResource.orElse(null);
+        DatasetResource datasetResource = datasetAccessRepo.findOne(id);
+        return datasetResource;
     }
 
     @Override
@@ -53,7 +53,7 @@ public class DatasetResourceService implements IDatasetResourceService {
 
     @Override
     public DatasetResource delete(ObjectId id) {
-        datasetAccessRepo.deleteById(id);
+        datasetAccessRepo.delete(id);
         return read(id);
     }
 

@@ -36,8 +36,8 @@ public class DatasetSimilarsService implements IDatasetSimilarsService {
 
     @Override
     public DatasetSimilars read(ObjectId id) {
-        Optional<DatasetSimilars> datasetSimilars = datasetRepo.findById(id);
-        return datasetSimilars.orElse(null);
+        DatasetSimilars datasetSimilars = datasetRepo.findOne(id);
+        return datasetSimilars;
     }
 
     @Override

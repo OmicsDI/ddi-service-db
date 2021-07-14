@@ -46,8 +46,8 @@ public class ExpOutputDatasetService implements IExpOutputDatasetService {
 
     @Override
     public ExpOutputDataset read(ObjectId id) {
-        Optional<ExpOutputDataset> outputDataset = accessRepo.findById(id);
-        return outputDataset.orElse(null);
+        ExpOutputDataset outputDataset = accessRepo.findOne(id);
+        return outputDataset;
     }
 
     @Override
@@ -74,7 +74,7 @@ public class ExpOutputDatasetService implements IExpOutputDatasetService {
 
     @Override
     public ExpOutputDataset delete(ObjectId id) {
-        accessRepo.deleteById(id);
+        accessRepo.delete(id);
         return read(id);
     }
 

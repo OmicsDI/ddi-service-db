@@ -25,8 +25,8 @@ public class DbLuceneMappingService implements IDbLuceneMappingService {
 
     @Override
     public DbLuceneMapping read(ObjectId id) {
-        Optional<DbLuceneMapping> dbLuceneMapping = dbLuceneMappingRepo.findById(id);
-        return dbLuceneMapping.orElse(null);
+        DbLuceneMapping dbLuceneMapping = dbLuceneMappingRepo.findOne(id);
+        return dbLuceneMapping;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class DbLuceneMappingService implements IDbLuceneMappingService {
 
     @Override
     public void delete(ObjectId id) {
-        dbLuceneMappingRepo.deleteById(id);
+        dbLuceneMappingRepo.delete(id);
     }
 
     @Override

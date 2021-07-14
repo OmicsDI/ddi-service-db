@@ -19,7 +19,7 @@ public class DatasetFileService {
     }
 
     public void saveAll(Iterable<DatasetFile> datasetFiles) {
-        datasetFilesRepo.saveAll(datasetFiles);
+        datasetFilesRepo.insert(datasetFiles);
     }
 
     public List<String> getFiles(String accession, String database) {

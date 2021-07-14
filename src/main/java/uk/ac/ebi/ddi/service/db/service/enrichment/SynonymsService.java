@@ -80,8 +80,8 @@ public class SynonymsService implements ISynonymsService {
      */
     @Override
     public Synonym read(ObjectId id) {
-        Optional<Synonym> synonym = accessRepo.findById(id);
-        return synonym.orElse(null);
+        Synonym synonym = accessRepo.findOne(id);
+        return synonym;
     }
 
     /**
@@ -120,7 +120,7 @@ public class SynonymsService implements ISynonymsService {
      */
     @Override
     public Synonym delete(ObjectId id) {
-        accessRepo.deleteById(id);
+        accessRepo.delete(id);
         return read(id);
     }
 

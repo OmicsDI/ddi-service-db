@@ -25,8 +25,8 @@ public class FeedbackService implements IFeedbackService{
 
     @Override
     public Feedback read(ObjectId id) {
-        Optional<Feedback> feedback = feedbackRepo.findById(id);
-        return feedback.orElse(null);
+        Feedback feedback = feedbackRepo.findOne(id);
+        return feedback;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class FeedbackService implements IFeedbackService{
 
     @Override
     public void delete(ObjectId id) {
-        feedbackRepo.deleteById(id);
+        feedbackRepo.delete(id);
     }
 
     @Override

@@ -3,7 +3,7 @@ package uk.ac.ebi.ddi.service.db.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mapping.MappingException;
+/*import org.springframework.data.mapping.MappingException;*/
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
@@ -44,7 +44,11 @@ public class CascadingMongoEventListener extends AbstractMongoEventListener{
                         ReflectionUtils.doWithFields(fieldClass, callback);
 
                         if (!callback.isIdFound()) {
-                            throw new MappingException("Cannot perform cascade save on child object without id set");
+                            try {
+                                throw new Exception("Cannot perform cascade save on child object without id set");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
 
                         if (Collection.class.isAssignableFrom(field.getType())) {

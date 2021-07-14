@@ -55,8 +55,8 @@ public class DatasetService implements IDatasetService {
 
     @Override
     public Dataset read(ObjectId id) {
-        Optional<Dataset> dataset = datasetAccessRepo.findById(id);
-        return dataset.orElse(null);
+        Dataset dataset = datasetAccessRepo.findOne(id);
+        return dataset;
     }
 
     @Override
@@ -67,24 +67,24 @@ public class DatasetService implements IDatasetService {
     @Override
     public Dataset update(ObjectId id, Dataset dataset) {
 
-        Optional<Dataset> existingDataset = datasetAccessRepo.findById(id);
+        Dataset existingDataset = datasetAccessRepo.findOne(id);
 
-        if (existingDataset.isPresent()) {
-            existingDataset.get().setCrossReferences(dataset.getCrossReferences());
-            existingDataset.get().setDescription(dataset.getDescription());
-            existingDataset.get().setCurrentStatus(dataset.getCurrentStatus());
-            existingDataset.get().setAdditional(dataset.getAdditional());
-            existingDataset.get().setAccession(dataset.getAccession());
-            existingDataset.get().setDatabase(dataset.getDatabase());
-            existingDataset.get().setDates(dataset.getDates());
-            existingDataset.get().setName(dataset.getName());
-            existingDataset.get().setFilePath(dataset.getFilePath());
+        if (existingDataset!= null) {
+            existingDataset.setCrossReferences(dataset.getCrossReferences());
+            existingDataset.setDescription(dataset.getDescription());
+            existingDataset.setCurrentStatus(dataset.getCurrentStatus());
+            existingDataset.setAdditional(dataset.getAdditional());
+            existingDataset.setAccession(dataset.getAccession());
+            existingDataset.setDatabase(dataset.getDatabase());
+            existingDataset.setDates(dataset.getDates());
+            existingDataset.setName(dataset.getName());
+            existingDataset.setFilePath(dataset.getFilePath());
 //            We set the InitHashCode only during the processing of creation
 //            existingDataset.setInitHashCode(dataset.getInitHashCode());
-            existingDataset.get().setScores(dataset.getScores());
+            existingDataset.setScores(dataset.getScores());
 //            This line will override the files fetched from another pipeline
 //            existingDataset.setFiles(dataset.getFiles());
-            return datasetAccessRepo.save(existingDataset.get());
+            return datasetAccessRepo.save(existingDataset);
         }
 
         return null;
@@ -92,7 +92,7 @@ public class DatasetService implements IDatasetService {
 
     @Override
     public void delete(ObjectId id) {
-        datasetAccessRepo.deleteById(id);
+        datasetAccessRepo.delete(id);
     }
 
     @Override

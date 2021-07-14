@@ -26,8 +26,8 @@ public class DatabaseService implements IDatabaseService {
 
     @Override
     public Database read(ObjectId id) {
-        Optional<Database> database = databaseRepo.findById(id);
-        return database.orElse(null);
+        Database database = databaseRepo.findOne(id);
+        return database;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class DatabaseService implements IDatabaseService {
 
     @Override
     public void delete(ObjectId id) {
-        databaseRepo.deleteById(id);
+        databaseRepo.delete(id);
     }
 
     @Override

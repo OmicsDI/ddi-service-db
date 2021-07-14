@@ -78,8 +78,8 @@ public class HttpEventService implements IHttpEventService {
 
     @Override
     public HttpEvent read(ObjectId id) {
-        Optional<HttpEvent> httpEvent = accessRepo.findById(id);
-        return httpEvent.orElse(null);
+        HttpEvent httpEvent = accessRepo.findOne(id);
+        return httpEvent;
     }
 
     @Override
@@ -114,9 +114,9 @@ public class HttpEventService implements IHttpEventService {
 
     @Override
     public HttpEvent delete(ObjectId id) {
-        accessRepo.deleteById(id);
-        Optional<HttpEvent> httpEvent = accessRepo.findById(id);
-        return httpEvent.orElse(null);
+        accessRepo.delete(id);
+        HttpEvent  httpEvent = accessRepo.findOne(id);
+        return httpEvent;
     }
 
     public long getLongEventService( String acccesion, String database){

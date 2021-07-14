@@ -30,8 +30,8 @@ public class PublicationDatasetService implements IPublicationDatasetService {
 
     @Override
     public PublicationDataset read(ObjectId id) {
-        Optional<PublicationDataset> publicationDataset = datasetAccessRepo.findById(id);
-        return publicationDataset.orElse(null);
+        PublicationDataset publicationDataset = datasetAccessRepo.findOne(id);
+        return publicationDataset;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class PublicationDatasetService implements IPublicationDatasetService {
 
     @Override
     public PublicationDataset delete(ObjectId id) {
-        datasetAccessRepo.deleteById(id);
+        datasetAccessRepo.delete(id);
         return read(id);
     }
 

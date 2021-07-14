@@ -56,8 +56,8 @@ public class EnrichmentInfoService implements IEnrichmentInfoService {
 
     @Override
     public DatasetEnrichmentInfo read(ObjectId id) {
-        Optional<DatasetEnrichmentInfo> datasetEnrichmentInfo = accessRepo.findById(id);
-        return datasetEnrichmentInfo.orElse(null);
+        DatasetEnrichmentInfo datasetEnrichmentInfo = accessRepo.findOne(id);
+        return datasetEnrichmentInfo;
     }
 
     @Override
@@ -72,7 +72,7 @@ public class EnrichmentInfoService implements IEnrichmentInfoService {
 
     @Override
     public DatasetEnrichmentInfo delete(ObjectId id) {
-        accessRepo.deleteById(id);
+        accessRepo.delete(id);
         return read(id);
     }
 
@@ -108,7 +108,7 @@ public class EnrichmentInfoService implements IEnrichmentInfoService {
     @Override
     public void updateIdentifiers(Iterable<Identifier> identifiers){
         identifierRepo.deleteAll();
-        identifierRepo.saveAll(identifiers);
+        identifierRepo.insert(identifiers);
     }
 
     @Override
