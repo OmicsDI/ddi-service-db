@@ -1,6 +1,7 @@
 package uk.ac.ebi.ddi.service.db.service.logger;
 
 
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.Cursor;
 import com.mongodb.DBObject;
@@ -33,6 +34,7 @@ import uk.ac.ebi.ddi.service.db.utils.Constants;
 import uk.ac.ebi.ddi.service.db.utils.Tuple;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
 
@@ -152,9 +154,11 @@ public class HttpEventService implements IHttpEventService {
     public void moreAccessedDataset(int size){
         try{
             DBObject cursor = new BasicDBObject("batchSize",100);
-        AggregationOptions options = Aggregation.newAggregationOptions().allowDiskUse(true).cursor(cursor).build();
+        AggregationOptions options = Aggregation.newAggregationOptions().allowDiskUse(true)
+                .cursor(cursor).build();
 
         Aggregation agg = Aggregation.newAggregation(
+                //limit(1600),
                 group("abstractResource._id").count().as("total")
                         .first("abstractResource.accession").as("accession")
                         .first("abstractResource.database").as("database"),
@@ -169,11 +173,15 @@ public class HttpEventService implements IHttpEventService {
         AggregationResults<MostAccessedDatasets> groupResults
                 = mongoTemplate.aggregate(agg, Constants.LOGGER_COLLECTION, MostAccessedDatasets.class);
 
-        List<MostAccessedDatasets> currentMostAccessed = groupResults.getMappedResults();
-        mostAccessedDatasetService.deleteAll();
+        //groupResults.getRawResults().
+       // List<MostAccessedDatasets> currentMostAccessed = groupResults.getMappedResults();
+            List<MostAccessedDatasets> currentMostAccessed = getDataFromRawResults(groupResults);
+        if(currentMostAccessed.size() > 15) {
+            mostAccessedDatasetService.deleteAll();
+        }
 
             for (MostAccessedDatasets visit : currentMostAccessed) {
-                if (visit.getId() != null) {
+                if (!visit.getAccession().isEmpty()) {
                     String database = databaseDetailService.retriveAnchorName(visit.getDatabase());
                     Dataset datasetOut = datasetService.read(visit.getAccession(),database);
                     if (datasetOut != null) {
@@ -200,5 +208,15 @@ public class HttpEventService implements IHttpEventService {
             System.out.println(ex.getMessage());
         }
 
+    }
+
+    public List<MostAccessedDatasets> getDataFromRawResults(AggregationResults groupResults){
+        List<MostAccessedDatasets> mostAccessedDatasetsList = new ArrayList<>();
+        DBObject dbObject = groupResults.getRawResults();
+        DBObject data =  (BasicDBObject)dbObject.toMap().get("cursor");
+        BasicDBList dbList = (BasicDBList) data.get("firstBatch");
+        mostAccessedDatasetsList = dbList.stream().map(r-> ((HashMap<String, Object>)r)).
+                map(r -> new MostAccessedDatasets(new Dataset(r.get("accession").toString(),r.get("database").toString()), (int)r.get("total"))).collect(Collectors.toList());
+        return mostAccessedDatasetsList;
     }
 }
