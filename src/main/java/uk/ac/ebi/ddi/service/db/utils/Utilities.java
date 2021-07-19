@@ -1,11 +1,14 @@
 package uk.ac.ebi.ddi.service.db.utils;
 
+import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import uk.ac.ebi.ddi.service.db.model.dataset.Dataset;
+import uk.ac.ebi.ddi.service.db.model.dataset.MostAccessedDatasets;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Utilities {
 
@@ -22,5 +25,13 @@ public class Utilities {
             dataset.setAdditional(additional);
         }
         return dataset;
+    }
+
+    public static BasicDBList getListRawResults(String key, DBObject groupResults){
+        List<MostAccessedDatasets> mostAccessedDatasetsList = new ArrayList<>();
+        DBObject dbObject = groupResults;
+        DBObject data =  (BasicDBObject)dbObject.toMap().get("cursor");
+        BasicDBList dbList = (BasicDBList) data.get(key);
+        return dbList;
     }
 }
