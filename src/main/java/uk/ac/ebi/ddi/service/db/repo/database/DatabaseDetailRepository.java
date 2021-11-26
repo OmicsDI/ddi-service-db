@@ -13,10 +13,12 @@ import java.util.List;
 @Repository
 public interface DatabaseDetailRepository extends PagingAndSortingRepository<DatabaseDetail,String>{
 
-
     @Query("{databaseName : ?0}")
     DatabaseDetail findDatabaseByName(String databaseName);
 
     @Query(value = "{}", fields = "{image: 0}")
     List<DatabaseDetail> findAllShort();
+
+    @Query("{databaseName : { $in: ?0 }}")
+    List<DatabaseDetail> findDatabaseByNames(List<String> dbList);
 }

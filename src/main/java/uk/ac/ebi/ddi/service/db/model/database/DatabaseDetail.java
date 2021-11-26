@@ -1,9 +1,11 @@
 package uk.ac.ebi.ddi.service.db.model.database;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -27,6 +29,9 @@ public class DatabaseDetail implements Serializable {
     String repository;
 
     String source;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    Date lastUpdated;
 
     public String getOrcidName() {
         return orcidName;
@@ -127,7 +132,7 @@ public class DatabaseDetail implements Serializable {
 
     public void setSourceUrl(String sourceUrl) {
         this.sourceUrl = sourceUrl;
-    }
+    }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
 
     public String getDescription() {
         return description;
@@ -144,7 +149,13 @@ public class DatabaseDetail implements Serializable {
     public void setImage(byte[] image) {
         this.image = image;
     }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+    public Date getLastUpdated() {
+        return lastUpdated;
+    }
 
-
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
 
 }

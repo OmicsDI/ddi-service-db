@@ -51,4 +51,9 @@ public class MostAccessedDatasetService implements IMostAccessedDatasetService{
     public MostAccessedDatasets getDatasetView(String acc, String database){
         return mostAccessedRepo.getByAccessionAndDatabase(acc, database);
     }
+
+    @Override
+    public List<MostAccessedDatasets> getMostAccessedByDatabase(List<String> dbList){
+        return mostAccessedRepo.getByDatabaseIn(dbList);
+    }
 }

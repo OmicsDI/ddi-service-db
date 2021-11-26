@@ -45,6 +45,11 @@ public class DatabaseDetailService {
         }
     }
 
+    public DatabaseDetail findDatabaseById(String id) {
+        DatabaseDetail databaseDetail = databaseDetailRepository.findOne(id);
+        return databaseDetail == null ? new DatabaseDetail() : databaseDetail;
+    }
+
     public DatabaseDetail findDatabaseByName(String databaseName) {
 
         DatabaseDetail databaseDetail = databaseDetailRepository.findDatabaseByName(databaseName);
@@ -63,5 +68,9 @@ public class DatabaseDetailService {
     //** source -> name
     public String retriveSolrName(String value){
         return nameToSource.get(value);
+    }
+
+    public List<DatabaseDetail> findModelExchangeDatabase(List<String> databases){
+        return databaseDetailRepository.findDatabaseByNames(databases);
     }
 }
